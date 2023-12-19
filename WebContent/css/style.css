@@ -1,0 +1,265 @@
+/* Menu horizontal */
+nav {
+	height: auto;
+    line-height: normal;
+    background-image: url("../img/cool-background-volt.png");
+	background-position: center; /* Center the image */
+  	background-repeat: no-repeat; /* Do not repeat the image */
+  	background-size: cover; /* Resize the background image to cover the entire container */
+  	background-transform: scaleX(-1);
+  	/*height: 500px;*/
+}
+
+nav ul {
+	width: 100%;
+	margin-left: 20px;
+}
+
+nav ul li {
+    display: inline-block;
+    float: none;
+}
+
+nav i.material-icons {
+	height: auto;
+    line-height: normal;
+    font-size: 30px;
+}
+
+nav a.brand-logo {
+	padding-right: 20px !important;
+}
+
+nav ul a {
+	padding: 10px;
+	width: 6em;
+    text-align: center;
+}
+
+.title-section {
+	margin: 0;
+}
+
+/* ***************** */
+
+div.container {
+	margin-top: 60px;
+	padding-left: 20px;
+	padding-right: 20px;
+	width: 100%;
+}
+
+div.title {
+	margin: 30px 0 30px 0;
+	width: 100%;
+	font-size: 2.2em;
+	justify-content: center;
+}
+
+div.title i.material-icons {
+	font-size: 0.6em;
+	margin-right: 10px;
+}
+
+.collection .collection-item.avatar:not(.circle-clipper)>.circle, .collection .collection-item.avatar :not(.circle-clipper)>.circle {
+	margin-top: 5px;
+	margin-left: 5px;
+	height: 35px;
+	width: 35px; 
+}
+
+.collection .collection-item.avatar i.circle {
+	line-height: 35px;
+}
+
+.collection .collection-item.avatar {
+	padding-left: 60px;
+}
+
+.collection .collection-item {
+	padding-bottom: 0;
+	border-bottom: 1px solid #b3b3b3 !important;
+}
+
+.collection .results {
+	margin-top: 20px;
+}
+
+ul.collection.library i.material-icons {
+	font-size: 1.2em !important;
+}
+
+ul.collection.library {
+	border: none;
+}
+
+div.collection.library {
+	padding: 10px 20px;
+    width: 50%;
+}
+
+div.container.config div.collection.library {
+    width: 50%;
+}
+
+div.container div.collection.library {
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid #b3b3b3;
+}  
+
+div.collection.library {
+	padding: 10px 10px;
+    width: 50%;
+}
+
+.collection {
+	overflow: visible;
+}
+
+div.collection.library, ul.collection.library li {
+	border-radius: 25px;
+	/*border: 1px solid #e0e0e0 !important;*/
+}
+
+ul.collection.library li + li {
+	margin-top: 20px !important;
+}
+
+div.search {
+	margin-bottom: 10px;
+}
+
+button {
+	margin-top: 10px;
+}
+
+h2.title-section {
+	display: none;
+	font-weight: 600;
+}
+
+.row {
+	margin-bottom: 10px;
+}
+
+.vertical-separator-right {
+	border-right: 1px solid #e0e0e0;
+	padding-right: 40px !important;	
+}
+
+.vertical-separator-left {
+	border-left: 1px solid #e0e0e0;
+	padding-left: 40px !important;
+	margin-left: -1px !important;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+	color: #1074cb;
+}
+
+div.container.new button {
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+/* Button to scroll to TOP or BOTTOM */
+.icon {
+	vertical-align: middle;
+	display: inline-block;
+	height: 64px;
+	width: 65px;
+	-moz-border-radius: 100%;
+	border-radius: 100%;
+	background-color: white;
+	background-position: center center;
+	background-repeat: no-repeat;
+	color: white;
+	transition: all .1s ease-in-out;
+	outline: none;
+}
+
+.icon:hover {
+	transform: scale(1.17);
+	cursor: pointer;
+}
+
+.progress {
+	margin: 0;
+	height: auto;
+	visibility: hidden;
+}
+
+.bottom-right {
+	right: 25px;
+	bottom: 25px;
+	position: fixed;
+	z-index: 1;
+}
+
+.icon.scroll {
+	display: none;
+	height: 30px;
+	width: 30px;
+	margin: 17px;
+	background-size: 30px;
+}
+
+.icon.back2top {
+	background-image: url(../img/back2top.png);
+}
+
+.icon.go2bottom {
+	background-image: url(../img/go2bottom.png);
+}
+
+.icon.scroll:hover {
+	transform: scale(1.25);
+}
+
+/****************************/
+
+
+/* Upload icon */
+.upload {
+	position: relative;
+	/*left: 6px;*/
+	top: 6px;
+	height: 40px;
+	width: 40px;
+	float: left;
+	background: url(../img/folder-empty.svg) no-repeat;
+	background-size: cover;
+	cursor: pointer;
+}
+
+.upload:hover {
+	transform: scale(1.1);
+}
+
+.upload input.upload {
+	margin-left: -6px;
+    font-size: 0px !important;
+    /* Con esto conseguimos que el input original desaparezca y quede el custom-checkbox */
+    opacity: 0;
+    top: 0px;
+    cursor:pointer;
+}
+/*
+.file-selected {
+	border: 2px solid var(--secondary-color-details);
+	width: 320px;
+	overflow: hidden;
+	height: 44px;
+	padding-left: 60px;
+	margin-left: -40px;
+	font-size: 0.9em;
+}
+*/
+
+input.file-selected {
+	margin-left: 15px;
+	width: calc(100% - 55px);
+}
+
+/*******************/

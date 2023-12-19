@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="COMPARES">
+		<class>es.um.fcd.model.Par</class>
+		<class>es.um.fcd.model.Source</class>
+		<class>es.um.fcd.model.User</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<!--  Activar esta property para poder lanzar el Main y crear los primeros objetos en el servidor  -->
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://fcd1.inf.um.es:3306/sisa_pruebas" />-->
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/compares" />	
+			<property name="javax.persistence.jdbc.user" value="documentacion" />
+			<property name="javax.persistence.jdbc.password" value="D0cumentac10n" />
+			<!--			
+				Nota - Para alternar entre versiones:
+					1) Cambiar el nombre y fecha de la versión de la aplicación en: 
+						- idioma.properties
+					
+					Nota: el nombre de la aplicación se incluye en:
+						- prelude.jsp (tab del navegador)
+						- login.jsp (pantalla login)	
+					Nota: La fecha de la versión se incluye en:
+						- acercaDe.jsp					 		
+						
+					2) Cambiar la base de datos por la correcta (incluido user y password) en este fichero (persistance.xml)
+			-->
+			
+			<property name="eclipselink.ddl-generation" value="create-tables" /> 
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+			<property name="eclipselink.session.customizer" value="es.um.fcd.dao.UnderscoreSessionCustomizer"/>
+		</properties>
+	</persistence-unit>
+</persistence>

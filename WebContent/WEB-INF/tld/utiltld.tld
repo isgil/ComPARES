@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>utiltld</shortname>
+	<info>Libreria de etiquetas</info>
+
+	<function>
+		<description>Devuelve las notificaciones de exito</description>
+		<name>getNotificacionesExito</name>
+		<function-class>es.um.fcd.web.util.FuncionesTLD</function-class>
+		<function-signature>java.util.List getNotificacionesExito(es.um.fcd.web.model.Notificaciones)</function-signature>
+	</function>
+	
+	<function>
+		<description>Devuelve las notificaciones de error</description>
+		<name>getNotificacionesError</name>
+		<function-class>es.um.fcd.web.util.FuncionesTLD</function-class>
+		<function-signature>java.util.List getNotificacionesError(es.um.fcd.web.model.Notificaciones)</function-signature>
+	</function>
+	
+	<function>
+		<description>Devuelve las notificaciones de advertencia</description>
+		<name>getNotificacionesAdvertencia</name>
+		<function-class>es.um.fcd.web.util.FuncionesTLD</function-class>
+		<function-signature>java.util.List getNotificacionesAdvertencia(es.um.fcd.web.model.Notificaciones)</function-signature>
+	</function>
+	
+	<function>
+		<description>Redondea el valor pasado con el numero de decimales indicado</description>
+		<name>redondear</name>
+		<function-class>ees.um.fcd.web.util.FuncionesTLD</function-class>
+		<function-signature>java.lang.String redondear(java.lang.Double, java.lang.Integer)</function-signature>
+	</function>
+</taglib>

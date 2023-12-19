@@ -1,0 +1,184 @@
+<script type="text/javascript">
+	function getNumElementosSeleccionados() {
+		return $('input:checked').length;
+	}
+
+	function getEbId(id) {
+		return document.getElementById(id);
+	}
+
+	function marcarTodoNada(boton, idElementoContenedor) {
+		var valor = (boton.getAttribute("value") === "todo") ? true : false;
+		$('#' + idElementoContenedor).find("input").each(function() {
+			$(this).prop('checked', valor);
+			boton.setAttribute("value", (valor === true) ? "nada" : "todo");
+		});
+	}
+
+	function stopEnterKey(e) {
+		var key;
+		if (window.event)
+			key = window.event.keyCode; //IE
+		else
+			key = e.which;
+		return (key != 13);
+	}
+
+	function crearAjax() {
+		if (window.XMLHttpRequest)
+			return new XMLHttpRequest();
+		else
+			return new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	function scrollToTop() {
+		$('html,body').animate({
+			scrollTop : 0
+		}, 0);
+	}
+
+	function scrollToTopSuavizado() {
+		$('html,body').animate({
+			scrollTop : 0
+		}, 500);
+	}
+
+	function scrollToBottom() {
+		$('html,body').animate({
+			scrollTop : $(document).height()
+		}, 0);
+	}
+
+	function scrollToBottomSuavizado() {
+		$('html,body').animate({
+			scrollTop : $(document).height()
+		}, 500);
+	}
+
+	function mostrarGoToBottom() {
+		$('.go2bottom').css('display', 'block');
+	}
+
+	function mostrarBackToTop() {
+		$('.back2top').css('display', 'block');
+	}
+	
+	function showProgress() {
+		/*$('.progress').css('visibility', 'visible');*/
+		$(".progress").css('visibility', 'visible', function() {           
+           });
+	}
+	
+	function hideProgress() {
+		 $(".progress").css('visibility', 'hidden');
+	}
+	
+	function toggleProgress(){
+		showProgress();
+		setTimeout(hideProgress, 3000);
+	};
+
+	//Subir documento / Configuración sistema
+	function actualizarInput(input) {
+		console.log('HOLA');
+		if (input.files.length > 0) {
+			console.log('HOLA2');
+			var id, form;
+
+			id = input.getAttribute("id");
+
+			// SUBIR DOCUMENTOS
+			console.log('id=' + id);
+			if (id === 'upload1') {
+				var parent = $('#' + id).parent();
+				$(parent).parent().find("#file-selected1").val(input.files[0].name);
+				$(parent).css("background-image", "url(" + context + "/img/folder-document.svg)");
+			}
+			if (id === 'upload2') {
+				var parent = $('#' + id).parent();
+				$(parent).parent().find("#file-selected2").val(input.files[0].name);
+				$(parent).css("background-image", "url(" + context + "/img/folder-document.svg)");
+			}
+			/*$(form).find(".upload").css("height", "34px");
+			$(form).find(".upload").css("top", "4px");*/
+		}
+	}
+
+	function mostrarPantallaCarga(texto, loop) {
+		if (texto !== '') {
+			$('#accion').html(texto + "...");
+		} else {
+			$('#accion').html("&nbsp");
+		}
+		$("#progreso").html("&nbsp");
+		$("#cargando").fadeIn(300);
+
+		if (loop) setTimeout(pollProgress, 250);
+	}
+	
+	function mostrarPantallaCargaPorcentaje() {
+		$('#accion').html("&nbsp");
+		$("#progreso").html("&nbsp");
+		$("#cargando").fadeIn(300);
+
+		setTimeout(pollProgressPercentaje, 250);
+	}
+	
+	function cerrarPantallaCarga() {
+		$("#cargando").fadeOut(300);
+	}
+	
+	function pollProgressPercentaje() {
+		$.ajax({
+			type : 'GET',
+			url : 'ActualizarProgreso', // Your Servlet mapping or JSP
+			data : {},
+			dataType : 'html', // Returns HTML as plain text; included script tags
+			// are evaluated when inserted in the DOM.
+			success : function exito(response) {
+				if (response !== 'null') {
+					var values = response.split(";");
+					if (values[0] === '') 
+						$('#accion').html("&nbsp");
+					else 
+						$('#accion').html(values[0]); 
+					if (values[1] === '') 
+						$("#progreso").html("&nbsp");
+					else 
+						$("#progreso").html(values[1]);
+					setTimeout(pollProgressPercentaje, 250 /*0.25 second*/);
+				}
+			}
+		});
+
+		return true;
+	}
+
+	function pollProgress() {
+		$.ajax({
+			type : 'GET',
+			url : 'ActualizarProgreso', // Your Servlet mapping or JSP
+			data : {},
+			dataType : 'html', // Returns HTML as plain text; included script tags
+			// are evaluated when inserted in the DOM.
+			success : function exito(response) {
+				if (response !== 'null') {
+					var values = response.split(";");
+					if (values[0] === '') 
+						$('#accion').html("&nbsp");
+					else 
+						$('#accion').html(values[0]); 
+					if (values[1] === '') 
+						$("#progreso").html("&nbsp");
+					else 
+						$("#progreso").html(values[1]);
+					setTimeout(pollProgress, 250);
+				}
+			}
+		});
+
+		return true;
+
+	}
+	
+</script>
