@@ -8,79 +8,80 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import es.um.fcd.model.Comparison;
 import es.um.fcd.model.Par;
 import es.um.fcd.model.Source;
 import es.um.tfg.atfc.db.modelo.Idioma;
 import es.um.tfg.atfc.sisa.util.AppLogger;
 
-public class JPADAOPar implements DAOPar {
+public class JPADAOComparison implements DAOComparison {
 
 	private EntityManagerFactory emf;
 
-	public JPADAOPar(EntityManagerFactory emf) {
+	public JPADAOComparison(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	@Override
-	public Par create() throws DAOException {
+	public Comparison create() throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
-		Par par = new Par();
+		Comparison comparison = new Comparison();
 		tx.begin();
 
 		try {
-			em.persist(par);
+			em.persist(comparison);
 			tx.commit();
 		} catch (Exception e) {
 			AppLogger.logException(e);
 			tx.rollback();
-			par = null;
+			comparison = null;
 		}
 		em.close();
 
-		return par;
+		return comparison;
 	}
 
 	@Override
-	public Par find(int id) throws DAOException {
+	public Comparison find(int id) throws DAOException {
 		EntityManager em = emf.createEntityManager();
-		Par par = em.find(Par.class, id);
+		Comparison comparison = em.find(Comparison.class, id);
 		em.close();
 		
-		return par;
+		return comparison;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Par> findAll() throws DAOException {
+	public Collection<Comparison> findAll() throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		
-		String queryString = "SELECT p FROM PAR p";
+		String queryString = "SELECT c FROM COMPARISON c";
 		Query query = em.createQuery(queryString);
-		List<Par> pares = (List<Par>) query.getResultList();
+		List<Comparison> comparison = (List<Comparison>) query.getResultList();
 		em.close();
 
-		return pares;
+		return comparison;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void delete(Par par) throws DAOException {
-		Par p = find(par.getId());
+	public void delete(Comparison comparison) throws DAOException {
+		Comparison c = find(comparison.getId());
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
 		tx.begin();
 		try {
-			p = em.merge(p);
-			em.remove(p);
+			c = em.merge(c);
+			em.remove(c);
 			tx.commit();
 			em.close();
 		} catch (Exception e) {
 			tx.rollback();
 			em.close();
-			throw new DAOException("Error removing par");
+			throw new DAOException("Error removing comparison");
 		}		
 	};
 }

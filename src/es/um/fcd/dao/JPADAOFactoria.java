@@ -9,10 +9,10 @@ public class JPADAOFactoria extends DAOFactoria {
 	public JPADAOFactoria(EntityManagerFactory emf) throws DAOException {
 		this.emf = emf;
 	}
-
+	
 	@Override
-	public DAOUser getDAOUser() {
-		return new JPADAOUser(this.emf);
+	public DAOComparison getDAOComparison() {
+		return new JPADAOComparison(this.emf);
 	}
 
 	@Override
@@ -23,5 +23,10 @@ public class JPADAOFactoria extends DAOFactoria {
 	@Override
 	public DAOSource getDAOSource() {
 		return new JPADAOSource(this.emf);
+	}
+	
+	@Override
+	public DAOUser getDAOUser() {
+		return new JPADAOUser(this.emf);
 	}
 }

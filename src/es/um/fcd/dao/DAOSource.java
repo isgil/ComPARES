@@ -6,7 +6,7 @@ import java.util.List;
 import es.um.fcd.model.Source;
 
 public interface DAOSource {
-	public Source create(Source source) throws DAOException;
+	public Source create(String source) throws DAOException;
 
 	public Source find(String source) throws DAOException;
 

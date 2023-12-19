@@ -4,9 +4,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public abstract class DAOFactoria {
-	public abstract DAOUser getDAOUsuario();
+	public abstract DAOComparison getDAOComparison();
 	public abstract DAOPar getDAOPar();
 	public abstract DAOSource getDAOSource();
+	public abstract DAOUser getDAOUser();
 
 	private static EntityManagerFactory emf;
 

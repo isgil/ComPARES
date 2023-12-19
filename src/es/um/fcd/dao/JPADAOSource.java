@@ -26,21 +26,21 @@ public class JPADAOSource implements DAOSource {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
-		Source tem = new Source();
-		tem.setSource(source);
+		Source src = new Source();
+		src.setSource(source);
 		tx.begin();
 
 		try {
-			em.persist(tem);
+			em.persist(src);
 			tx.commit();
 		} catch (Exception e) {
 			AppLogger.logException(e);
 			tx.rollback();
-			tem = null;
+			src = null;
 		}
 		em.close();
 
-		return tem;
+		return src;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class JPADAOSource implements DAOSource {
 
 	@Override
 	public void delete(Source source) throws DAOException {
-		Source s = find(source);
+		Source s = find(source.getSource());
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
