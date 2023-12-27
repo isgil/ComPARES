@@ -2,7 +2,7 @@ package es.um.fcd.dao;
 
 import javax.persistence.EntityManagerFactory;
 
-public class JPADAOFactoria extends DAOFactoria {
+public class JPADAOFactoria extends DAOFactory {
 
 	private EntityManagerFactory emf;
 
@@ -11,8 +11,8 @@ public class JPADAOFactoria extends DAOFactoria {
 	}
 	
 	@Override
-	public DAOComparison getDAOComparison() {
-		return new JPADAOComparison(this.emf);
+	public DAOTest getDAOTest() {
+		return new JPADAOTest(this.emf);
 	}
 
 	@Override

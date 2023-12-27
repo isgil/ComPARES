@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import es.um.fcd.dao.DAOFactoria;
+import es.um.fcd.dao.DAOFactory;
 import es.um.fcd.util.AppLogger;
 
 public class FrontController extends HttpServlet {
@@ -26,9 +26,9 @@ public class FrontController extends HttpServlet {
 		// Obtiene una factoria DAO y la almacena en la aplicación
 		try {
 			/*
-			DAOFactoria daoFactoria = DAOFactoria.getDAOFactoria(DAOFactoria.MYSQL);
+			DAOFactory daoFactoria = DAOFactory.getDAOFactoria(DAOFactory.MYSQL);
 			ServletContext aplicacion = config.getServletContext();
-			aplicacion.setAttribute("DAOFactoria", daoFactoria);
+			aplicacion.setAttribute("DAOFactory", daoFactoria);
 			*/
 		} catch (Exception e) {
 			AppLogger.logException(e);

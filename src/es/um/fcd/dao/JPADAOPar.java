@@ -9,9 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import es.um.fcd.model.Par;
-import es.um.fcd.model.Source;
-import es.um.tfg.atfc.db.modelo.Idioma;
-import es.um.tfg.atfc.sisa.util.AppLogger;
+import es.um.fcd.util.AppLogger;
 
 public class JPADAOPar implements DAOPar {
 
@@ -22,13 +20,11 @@ public class JPADAOPar implements DAOPar {
 	}
 
 	@Override
-	public Par create() throws DAOException {
+	public Par create(Par par) throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
-		Par par = new Par();
 		tx.begin();
-
 		try {
 			em.persist(par);
 			tx.commit();
@@ -64,7 +60,22 @@ public class JPADAOPar implements DAOPar {
 		return pares;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@Override
+	public void update(Par par) throws DAOException {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+		try {
+			par = em.merge(par);
+			tx.commit();
+		} catch (Exception e) {
+			AppLogger.logException(e);
+			tx.rollback();
+		}
+		em.close();
+	}
+	
 	@Override
 	public void delete(Par par) throws DAOException {
 		Par p = find(par.getId());

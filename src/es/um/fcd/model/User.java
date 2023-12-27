@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="USER")
+//@Entity(name="USER")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -16,10 +16,10 @@ public class User implements Serializable {
 	public static final int ADMIN = 2000;
 	public static final int USUARIO = 100;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(unique = true, nullable = false)
+//	@Column(unique = true, nullable = false)
 	private String username;
 	private String password;
 	private String email;

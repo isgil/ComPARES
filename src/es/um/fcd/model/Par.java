@@ -11,8 +11,10 @@ import javax.persistence.Id;
 public class Par implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String file1;
-	private String file2;
+	private String fileName1;
+	private String fileName2;
+	private Source source1;
+	private Source source2;
 	private float top10;
 	private float top50;
 	private float top100;
@@ -26,6 +28,13 @@ public class Par implements Serializable {
 		super();
 	}
 
+	public Par(String fileName1, Source source1, String fileName2, Source source2){
+		this.fileName1 = fileName1;
+		this.source1 = source1;
+		this.fileName2 = fileName2;
+		this.source2 = source2;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -34,20 +43,36 @@ public class Par implements Serializable {
 		this.id = id;
 	}
 
-	public String getFile1() {
-		return file1;
+	public String getFileName1() {
+		return fileName1;
 	}
 
-	public void setFile1(String file1) {
-		this.file1 = file1;
+	public void setFileName1(String file1) {
+		this.fileName1 = file1;
 	}
 
-	public String getFile2() {
-		return file2;
+	public String getFileName2() {
+		return fileName2;
 	}
 
-	public void setFile2(String file2) {
-		this.file2 = file2;
+	public void setFileName2(String file2) {
+		this.fileName2 = file2;
+	}
+	
+	public Source getSource1() {
+		return source1;
+	}
+
+	public void setSource1(Source source1) {
+		this.source1 = source1;
+	}
+
+	public Source getSource2() {
+		return source2;
+	}
+
+	public void setSource2(Source source2) {
+		this.source2 = source2;
 	}
 
 	public float getTop10() {

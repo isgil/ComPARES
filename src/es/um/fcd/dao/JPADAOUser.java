@@ -1,6 +1,5 @@
 package es.um.fcd.dao;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,9 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import es.um.fcd.model.User;
-import es.um.tfg.atfc.db.modelo.Regla;
-import es.um.tfg.atfc.db.modelo.Usuario;
-import es.um.tfg.atfc.sisa.util.AppLogger;
+import es.um.fcd.util.AppLogger;
 
 public class JPADAOUser implements DAOUser {
 
@@ -77,13 +74,13 @@ public class JPADAOUser implements DAOUser {
 	}
 
 	@Override
-	public void update(Usuario usuario) throws DAOException {
+	public void update(User user) throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
 		tx.begin();
 		try {
-			usuario = em.merge(usuario);
+			user = em.merge(user);
 			tx.commit();
 		} catch (Exception e) {
 			AppLogger.logException(e);
@@ -93,15 +90,14 @@ public class JPADAOUser implements DAOUser {
 	}
 
 	@Override
-	public void delete(String username) throws DAOException {
-		User u = find(username);
+	public void delete(User user) throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
 		tx.begin();
 		try {
-			u = em.merge(u);
-			em.remove(u);
+			user = em.merge(user);
+			em.remove(user);
 			tx.commit();
 			em.close();
 		} catch (Exception e) {

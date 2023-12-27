@@ -10,6 +10,8 @@ public interface DAOUser {
 	public User find(String username) throws DAOException;
 
 	public Collection<User> findAll() throws DAOException;
+	
+	public void update(User user) throws DAOException;
 
-	public void delete(String userName) throws DAOException;
+	public void delete(User user) throws DAOException;
 }

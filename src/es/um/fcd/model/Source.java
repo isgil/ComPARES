@@ -20,6 +20,10 @@ public class Source implements Serializable {
 		super();
 	}
 
+	public Source(String source) {
+		this.source = source;
+	}
+
 	public Integer getId() {
 		return id;
 	}

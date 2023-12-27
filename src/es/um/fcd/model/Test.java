@@ -9,17 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="PROJECT")
-public class Comparison implements Serializable {
+public class Test implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private String name;
 	private List<Par> pares;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	public Comparison() {
+	public Test() {
 		super();
+	}
+
+	public Test(String name, List<Par> pares) {
+		this.name = name;
+		this.pares = pares;
 	}
 
 	public Integer getId() {
@@ -28,6 +34,14 @@ public class Comparison implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public List<Par> getPares(){

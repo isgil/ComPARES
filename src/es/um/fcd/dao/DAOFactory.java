@@ -3,8 +3,8 @@ package es.um.fcd.dao;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public abstract class DAOFactoria {
-	public abstract DAOComparison getDAOComparison();
+public abstract class DAOFactory {
+	public abstract DAOTest getDAOTest();
 	public abstract DAOPar getDAOPar();
 	public abstract DAOSource getDAOSource();
 	public abstract DAOUser getDAOUser();
@@ -14,9 +14,9 @@ public abstract class DAOFactoria {
 	public final static int JPA = 1;
 	public final static int MYSQL = 2;
 
-	public static DAOFactoria getDAOFactoria(int tipo) throws DAOException {
+	public static DAOFactory getDAOFactoria(int tipo) throws DAOException {
 		if (emf == null) {
-			emf = Persistence.createEntityManagerFactory("SISA");
+			emf = Persistence.createEntityManagerFactory("COMPARES");
 		}
 		switch (tipo) {
 		case JPA:

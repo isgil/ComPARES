@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import es.um.fcd.model.User;
 //import es.um.tfg.atfc.web.modelo.Login;
-import es.um.fcd.web.model.Notificaciones;
+import es.um.fcd.web.model.Notifications;
 
 public abstract class Action {
 	public abstract String execute(HttpServletRequest request, HttpServletResponse response, ServletContext application);
@@ -23,13 +23,13 @@ public abstract class Action {
 		return null;
 	}
 
-	public Notificaciones getNotificacionesSesion(HttpSession sesion) {
-		Notificaciones notificaciones = (Notificaciones) sesion.getAttribute("notificaciones");
-		if (notificaciones == null) {
-			notificaciones = new Notificaciones();
-			sesion.setAttribute("notificaciones", notificaciones);
+	public Notifications getNotificacionesSesion(HttpSession sesion) {
+		Notifications notifications = (Notifications) sesion.getAttribute("notificaciones");
+		if (notifications == null) {
+			notifications = new Notifications();
+			sesion.setAttribute("notificaciones", notifications);
 		}
 
-		return notificaciones;
+		return notifications;
 	}
 }

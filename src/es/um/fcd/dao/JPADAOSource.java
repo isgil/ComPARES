@@ -9,9 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import es.um.fcd.model.Source;
-import es.um.fcd.model.User;
-import es.um.tfg.atfc.db.modelo.Tematica;
-import es.um.tfg.atfc.sisa.util.AppLogger;
+import es.um.fcd.util.AppLogger;
 
 public class JPADAOSource implements DAOSource {
 
@@ -22,25 +20,22 @@ public class JPADAOSource implements DAOSource {
 	}
 
 	@Override
-	public Source create(String source) throws DAOException {
+	public Source create(Source source) throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
-		Source src = new Source();
-		src.setSource(source);
 		tx.begin();
-
 		try {
-			em.persist(src);
+			em.persist(source);
 			tx.commit();
 		} catch (Exception e) {
 			AppLogger.logException(e);
 			tx.rollback();
-			src = null;
+			source = null;
 		}
 		em.close();
 
-		return src;
+		return source;
 	}
 
 	@Override
@@ -57,6 +52,15 @@ public class JPADAOSource implements DAOSource {
 		if (result.isEmpty())
 			return null;
 		return result.get(0);
+	}
+	
+	@Override
+	public Source find(int id) throws DAOException {
+		EntityManager em = emf.createEntityManager();
+		Source source = em.find(Source.class, id);
+		em.close();
+		
+		return source;
 	}
 
 	@SuppressWarnings("unchecked")

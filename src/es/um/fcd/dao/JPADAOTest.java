@@ -8,67 +8,61 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import es.um.fcd.model.Comparison;
-import es.um.fcd.model.Par;
-import es.um.fcd.model.Source;
-import es.um.tfg.atfc.db.modelo.Idioma;
-import es.um.tfg.atfc.sisa.util.AppLogger;
+import es.um.fcd.model.Test;
+import es.um.fcd.util.AppLogger;
 
-public class JPADAOComparison implements DAOComparison {
+public class JPADAOTest implements DAOTest {
 
 	private EntityManagerFactory emf;
 
-	public JPADAOComparison(EntityManagerFactory emf) {
+	public JPADAOTest(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	@Override
-	public Comparison create() throws DAOException {
+	public Test create(Test test) throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
-		Comparison comparison = new Comparison();
 		tx.begin();
-
 		try {
-			em.persist(comparison);
+			em.persist(test);
 			tx.commit();
 		} catch (Exception e) {
 			AppLogger.logException(e);
 			tx.rollback();
-			comparison = null;
+			test = null;
 		}
 		em.close();
 
-		return comparison;
+		return test;
 	}
 
 	@Override
-	public Comparison find(int id) throws DAOException {
+	public Test find(int id) throws DAOException {
 		EntityManager em = emf.createEntityManager();
-		Comparison comparison = em.find(Comparison.class, id);
+		Test test = em.find(Test.class, id);
 		em.close();
 		
-		return comparison;
+		return test;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Comparison> findAll() throws DAOException {
+	public Collection<Test> findAll() throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		
 		String queryString = "SELECT c FROM COMPARISON c";
 		Query query = em.createQuery(queryString);
-		List<Comparison> comparison = (List<Comparison>) query.getResultList();
+		List<Test> test = (List<Test>) query.getResultList();
 		em.close();
 
-		return comparison;
+		return test;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public void delete(Comparison comparison) throws DAOException {
-		Comparison c = find(comparison.getId());
+	public void delete(Test test) throws DAOException {
+		Test c = find(test.getId());
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
@@ -82,6 +76,6 @@ public class JPADAOComparison implements DAOComparison {
 			tx.rollback();
 			em.close();
 			throw new DAOException("Error removing comparison");
-		}		
+		}
 	};
 }
