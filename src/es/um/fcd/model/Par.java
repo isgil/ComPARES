@@ -15,6 +15,8 @@ public class Par implements Serializable {
 	private String fileName2;
 	private Source source1;
 	private Source source2;
+	private String titleMark1;
+	private String titleMark2;
 	private float top10;
 	private float top50;
 	private float top100;
@@ -28,9 +30,11 @@ public class Par implements Serializable {
 		super();
 	}
 
-	public Par(String fileName1, Source source1, String fileName2, Source source2){
+	public Par(String fileName1, Source source1, String titleMark1, String fileName2, Source source2, String titleMark2){
 		this.fileName1 = fileName1;
 		this.source1 = source1;
+		this.titleMark1 = titleMark1;
+		this.titleMark2 = titleMark2;
 		this.fileName2 = fileName2;
 		this.source2 = source2;
 	}
@@ -105,5 +109,21 @@ public class Par implements Serializable {
 
 	public void setTop1000(float top1000) {
 		this.top1000 = top1000;
+	}
+
+	public String getTitleMark1() {
+		return titleMark1;
+	}
+
+	public void setTitleMark1(String titleMark1) {
+		this.titleMark1 = titleMark1;
+	}
+
+	public String getTitleMark2() {
+		return titleMark2;
+	}
+
+	public void setTitleMark2(String titleMark2) {
+		this.titleMark2 = titleMark2;
 	}
 }

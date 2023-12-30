@@ -11,29 +11,29 @@ import javax.servlet.http.HttpServletResponse;
 import es.um.fcd.util.AppLogger;
 import es.um.fcd.web.controller.ActionLibrary;
 
-public abstract class CargadorFicheros extends MyHttpServlet {
+public abstract class FileUploader extends MyHttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected String directorioPath;
+	protected String filesDir;
 
 	public void init(ServletConfig config) {
 		try {
 			super.init(config);
 
 			// Recuperamos el directorio donde se guardaran los documentos
-			directorioPath = config.getInitParameter(getDirectorio());
+			filesDir = config.getInitParameter(getDirectory());
 		} catch (Exception e) {
 			AppLogger.logException(e);
 		}
 	}
 	
-	protected abstract String getDirectorio();
+	protected abstract String getDirectory();
 
-	protected void reenviarIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void fordwardIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher(new ActionLibrary().execute(request, response, getServletConfig().getServletContext()));
 		rd.forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		reenviarIndex(request, response);
+		fordwardIndex(request, response);
 	}
 }

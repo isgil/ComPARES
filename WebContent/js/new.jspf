@@ -1,0 +1,34 @@
+<script type="text/javascript">
+	function createSource(sourceName) {
+		console.log("Source =" + sourceName);
+		$.ajax({
+			type : 'POST',
+			url : 'CreateSource', // Your Servlet mapping or JSP
+			data: { source: sourceName },
+			dataType : 'html', // Returns HTML as plain text; included script tags
+			// are evaluated when inserted in the DOM.
+			success : function exito(data, textStatus, xhr) {
+					console.log('Request completed: ' + xhr.status);
+					$("div.modal").css('display', 'none');	
+					$("#new-test").removeClass('blurry');
+					$("select").append('<option value="5">' + sourceName + '</option>')
+					$("select#source1").formSelect();
+					/*
+					var values = response.split(";");
+					if (values[0] === '')
+						$('#accion').html("&nbsp");
+					else
+						$('#accion').html(values[0]);
+					if (values[1] === '')
+						$("#progreso").html("&nbsp");
+					else
+						$("#progreso").html(values[1]);
+					setTimeout(pollProgressPercentaje, 250 /*0.25 second*/
+							/*);
+					*/
+			}
+		});
+
+		return true;
+	}
+</script>

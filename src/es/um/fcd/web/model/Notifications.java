@@ -9,10 +9,18 @@ public class Notifications {
 	public static final String ERROR_NO_DOCUMENT_SELECTED = "No document selected";
 	public static final String ERROR_UPLOAD = "Error during file upload process";
 	public static final String ERROR_NUMBER_OF_FILES_MISMATCH = "The number of files for Source 1 and Source 2 do not match";
+	public static final String ERROR_SOURCE_INCORRECT = "The source was not determined properly";
+	public static final String ERROR_RETRIEVING_SOURCE = "The source could not be retrieved from the database";
+	public static final String ERROR_CREATING_TEST = "Error during the creation of the test";
 	
-	public static final String getErrorFileUpload(List<String> documentosErroneosSistema) {
-		return "The following documents could not be uploaded into the system: " + Strings.getString(documentosErroneosSistema, ",", true);
+	public static final String getErrorFileUpload(List<String> filesWithUploadErrors) {
+		return "The following documents could not be uploaded to the system: " + Strings.getString(filesWithUploadErrors, ",", true);
 	}
+
+	public static String getExitoFicherosSubidos(int filesUploadedSuccessfully) {
+		return filesUploadedSuccessfully + " files were uploaded successfully";
+	}
+	
 	/*
 	 * Definir en un punto central como este todas las reglas es una primera
 	 * aproximación para internacionalizar las notificaciones

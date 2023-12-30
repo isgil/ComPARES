@@ -21,8 +21,8 @@ public class FacadePares extends Facade {
 		return instancia;
 	}
 	
-	public Par add(String fileName1, Source source1, String fileName2, Source source2) throws DAOException {
-		Par par = new Par(fileName1, source1, fileName2, source2);
+	public Par add(String fileName1, Source source1, String titleMark1, String fileName2, Source source2, String titleMark2) throws DAOException {
+		Par par = new Par(fileName1, source1, titleMark1, fileName2, source2, titleMark2);
 		return getDAOFactoria().getDAOPar().create(par);
 	}
 

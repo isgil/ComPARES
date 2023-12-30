@@ -3,21 +3,34 @@ package es.um.fcd.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
-@Entity(name="PROJECT")
+@Entity(name="TEST")
 public class Test implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String name;
-	private List<Par> pares;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	private String name;
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@JoinTable(
+	        name = "REL_TEST_PAR",
+	        joinColumns = @JoinColumn(name = "TEST_ID"),
+	        inverseJoinColumns = @JoinColumn(name = "PAR_ID")
+	)
+	private List<Par> pares;
 	
 	public Test() {
 		super();

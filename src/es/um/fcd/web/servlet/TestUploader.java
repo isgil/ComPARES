@@ -1,7 +1,6 @@
 package es.um.fcd.web.servlet;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,27 +15,36 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.IOUtils;
 
+import es.um.fcd.controller.FacadePares;
+import es.um.fcd.controller.FacadeSources;
+import es.um.fcd.controller.FacadeTests;
+import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Par;
 import es.um.fcd.model.Source;
-import es.um.fcd.model.Test;
 import es.um.fcd.util.AppLogger;
+import es.um.fcd.web.controller.ActionLibrary;
 import es.um.fcd.web.controller.ActionNew;
 import es.um.fcd.web.model.Notifications;
 import es.um.fcd.web.util.FileLoader;
 
-public class CargadorDocumentos extends CargadorFicheros {
+public class TestUploader extends FileUploader {
 	private static final long serialVersionUID = 1L;
-	private final String documentsDir = "documents";
+	private final String filesDir = "files";
 
 	@Override
-	protected String getDirectorio() {
-		return documentsDir;
+	protected String getDirectory() {
+		return filesDir;
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 	@SuppressWarnings("rawtypes")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("TEST UPLOADER RUNNING");
 		Notifications notifications = getSesionNotifications(request.getSession());
 
 		// Checks if there are files attached
@@ -48,7 +56,7 @@ public class CargadorDocumentos extends CargadorFicheros {
 			return;
 		}
 
-		String dir = getServletContext().getRealPath("") + File.separator + directorioPath;
+		String dir = getServletContext().getRealPath("") + File.separator + filesDir;
 		ServletFileUpload upload = FileLoader.getUpload(dir);
 
 		String fileName = null;
@@ -57,7 +65,8 @@ public class CargadorDocumentos extends CargadorFicheros {
 		List<String> fileListSource2 = new ArrayList<String>();
 		String fileNameUnique = null;
 		String extension = null;
-		String sourceStr1, sourceStr2;
+		String testName = null, sourceName1 = null, sourceName2 = null;
+		String titleMark1 = null, titleMark2 = null;
 		List<String> filesWithUploadErrors = new LinkedList<String>();
 
 		// Preparamos la lista de campos que hemos recibido
@@ -77,19 +86,31 @@ public class CargadorDocumentos extends CargadorFicheros {
 						extension = fileName.substring(fileName.lastIndexOf("."));
 						filePath = dir + File.separator + fileNameUnique + extension;
 						FileLoader.saveFile(item, filePath);
-						if (item.getFieldName().equalsIgnoreCase("filesSource1")) {
+						if (item.getFieldName().equalsIgnoreCase("files-source1")) {
 							fileListSource1.add(filePath);
 						} else {
 							fileListSource2.add(filePath);
 						}
 					}
-					// Source 1
-					else if (item.isFormField() && item.getFieldName().equalsIgnoreCase("source1")) {
-						sourceStr1 = item.getString();
+					// Test Name
+					else if (item.isFormField() && item.getFieldName().equalsIgnoreCase("test-name")) {
+						testName = item.getString();
+					}
+					// Test Name
+					else if (item.isFormField() && item.getFieldName().equalsIgnoreCase("title-mark1")) {
+						titleMark1 = item.getString();
+					}
+					// Test Name
+					else if (item.isFormField() && item.getFieldName().equalsIgnoreCase("title-mark2")) {
+						titleMark2 = item.getString();
 					}
 					// Source 1
+					else if (item.isFormField() && item.getFieldName().equalsIgnoreCase("source1")) {
+						sourceName1 = item.getString();
+					}
+					// Source 2
 					else if (item.isFormField() && item.getFieldName().equalsIgnoreCase("source2")) {
-						sourceStr2 = item.getString();
+						sourceName2 = item.getString();
 					}
 				} catch (Exception e) {
 					// Remove file if there was an error uploading
@@ -122,117 +143,79 @@ public class CargadorDocumentos extends CargadorFicheros {
 			
 			return;
 		}
-
-		List<Integer> filesWithDBErrors = new LinkedList<Integer>();
-		// Se preprocesan los documentos
-		int fileCounter = 0;
-		//request.getSession().setAttribute("numDocumentosParaSubir", listaFicheros.size());
 		
 		int numFiles = fileListSource1.size();
-		Test test = new Test();
 		List<Par> pares = new LinkedList<Par>();
-		Source source1 = new Source(sourceStr1);
-		Source source2 = new Source(sourceStr2);
+		FacadeSources fcSource = FacadeSources.getInstancia();
+		if (sourceName1 == null || sourceName2 == null) {
+			notifications.pushError(Notifications.ERROR_SOURCE_INCORRECT);
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			rd.forward(request, response);
+			return;
+		}
+		Source source1, source2;
+		try {
+			source1 = fcSource.get(sourceName1);
+			if (source1 == null) source1 = fcSource.add(sourceName1);
+			source2 = fcSource.get(sourceName2);
+			if (source2 == null) source2 = fcSource.add(sourceName2);
+		} catch (DAOException e1) {
+			e1.printStackTrace();
+			notifications.pushError(Notifications.ERROR_RETRIEVING_SOURCE);
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			rd.forward(request, response);
+			return;
+		}
 		for (int i=0; i<numFiles; i++) {
-			Par par = new Par();
+			String fileName1 = fileListSource1.get(i);
+			String fileName2 = fileListSource2.get(i);
 			try {
+				Par par = FacadePares.getInstancia().add(fileName1, source1, titleMark1, fileName2, source2, titleMark2);
+				pares.add(par);
 				request.getSession().setAttribute("progressAction", "Uploading");
 				request.getSession().setAttribute("progressValue", i + "/" + numFiles);
-				test = FachadaDocumentos.getInstancia().addDocumento(path, publico);
-				}
-				String idiomaIdentificado = determinarIdioma(doc, getServletConfig().getServletContext().getRealPath(""));
-				if (idiomaIdentificado == null || idiomaIdentificado.isEmpty()) {
-					notifications.pushError(Notifications.ADVERTENCIA_SIN_IDIOMA);
-				}
-				Idioma idioma = null;
-				FachadaIdiomas fi = FachadaIdiomas.getInstancia();
-				try{
-					Idioma idiomaDB = fi.getIdioma(idiomaIdentificado);
-					if (idiomaDB == null) {
-						idioma = fi.addIdioma(idiomaIdentificado);
-					} else {
-						idioma = idiomaDB;
-					}
-				} catch (DAOException e) {
-					AppLogger.logException(e);
-					notifications.pushError(Notifications.ERROR_CARGAR_DOCUMENTO);
-				}
-				doc.setIdioma(idioma);
-				FachadaDocumentos.getInstancia().update(doc);
-				System.out.println("Idioma asignado al documento");
 			} catch (Exception e) {
 				// Si se produce algún error, se elimina el fichero subido
 				// si ya se ha almacenado en el sistema
 				AppLogger.logException(e);
-				File file = new File(filePath);
-				if (file.exists())
+				File file = new File(fileName1);
+				if (file.exists()) {
 					file.delete();
-				if (doc != null) {
-					try {
-						filesWithDBErrors.add(doc.getId());
-						FachadaDocumentos.getInstancia().deleteDatosProcesados(doc.getId());
-					} catch (Exception e1) {
-						AppLogger.logException(e1);
-						notifications.pushError(Notifications.getErrorEliminarDatosProcesados(doc.getId().toString()));
+					file = new File(fileName2);
+					if (file.exists()) {
+						file.delete();
 					}
 				}
 			}
 		}
+		
+		FacadeTests fcTests = FacadeTests.getInstancia();
+		try {
+			fcTests.add(testName, pares);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			notifications.pushError(Notifications.ERROR_CREATING_TEST);
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			rd.forward(request, response);
+			return;
+		}
+		
 		request.getSession().removeAttribute("progressAction");
 		request.getSession().removeAttribute("progressValue");
-		
-		//request.getSession().removeAttribute("documentoActual");
-		//request.getSession().removeAttribute("numDocumentosParaSubir");
-		
-		if (filesWithUploadErrors.size() > 0) {
-			notifications.pushError(Notifications.getErrorDocumentosBBDD(filesWithDBErrors));
-		}
 
 		// Reenviar a la vista
-		if (fileList.size() > 0) {
-			notifications.pushSuccess(Notifications.getExitoFicherosSubidos(fileList.size()));
-			RequestDispatcher rd = request.getRequestDispatcher(new AccionDocumentos().ejecutar(request, response, getServletConfig().getServletContext()));
+		if (numFiles > 0) {
+			notifications.pushSuccess(Notifications.getExitoFicherosSubidos(numFiles - filesWithUploadErrors.size()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionLibrary().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
+			return;
 		} else {
 			if (filesWithUploadErrors.size() == 0){
 				notifications.pushError(Notifications.ERROR_NO_DOCUMENT_SELECTED);
 			}
-			RequestDispatcher rd = request.getRequestDispatcher(new AccionDocumentoNuevo().ejecutar(request, response, getServletConfig().getServletContext()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
+			return;
 		}
-	}
-	
-	private String determinarIdioma(Documento documento, String applicationPath) throws IOException {
-		FileInputStream inputStream = new FileInputStream(documento.getUri());
-		String texto = "";
-		try {
-		    texto = IOUtils.toString(inputStream);
-		    texto = EstrategiaTexto.limpiarTexto(texto);
-		    /*int endIndex = texto.length();
-		    if (endIndex - 1000 > 1000) endIndex = endIndex - 1000;
-		    texto = texto.substring(0, endIndex);*/
-		} finally {
-		    inputStream.close();
-		}
-		
-		System.out.println("Texto = " + texto);
-		
-		return determinarIdioma(texto, applicationPath);
-	}
-
-	private String determinarIdioma(String texto, String applicationPath) {
-		System.out.println("Detectar idioma");
-		String idiomaIdentificado = null;
-		if (!texto.isEmpty()) {
-			// Se captura el idioma
-			try {
-				idiomaIdentificado = DetectorIdioma.getInstancia(applicationPath).detectarIdioma(texto);
-				System.out.println("Idioma identificado = " + idiomaIdentificado);
-			} catch (LangDetectException | DAOException e) {
-				AppLogger.logException(e);
-			}
-		}
-		
-		return idiomaIdentificado;
 	}
 }

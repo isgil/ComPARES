@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xmlns="http://java.sun.com/xml/ns/javaee" 
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
-id="ComPARES" 
-version="2.5">
-  <display-name>COMPARES</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  <filter>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="ComPARES" version="2.5">
+	<display-name>COMPARES</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<filter>
 		<filter-name>CharsetFilter</filter-name>
 		<filter-class>es.um.fcd.web.controller.CharsetFilter</filter-class>
 		<init-param>
@@ -22,7 +20,33 @@ version="2.5">
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
-  <jsp-config>
+	<servlet>
+		<description></description>
+		<display-name>Test Uploader</display-name>
+		<servlet-name>TestUploader</servlet-name>
+		<servlet-class>es.um.fcd.web.servlet.TestUploader</servlet-class>
+		<init-param>
+			<description>Uploads test data and files attached</description>
+			<param-name>filesDir</param-name>
+			<param-value>WEB-INF/files</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestUploader</servlet-name>
+		<url-pattern>/create-test</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>Create Source</display-name>
+		<servlet-name>CreateSource</servlet-name>
+		<servlet-class>es.um.fcd.web.servlet.CreateSource</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateSource</servlet-name>
+		<url-pattern>/CreateSource</url-pattern>
+		<url-pattern>/create-source</url-pattern>
+	</servlet-mapping>
+	<jsp-config>
 		<taglib>
 			<taglib-uri>/utiltld</taglib-uri>
 			<taglib-location>/WEB-INF/tld/utiltld.tld</taglib-location>
@@ -46,9 +70,7 @@ version="2.5">
 			<scripting-invalid>false</scripting-invalid>
 			<include-prelude>/WEB-INF/views/html/include.jsp</include-prelude>
 			<include-prelude>/WEB-INF/views/html/prelude.jsp</include-prelude>
-			<!-- 
-			<include-coda>/WEB-INF/views/html/coda.jsp</include-coda>
-			 -->
+			<!-- <include-coda>/WEB-INF/views/html/coda.jsp</include-coda> -->
 		</jsp-property-group>
 	</jsp-config>
 	<servlet>

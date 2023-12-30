@@ -45,7 +45,7 @@ public class JPADAOSource implements DAOSource {
 		
 		String queryString = "SELECT t FROM SOURCE t " + "WHERE t.source = :source";
 		Query query = em.createQuery(queryString);
-		query.setParameter("tematica", source);
+		query.setParameter("source", source);
 		List<Source> result = (List<Source>) query.getResultList();
 		em.close();
 
@@ -68,7 +68,7 @@ public class JPADAOSource implements DAOSource {
 	public Collection<Source> findAll() throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		
-		String queryString = "SELECT t FROM TEMATICA t";
+		String queryString = "SELECT t FROM SOURCE t";
 		Query query = em.createQuery(queryString);
 		List<Source> sources = (List<Source>) query.getResultList();
 		em.close();

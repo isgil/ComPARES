@@ -28,7 +28,7 @@ public class Main {
 			Source source2 = new Source("UMU");
 			
 			// Par
-			Par par = new Par("export Source 1.txt", source1, "export Source 2.txt", source2);
+			Par par = new Par("export Source 1.txt", source1, "title", "export Source 2.txt", source2, "ti");
 			
 			// Test
 			List<Par> pares = new LinkedList<Par>();

@@ -7,15 +7,15 @@ import java.util.List;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Source;
 
-public class FacadeSource extends Facade {
-	private static FacadeSource instancia = null;
+public class FacadeSources extends Facade {
+	private static FacadeSources instancia = null;
 
-	private FacadeSource() {
+	private FacadeSources() {
 	}
 
-	public static FacadeSource getInstancia() {
+	public static FacadeSources getInstancia() {
 		if (instancia == null)
-			instancia = new FacadeSource();
+			instancia = new FacadeSources();
 		return instancia;
 	}
 	
@@ -30,6 +30,12 @@ public class FacadeSource extends Facade {
 	
 	public Source get(int id) throws DAOException {
 		return getDAOFactoria().getDAOSource().find(id);
+	}
+	
+	public boolean exists(String sourceName) throws DAOException {
+		Source source = get(sourceName);
+		
+		return (source != null);
 	}
 
 	public Collection<Source> getAll() throws DAOException {
