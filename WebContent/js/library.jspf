@@ -1,0 +1,28 @@
+<script type="text/javascript">
+$( document ).ready(function() {
+   $(".title-section").text($("nav #library span").text()).fadeIn(1000);
+   $("input.custom-checkbox").click(clickCheckbox);
+});	
+
+function clickCheckbox() {
+	var testIds = [];
+	$("input.custom-checkbox:checked").each(function(){
+		console.log('val = ' + $(this).val());
+		testIds.push($(this).val());
+	});
+	if (testIds.length > 0) {
+		var parameters = $.param({ 'id': testIds }, true);
+		executeAjax('GET', 'results.ctrl', parameters, 'HTML', success, error);
+	}
+};
+
+function success(data) {
+	console.log('success!');
+	$(".results").html(data);
+}
+
+function error() {
+	console.log('error!');
+	$(".results").html();
+}
+</script>

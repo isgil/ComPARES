@@ -181,4 +181,15 @@
 
 	}
 	
+	function executeAjax(method, url, data, dataType, successFunction, errorFunction){
+		$.ajax({
+			type : method,
+			url : url, // Your Servlet mapping or JSP
+			data : data,
+			dataType : dataType, // Returns HTML as plain text; included script tags are evaluated when inserted in the DOM.
+		})
+		.done(function (data) { successFunction(data); })
+		.fail(function (jqXHR, textStatus, errorThrown) { errorFunction(); });
+	}
+	
 </script>

@@ -14,14 +14,14 @@ public class Source implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String source;
+	private String name;
 
 	public Source() {
 		super();
 	}
 
 	public Source(String source) {
-		this.source = source;
+		this.name = source;
 	}
 
 	public Integer getId() {
@@ -32,12 +32,12 @@ public class Source implements Serializable {
 		this.id = id;
 	}
 
-	public String getSource() {
-		return source;
+	public String getName() {
+		return name;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
+	public void setName(String source) {
+		this.name = source;
 	}
 
 	@Override

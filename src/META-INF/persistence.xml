@@ -4,6 +4,7 @@
 		<class>es.um.fcd.model.Par</class>
 		<class>es.um.fcd.model.Source</class>
 		<class>es.um.fcd.model.Test</class>
+		<class>es.um.fcd.model.Settings</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<!--  Activar esta property para poder lanzar el Main y crear los primeros objetos en el servidor  -->

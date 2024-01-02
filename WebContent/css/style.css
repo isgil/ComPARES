@@ -42,6 +42,7 @@ nav ul a {
 
 /* ***************** */
 
+/* General */
 body {
 	/*height: 100vh;*/
 }
@@ -58,82 +59,87 @@ div.container {
 	filter: blur(8px);
 }
 
-div.title {
-	margin: 30px 0 30px 0;
-	width: 100%;
-	font-size: 2.2em;
-	justify-content: center;
-}
-
-div.title i.material-icons {
-	font-size: 0.6em;
-	margin-right: 10px;
-}
-
-.collection .collection-item.avatar:not(.circle-clipper)>.circle, .collection .collection-item.avatar :not(.circle-clipper)>.circle {
-	margin-top: 5px;
-	margin-left: 5px;
-	height: 35px;
-	width: 35px; 
-}
-
-.collection .collection-item.avatar i.circle {
-	line-height: 35px;
-}
-
-.collection .collection-item.avatar {
-	padding-left: 60px;
-}
-
-.collection .collection-item {
+.item {
 	padding-bottom: 0;
-	border-bottom: 1px solid #b3b3b3 !important;
+	border-bottom: 1px solid #b3b3b3;
+	/*border: 1px solid #b3b3b3;*/
+	border-radius: 10px;
+	padding: 20px 20px !important;
+    /*width: 50%;*/
 }
+
+.item + .item {
+	/*margin-left: 20px !important;*/
+}
+
+div.content {
+	margin-top: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+}
+
+div.content a {
+	font-size: 1.2em;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+div.content .chip {
+	font-size: 1em;
+	margin-bottom: 0;
+}
+
+div.sources {
+	float: right;
+}
+
+div.results-wrapper {
+	padding-left: 20px !important;
+}
+
+/*******************/
 
 .collection .results {
 	margin-top: 20px;
-}
-
-ul.collection.library i.material-icons {
-	font-size: 1.2em !important;
-}
-
-ul.collection.library {
-	border: none;
-}
-
-div.collection.library {
-	padding: 10px 20px;
-    width: 50%;
 }
 
 div.container.config div.collection.library {
     width: 50%;
 }
 
+/*
 div.container div.collection.library {
     width: 80%;
     border: none;
     border-bottom: 1px solid #b3b3b3;
-}  
+} 
+ 
 
 div.collection.library {
 	padding: 10px 10px;
     width: 50%;
 }
 
+
 .collection {
 	overflow: visible;
 }
 
+
 div.collection.library, ul.collection.library li {
 	border-radius: 25px;
 	/*border: 1px solid #e0e0e0 !important;*/
+
+/*
 }
 
 ul.collection.library li + li {
 	margin-top: 20px !important;
 }
+*/
 
 div.search {
 	margin-bottom: 10px;
@@ -290,3 +296,47 @@ div.container .modal {
     max-height: 100%;
     z-index: 100;
 }
+
+/******** Checkbox ********/
+input.custom-checkbox {
+	position: absolute;
+	z-index: -1000;
+	left: -1000px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+}
+
+input.custom-checkbox+label.custom-checkbox {
+	float: left;
+	padding-left: 35px;
+	margin-top: 2px;
+	height: 25px;
+	display: inline-block;
+	line-height: 25px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+input.custom-checkbox:checked+label.custom-checkbox {
+	background-position: 0 -25px;
+}
+
+label.custom-checkbox {
+	background-size: 25px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: url(../img/checkbox.png);
+}
+
+/*********************************/

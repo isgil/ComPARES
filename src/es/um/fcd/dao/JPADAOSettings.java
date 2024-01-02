@@ -8,74 +8,74 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import es.um.fcd.model.Test;
+import es.um.fcd.model.Settings;
 import es.um.fcd.util.AppLogger;
 
-public class JPADAOTest implements DAOTest {
+public class JPADAOSettings implements DAOSettings {
 
 	private EntityManagerFactory emf;
 
-	public JPADAOTest(EntityManagerFactory emf) {
+	public JPADAOSettings(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	@Override
-	public Test create(Test test) throws DAOException {
+	public Settings create(Settings settings) throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
 		tx.begin();
 		try {
-			em.persist(test);
+			em.persist(settings);
 			tx.commit();
 		} catch (Exception e) {
 			AppLogger.logException(e);
 			tx.rollback();
-			test = null;
+			settings = null;
 		}
 		em.close();
 
-		return test;
+		return settings;
 	}
 
 	@Override
-	public Test find(int id) throws DAOException {
+	public Settings find(int id) throws DAOException {
 		EntityManager em = emf.createEntityManager();
-		Test test = em.find(Test.class, id);
+		Settings settings = em.find(Settings.class, id);
 		em.close();
 		
-		return test;
+		return settings;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Test> findAll() throws DAOException {
+	public Collection<Settings> findAll() throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		
-		String queryString = "SELECT t FROM TEST t";
+		String queryString = "SELECT s FROM SETTINGS s";
 		Query query = em.createQuery(queryString);
-		List<Test> test = (List<Test>) query.getResultList();
+		List<Settings> settings = (List<Settings>) query.getResultList();
 		em.close();
 
-		return test;
+		return settings;
 	}
 	
 	@Override
-	public void delete(Test test) throws DAOException {
-		Test c = find(test.getId());
+	public void delete(Settings settings) throws DAOException {
+		Settings s = find(settings.getId());
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
 		tx.begin();
 		try {
-			c = em.merge(c);
-			em.remove(c);
+			s = em.merge(s);
+			em.remove(s);
 			tx.commit();
 			em.close();
 		} catch (Exception e) {
 			tx.rollback();
 			em.close();
-			throw new DAOException("Error removing test");
+			throw new DAOException("Error removing settings");
 		}
 	};
 }

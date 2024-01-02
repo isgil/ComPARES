@@ -26,6 +26,11 @@ public class JPADAOFactoria extends DAOFactory {
 	}
 	
 	@Override
+	public DAOSettings getDAOSettings() {
+		return new JPADAOSettings(this.emf);
+	}
+	
+	@Override
 	public DAOUser getDAOUser() {
 		return new JPADAOUser(this.emf);
 	}

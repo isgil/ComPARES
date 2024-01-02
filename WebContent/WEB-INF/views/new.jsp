@@ -3,10 +3,10 @@
 <!-- CONTENT -->
 
 <body>
-	<div class="container new">
+	<div id="new" class="content">
 		<!-- CONTENT -->
-		<div id="new-test" class="collection library grey lighten-4 row">
-			<form class="col s12" action="create-test" enctype="multipart/form-data">
+		<div id="new-test" class="row s12 m12 l12 center">
+			<form class="item col s12 m12 l6 offset-l3 grey lighten-4" action="create-test" enctype="multipart/form-data">
 				<div class="input-field col s12">
 					<input style="width: 100%" id="test-name" type="text" class="validate">
           			<label for="test-name">Test name</label>
@@ -27,9 +27,10 @@
 							<select id="source1">
 								<option value="0" disabled selected>Source</option>
 								<option value="1">New Source...</option>
-								<option value="2">UMU</option>
-								<option value="3">Redalyc</option>
-								<option value="4">Source 3</option>
+								<c:set var="i" value="2" />
+								<c:forEach items="${sources}" var="source">
+									<option value="${i}">${source.name}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="input-field col s12">
@@ -54,9 +55,10 @@
 							<select id="source2">
 								<option value="0" disabled selected>Source</option>
 								<option value="1">New Source...</option>
-								<option value="2">UMU</option>
-								<option value="3">Redalyc</option>
-								<option value="4">Source 3</option>
+								<c:set var="i" value="2" />
+								<c:forEach items="${sources}" var="source">
+									<option value="${i}">${source.name}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="input-field col s12">

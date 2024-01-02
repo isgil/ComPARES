@@ -78,7 +78,7 @@ public class JPADAOSource implements DAOSource {
 
 	@Override
 	public void delete(Source source) throws DAOException {
-		Source s = find(source.getSource());
+		Source s = find(source.getName());
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
