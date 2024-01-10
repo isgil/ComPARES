@@ -7,11 +7,11 @@ import es.um.fcd.model.Test;
 
 public class TestResults {
 	private Test test;
-	private Map<Par, Map<String, Integer>> results;
+	private Map<Par, Map<String, Integer>> testResults;
 	
 	public TestResults(Test test, Map<Par, Map<String, Integer>> results) {
 		this.test = test;
-		this.results = results;
+		this.testResults = results;
 	}
 	
 	public Test getTest() {
@@ -22,11 +22,11 @@ public class TestResults {
 		this.test = test;
 	}
 	
-	public Map<Par, Map<String, Integer>> getResults() {
-		return results;
+	public Map<Par, Map<String, Integer>> getTestResults() {
+		return testResults;
 	}
 	
-	public void setResults(Map<Par, Map<String, Integer>> results) {
-		this.results = results;
+	public void setTestResults(Map<Par, Map<String, Integer>> results) {
+		this.testResults = results;
 	}
 }

@@ -1,13 +1,9 @@
 <script type="text/javascript">
-	function getNumElementosSeleccionados() {
+	function getNumElementsSelected() {
 		return $('input:checked').length;
 	}
 
-	function getEbId(id) {
-		return document.getElementById(id);
-	}
-
-	function marcarTodoNada(boton, idElementoContenedor) {
+	function selectAllNothing(boton, idElementoContenedor) {
 		var valor = (boton.getAttribute("value") === "todo") ? true : false;
 		$('#' + idElementoContenedor).find("input").each(function() {
 			$(this).prop('checked', valor);
@@ -15,51 +11,35 @@
 		});
 	}
 
-	function stopEnterKey(e) {
-		var key;
-		if (window.event)
-			key = window.event.keyCode; //IE
-		else
-			key = e.which;
-		return (key != 13);
-	}
-
-	function crearAjax() {
-		if (window.XMLHttpRequest)
-			return new XMLHttpRequest();
-		else
-			return new ActiveXObject("Microsoft.XMLHTTP");
-	}
-
-	function scrollToTop() {
+	function scrollTop() {
 		$('html,body').animate({
 			scrollTop : 0
 		}, 0);
 	}
 
-	function scrollToTopSuavizado() {
+	function scrollTopSmooth() {
 		$('html,body').animate({
 			scrollTop : 0
 		}, 500);
 	}
 
-	function scrollToBottom() {
+	function scrollBottom() {
 		$('html,body').animate({
 			scrollTop : $(document).height()
 		}, 0);
 	}
 
-	function scrollToBottomSuavizado() {
+	function scrollBottomSmooth() {
 		$('html,body').animate({
 			scrollTop : $(document).height()
 		}, 500);
 	}
 
-	function mostrarGoToBottom() {
+	function showScrollBottomIcon() {
 		$('.go2bottom').css('display', 'block');
 	}
 
-	function mostrarBackToTop() {
+	function showScrollTopIcon() {
 		$('.back2top').css('display', 'block');
 	}
 	
@@ -178,7 +158,6 @@
 		});
 
 		return true;
-
 	}
 	
 	function executeAjax(method, url, data, dataType, successFunction, errorFunction){

@@ -74,8 +74,8 @@ div.container {
 
 div.content {
 	margin-top: 60px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
     width: 100%;
     height: 100%;
     font-size: 1rem;
@@ -87,9 +87,13 @@ div.content a {
 	margin-right: 15px;
 }
 
+.chip {
+	cursor: pointer;
+}
+
 div.content .chip {
 	font-size: 1em;
-	margin-bottom: 0;
+	/*margin-bottom: 0;*/
 }
 
 div.sources {
@@ -97,10 +101,124 @@ div.sources {
 }
 
 div.results-wrapper {
-	padding-left: 20px !important;
+	padding-left: 40px !important;
+}
+
+table.highlight>tbody>tr:hover {
+    background-color: rgb(215 215 215 / 50%);
+}
+
+table tbody tr td:first-child {
+	/*text-align:left;*/
+	white-space: nowrap;
+}
+
+/*
+table thead tr th:first-child, table tbody tr td:first-child {
+	width: 30%;
+	max-width: 30%;
+}
+*/
+
+table td, table th {
+	background-color: white;
+}
+
+/****** Vertical Table *******/
+/*
+table.vertical-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: block;
+    position: relative;
+}
+
+table.vertical-table thead {
+    border: 0;
+    display: block;
+    float: left;
+}
+
+table.vertical-table thead tr {
+	display: block;
+}
+
+table.vertical-table th {
+    display: block;
+    text-align: left;
+}
+
+table.vertical-table th, table.vertical-table td {
+    margin: 0;
+    vertical-align: top;
+    padding: 5px 10px;
+}
+
+table.vertical-table tbody {
+    display: block;
+    width: auto;
+    position: relative;
+}
+
+table.vertical-table tbody tr {
+    display: inline-block;
+    vertical-align: top;
+}
+
+table.vertical-table td {
+    display: block;
+    min-height: 1.25em;
+    text-align: left;
+}
+
+table.vertical-table tr:not(:first-child) {
+    margin-left: -4px;
+}
+*/
+
+table th, table td {
+	border: 1px solid #cfcfcfaa;
+	vertical-align: middle;
+}
+/*
+div.table-wrapper {
+	width: 100%;
+	overflow-x: auto;
+}
+*/
+div.test-result {
+	margin: 10px 20px;
+	margin-top: 0;
+}
+
+div.test-result + div.test-result {
+	margin-top: 40px;
 }
 
 /*******************/
+
+/*** DataTables override **/
+
+table.dataTable {
+	width: 100% !important;
+}
+
+.dataTables_wrapper .dataTables_paginate, .dataTables_wrapper .dataTables_length {
+	display: none;
+}
+
+.dataTables_wrapper .dataTables_filter {
+	float: left;
+	text-align: left;
+}
+
+/** materialize table override **/
+input[type=search]:not(.browser-default) {
+	height: auto;
+	font-size: 1em;
+}
+
 
 .collection .results {
 	margin-top: 20px;
@@ -170,7 +288,16 @@ h2.title-section {
 }
 
 .dropdown-content li>a, .dropdown-content li>span {
-	color: #1074cb;
+	color: black;
+}
+
+.dropdown-content li:nth-child(2) {
+    /*background-color: #ffe0b2;*/
+    font-style: italic;
+}
+
+.dropdown-content li:nth-child(2):hover {
+    /*background-color: #edc58a;*/
 }
 
 div.container.new button {
@@ -285,7 +412,7 @@ input.file-selected {
 	display: none;
 }
 
-div.container .modal {
+div.content .modal {
 	top: 0;
     padding-top: 15%;
     padding-left: 30%;

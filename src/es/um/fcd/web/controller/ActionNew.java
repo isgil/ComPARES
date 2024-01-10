@@ -54,7 +54,7 @@ public class ActionNew extends Action {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return "/WEB-INF/views/new.jsp";
+			return "/WEB-INF/views/new-test.jsp";
 		}
 	}
 

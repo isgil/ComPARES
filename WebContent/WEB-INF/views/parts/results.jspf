@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.LinkedList" %>
+<%@ page import="java.util.LinkedHashMap" %>
+
+<!-- For each Test -->
+<c:forEach begin="1" end="${fn:length(results)}" var="i">
+<div class="test-result">
+	<c:set var="result" value="${results[i-1]}"/>
+	<c:set var="maxNumberOfTops" value="0"/>
+	<c:set var="maxTopResults"/>
+	<!-- For each Par -->
+	<c:forEach var="parResults" items="${result.testResults}">
+		<!-- Get number of Tops generated -->
+		<c:set var="topResultsLength" value="${fn:length(parResults.value)}" />
+		<!-- If number of tops for this Par is bigger, updates Max values -->
+		<c:if test="${maxNumberOfTops < topResultsLength}">
+			<c:set var="maxNumberOfTops" value="${fn:length(parResults.value)}"/>
+			<c:set var="maxTopResults" value="${parResults.value}"/>
+		</c:if>
+	</c:forEach>
+	
+	<%--
+	<p>Max Number of Tops = ${maxNumberOfTops}</p>
+	<p>Max Top Results = ${maxTopResults}</p>
+	 --%>	
+	 
+	<!-- Test Name --> 
+	<h6><b>Test ${result.test.id} - ${result.test.name}</b></h6>
+	
+		<c:choose>
+			<c:when test = "${maxNumberOfTops > 15}">
+	            <tag:ResultsTable id="${i}" result="${result}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" vertical="false" />
+         	</c:when>         
+         	<c:otherwise>
+	            <tag:ResultsTable id="${i}" result="${result}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" vertical="false" />
+         	</c:otherwise>
+		</c:choose>
+	
+	<c:set var="i" value="${i+1}"/>
+</div>
+</c:forEach>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('table').each(function() {
+    	$(this).DataTable({
+            scrollX: true, // Enable horizontal scrolling
+            fixedColumns: {
+                leftColumns: 1, // Number of columns to fix on the left
+            }
+    	});
+    });
+});
+</script>

@@ -12,7 +12,16 @@ function clickCheckbox() {
 	});
 	if (testIds.length > 0) {
 		var parameters = $.param({ 'id': testIds }, true);
-		executeAjax('GET', 'results.ctrl', parameters, 'HTML', success, error);
+		executeAjax('POST', 'results.ctrl', parameters, 'HTML', success, error);
+		//$('#test-list').removeClass('l6').addClass('l3');
+		//$('#results-wrapper').removeClass('l6').addClass('l9');
+		$('#results').removeClass('center');
+	} else {
+		//$('#test-list').removeClass('l3').addClass('l6');
+		//$('#results-wrapper').removeClass('l9').addClass('l6');
+		$('#results').addClass('center');
+		var data = '<b><span>No results to display</span></b>'
+		$(".results").html(data);
 	}
 };
 
