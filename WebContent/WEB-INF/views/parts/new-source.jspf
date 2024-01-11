@@ -3,6 +3,8 @@
 
 <div class="modal">
 	<div class="item grey lighten-4 row">
+		<!-- <a target="_blank" href="https://icons8.com/icon/63688/cancel">Close</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>-->
+		<div class="top-icons"><img class="close" /></div>
 		<form id="form-new-source" class="vertical-separator-right col s6" action="create-source">
 			<h6>
 				<b>New source</b>
@@ -11,14 +13,13 @@
 				<input style="width: 100%" id="input-source" type="text"
 					class="validate"> <label for="input-source">Source</label>
 				<button id="add" class="btn btn-small blue darken-1 waves-effect waves-light" type="submit" name="action">Add</button>
-				<button id="close" class="btn btn-small blue darken-1 waves-effect waves-light" type="button" name="action">Close</button>
 			</div>
 		</form>
 		<div class="sources vertical-separator-left col s6">
 			<h6>
 				<b>List of sources</b>
 			</h6>
-			<ul>
+			<ul id="list-sources">
 				<c:forEach items="${sources}" var="source">
 					<li>${source.name}</li>
 				</c:forEach>

@@ -70,7 +70,7 @@
 			<scripting-invalid>false</scripting-invalid>
 			<include-prelude>/WEB-INF/views/html/include.jsp</include-prelude>
 			<include-prelude>/WEB-INF/views/html/prelude.jsp</include-prelude>
-			<!-- <include-coda>/WEB-INF/views/html/coda.jsp</include-coda> -->
+			<include-coda>/WEB-INF/views/html/coda.jsp</include-coda>
 		</jsp-property-group>
 	</jsp-config>
 	<servlet>

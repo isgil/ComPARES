@@ -24,7 +24,7 @@ import es.um.fcd.model.Par;
 import es.um.fcd.model.Source;
 import es.um.fcd.util.AppLogger;
 import es.um.fcd.web.controller.ActionLibrary;
-import es.um.fcd.web.controller.ActionNew;
+import es.um.fcd.web.controller.ActionNewTest;
 import es.um.fcd.web.model.Notifications;
 import es.um.fcd.web.util.FileLoader;
 
@@ -50,7 +50,7 @@ public class TestUploader extends FileUploader {
 		// Checks if there are files attached
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			notifications.pushError(Notifications.ERROR_NO_DOCUMENT_SELECTED);
-			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNewTest().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
 
 			return;
@@ -130,7 +130,7 @@ public class TestUploader extends FileUploader {
 		} catch (Exception e) {
 			AppLogger.logException(e);
 			notifications.pushError(Notifications.ERROR_UPLOAD);
-			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNewTest().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
 			
 			return;
@@ -138,7 +138,7 @@ public class TestUploader extends FileUploader {
 		// If number of files for Source 1 is not the same than for Source 2, throw error.
 		if (fileListSource1.size() != fileListSource2.size()) {
 			notifications.pushError(Notifications.ERROR_NUMBER_OF_FILES_MISMATCH);
-			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNewTest().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
 			
 			return;
@@ -149,7 +149,7 @@ public class TestUploader extends FileUploader {
 		FacadeSources fcSource = FacadeSources.getInstancia();
 		if (sourceName1 == null || sourceName2 == null) {
 			notifications.pushError(Notifications.ERROR_SOURCE_INCORRECT);
-			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNewTest().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
 			return;
 		}
@@ -162,7 +162,7 @@ public class TestUploader extends FileUploader {
 		} catch (DAOException e1) {
 			e1.printStackTrace();
 			notifications.pushError(Notifications.ERROR_RETRIEVING_SOURCE);
-			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNewTest().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
 			return;
 		}
@@ -195,7 +195,7 @@ public class TestUploader extends FileUploader {
 		} catch (DAOException e) {
 			e.printStackTrace();
 			notifications.pushError(Notifications.ERROR_CREATING_TEST);
-			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNewTest().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
 			return;
 		}
@@ -213,7 +213,7 @@ public class TestUploader extends FileUploader {
 			if (filesWithUploadErrors.size() == 0){
 				notifications.pushError(Notifications.ERROR_NO_DOCUMENT_SELECTED);
 			}
-			RequestDispatcher rd = request.getRequestDispatcher(new ActionNew().execute(request, response, getServletConfig().getServletContext()));
+			RequestDispatcher rd = request.getRequestDispatcher(new ActionNewTest().execute(request, response, getServletConfig().getServletContext()));
 			rd.forward(request, response);
 			return;
 		}

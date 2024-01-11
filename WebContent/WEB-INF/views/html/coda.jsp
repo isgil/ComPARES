@@ -1,4 +1,4 @@
 			<%-- Fin Contenido --%>
-	<%@  include file="pie.jsp"%>
 </body>
+<%@  include file="footer.jsp"%>
 </html>

@@ -45,8 +45,7 @@
 	
 	function showProgress() {
 		/*$('.progress').css('visibility', 'visible');*/
-		$(".progress").css('visibility', 'visible', function() {           
-           });
+		$(".progress").css('visibility', 'visible');
 	}
 	
 	function hideProgress() {
@@ -54,9 +53,41 @@
 	}
 	
 	function toggleProgress(){
-		showProgress();
-		setTimeout(hideProgress, 3000);
+		if ($(".progress").css('visibility') == 'visible') {
+			hideProgress();
+		} else {
+			showProgress();
+		}
 	};
+	
+	function showSuccessMessage(message) {
+		showMessage(message, 's');
+	}
+	
+	function showErrorMessage(message) {
+		showMessage(message, 'e');
+	}
+	
+	function showInfoMessage(message) {
+		showMessage(message, 'i');
+	}
+	
+	function showMessage(message, type) {
+		console.log('showMessage');
+		var msgElem;
+		if (type == 's') {
+			msgElem = $('.bubble-success .msg'); 
+		} else if (type == 'e') {
+			msgElem = $('.bubble-error .msg');
+		} else {
+			msgElem = $('.bubble-info .msg');
+		}
+		$(msgElem).find('span').text(message);		
+		$(msgElem).fadeIn(400).css("display", "inline-flex");
+	    setTimeout(function() {
+	        $(msgElem).fadeOut(400);
+	    }, 5000);
+	}
 
 	//Subir documento / Configuración sistema
 	function actualizarInput(input) {
@@ -160,15 +191,16 @@
 		return true;
 	}
 	
-	function executeAjax(method, url, data, dataType, successFunction, errorFunction){
+	function executeAjax(method, url, settings, dataType, successFunction, errorFunction, alwaysFunction){
 		$.ajax({
 			type : method,
 			url : url, // Your Servlet mapping or JSP
-			data : data,
+			data : settings,
 			dataType : dataType, // Returns HTML as plain text; included script tags are evaluated when inserted in the DOM.
 		})
-		.done(function (data) { successFunction(data); })
-		.fail(function (jqXHR, textStatus, errorThrown) { errorFunction(); });
+		.done(function (data) { successFunction(data) })
+		.fail(function (jqXHR, textStatus, errorThrown) { errorFunction(jqXHR, textStatus, errorThrown) })
+		.always(function () { alwaysFunction() });
 	}
 	
 </script>

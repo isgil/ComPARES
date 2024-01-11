@@ -43,9 +43,9 @@ public class JPADAOSource implements DAOSource {
 	public Source find(String source) throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		
-		String queryString = "SELECT t FROM SOURCE t " + "WHERE t.source = :source";
+		String queryString = "SELECT t FROM SOURCE t " + "WHERE t.name = :name";
 		Query query = em.createQuery(queryString);
-		query.setParameter("source", source);
+		query.setParameter("name", source);
 		List<Source> result = (List<Source>) query.getResultList();
 		em.close();
 

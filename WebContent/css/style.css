@@ -300,9 +300,59 @@ h2.title-section {
     /*background-color: #edc58a;*/
 }
 
-div.container.new button {
-	margin-top: 30px;
-	margin-bottom: 20px;
+div.top-icons {
+	width: 100%;
+    margin-bottom: -3em;
+    text-align: right;
+}
+
+img.close {
+	content:url('../img/close.svg');
+	width: 2.3em;
+	height: 2.3em;
+	/*float: right;*/
+}
+
+img.close:hover {
+	transform: scale(1.02);
+	cursor: pointer;
+}
+
+div.bubble {
+	width: 100%;
+}
+
+div.bubble div.msg {
+	display: none;
+	position: fixed;
+	border-bottom: 1px solid;
+	z-index: 999;
+	bottom: 5%;
+  	left: 50%;
+  	transform: translate(-50%, -5%);
+}
+
+div.bubble i {
+	margin-right: 10px;
+}
+
+div.bubble-success .msg {
+	background-color: #dfffdf;
+	border-color: #818181;
+}
+
+div.bubble-error .msg i {
+	color: red;
+}
+
+div.bubble-error .msg {
+	background-color: #ffdddd;
+	border-color: #818181;
+}
+
+div.bubble-info .msg {
+	background-color: #d9f2ff;
+	border-color: 1px solid #818181;
 }
 
 /* Button to scroll to TOP or BOTTOM */

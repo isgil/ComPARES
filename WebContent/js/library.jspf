@@ -12,7 +12,7 @@ function clickCheckbox() {
 	});
 	if (testIds.length > 0) {
 		var parameters = $.param({ 'id': testIds }, true);
-		executeAjax('POST', 'results.ctrl', parameters, 'HTML', success, error);
+		executeAjax('POST', 'results.ctrl', parameters, 'HTML', success, error, always);
 		//$('#test-list').removeClass('l6').addClass('l3');
 		//$('#results-wrapper').removeClass('l6').addClass('l9');
 		$('#results').removeClass('center');
@@ -32,6 +32,10 @@ function success(data) {
 
 function error() {
 	console.log('error!');
-	$(".results").html();
+	/*$(".results").html();*/
+}
+
+function always() {
+	/*console.log('always!');*/
 }
 </script>

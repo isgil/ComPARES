@@ -5,7 +5,7 @@ $( document ).ready(function() {
    $('select#source1').formSelect();
 	$('select#source2').formSelect();
 	$('button#add').click(toggleProgress);
-	$('button#close').click(function() {
+	$('img.close').click(function() {
 		var selectElements = $('select');
 		closeModal(selectElements);
 	});
@@ -32,18 +32,44 @@ function openModal(selectElements) {
 	/*$(selectElements).find('option:eq(0)').attr('selected',true);
 	$(selectElements).val('0');*/
 	$("div.modal").css('display', 'block');	
-	$("#new-test").addClass('blurry');
+	//$("div#new-test").addClass('blurry');
 }
 
 function closeModal(selectElements){
 	$(selectElements).find('option:eq(0)').attr('selected',true);
 	$(selectElements).val('0');
 	$(selectElements).formSelect();
-	$("div.modal").css('display', 'none');	
-	$("#new-test").removeClass('blurry');
+	$("div.modal").css('display', 'none');
+	$("div.modal input#input-source").val('');
+	//$("div#new-test").removeClass('blurry');
 }
 
 function createSource(sourceName) {
+	//	function executeAjax(method, url, data, dataType, successFunction, errorFunction){
+	var parameters = $.param({ 'source': sourceName }, true);
+	executeAjax('POST', 'CreateSource', parameters, 'HTML', success, error, always);
+}
+	
+function success(data) {
+	var lastValue = $('select:first option:last').val();
+	console.log('data=' + data);
+	$("select").append('<option value="' + (lastValue + 1) + '">' + data + '</option>');
+	$("ul#list-sources").append('<li>' + data + '</li>'); 
+	var selectElements = $('select');
+	closeModal(selectElements);
+	showSuccessMessage('Source created');
+}
+
+function error(jqXHR, textStatus, errorThrown) {
+	console.log('Request failed: ' + jqXHR.status);
+	showErrorMessage('Error while processing');
+}
+
+function always() {
+	setTimeout(hideProgress, 1000);
+}
+
+function createSource2(sourceName) {
 	console.log("Source =" + sourceName);
 	$.ajax({
 		type : 'POST',
@@ -56,9 +82,12 @@ function createSource(sourceName) {
 				var lastValue = $('select:first option:last').val();
 				console.log('Last value = ' + lastValue);
 
-				$("select").append('<option value="' + (lastValue + 1) + '">' + sourceName + '</option>')
+				$("select").append('<option value="' + (lastValue + 1) + '">' + sourceName + '</option>');
+				$("ul#list-sources").append('<li>' + sourceName + '</li>'); 
 				var selectElements = $('select');
 				closeModal(selectElements);
+				setTimeout(hideProgress, 1000);
+				showMessage('Source created');
 				/*
 				$("div.modal").css('display', 'none');	
 				$("#new-test").removeClass('blurry');

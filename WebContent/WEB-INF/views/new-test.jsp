@@ -3,7 +3,7 @@
 <!-- CONTENT -->
 
 <body>
-	<div id="new" class="content">
+	<div id="new-test" class="content">
 		<!-- CONTENT -->
 		<div id="new-test" class="row s12 m12 l12 center">
 			<form class="item col s12 m12 l6 offset-l3 grey lighten-4" action="create-test" enctype="multipart/form-data">

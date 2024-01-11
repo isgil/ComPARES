@@ -10,7 +10,7 @@ import es.um.fcd.controller.FacadeSources;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Source;
 
-public class ActionNew extends Action {
+public class ActionNewTest extends Action {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response, ServletContext application) {
 		if (request.getMethod().equalsIgnoreCase("POST")) {
@@ -54,6 +54,7 @@ public class ActionNew extends Action {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			System.out.println("returning new-test.jsp");
 			return "/WEB-INF/views/new-test.jsp";
 		}
 	}
