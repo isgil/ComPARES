@@ -89,29 +89,20 @@
 	    }, 5000);
 	}
 
-	//Subir documento / Configuración sistema
-	function actualizarInput(input) {
-		console.log('HOLA');
+	// Upload test document(s)
+	function updateSourceFiles(input) {
 		if (input.files.length > 0) {
-			console.log('HOLA2');
-			var id, form;
-
-			id = input.getAttribute("id");
-
-			// SUBIR DOCUMENTOS
-			console.log('id=' + id);
-			if (id === 'upload1') {
-				var parent = $('#' + id).parent();
-				$(parent).parent().find("#file-selected1").val(input.files[0].name);
-				$(parent).css("background-image", "url(" + context + "/img/folder-document.svg)");
+			var value = "";
+			var icon = "";
+			if (input.files.length === 1) {
+				value = input.files[0].name;
+				icon = "folder-document.svg";
+			} else {
+				value = input.files.length + ' documents selected';
+				icon = "folder-documents.svg";
 			}
-			if (id === 'upload2') {
-				var parent = $('#' + id).parent();
-				$(parent).parent().find("#file-selected2").val(input.files[0].name);
-				$(parent).css("background-image", "url(" + context + "/img/folder-document.svg)");
-			}
-			/*$(form).find(".upload").css("height", "34px");
-			$(form).find(".upload").css("top", "4px");*/
+			$(input).parent().parent().find(".file-selected").val(value);
+			$(input).parent().css("background", "url(" + context + "/img/" + icon + ")");			
 		}
 	}
 

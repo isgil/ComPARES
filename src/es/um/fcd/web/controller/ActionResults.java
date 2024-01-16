@@ -116,6 +116,7 @@ public class ActionResults extends Action {
 			}
 			TestResults testResults = new TestResults(test, parResults);
 			results.add(testResults);
+			System.out.println("adding results " + test.getId());
 		}
 		/*
 		for (TestResults testResults : results) {

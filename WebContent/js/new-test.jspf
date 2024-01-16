@@ -14,9 +14,10 @@ $( document ).ready(function() {
 		$(this).on('change', function (e) {
 			var optionSelected = $("option:selected", this);
 		    var valueSelected = this.value;
-		    if (valueSelected == '1') {
-		    	openModal(this);
+		    if (valueSelected == 'new_source') {
+		    	openModal();
 		    }
+		    checkSelectValid(this);
 		})
 	});
 	
@@ -26,37 +27,112 @@ $( document ).ready(function() {
 	    createSource(source);
 	    event.preventDefault();
 	});
+	
+	$('form#form-new-test').submit(function(event) {
+		console.log('validating');
+		var select = $('select#source1');
+		if (checkFormValid()) {
+			// code if valid
+		} else {
+			// Prevent form submission
+			event.preventDefault();	
+		}
+	  });
 });
 
-function openModal(selectElements) {
-	/*$(selectElements).find('option:eq(0)').attr('selected',true);
-	$(selectElements).val('0');*/
-	$("div.modal").css('display', 'block');	
-	//$("div#new-test").addClass('blurry');
+function checkSelectValid(select) {
+	var selectWrapper;
+	if ($(select).attr('id') == 'source1') {
+		selectWrapper = $('.select-wrapper:eq(0)');
+	} else {
+		selectWrapper = $('.select-wrapper:eq(1)');
+	}
+	var selectedElements = $(selectWrapper).find('ul.select-dropdown li:not(.disabled).selected').length;
+	var input = $(selectWrapper).find('input');
+	var validated = true;
+	if (selectedElements < 1){
+		var isAlreadyInvalid = $(input).hasClass('invalid');
+		if (!isAlreadyInvalid) {
+			var validationMessage = '<span class="helper-text" data-error="Please choose an option"></span>';
+			$(input).addClass('invalid');
+			$(input).after(validationMessage);
+		}
+		validated = false;
+	} else {
+		// Remove validation error
+		$(input).removeClass('invalid');
+		$(selectWrapper).find('span.helper-text').remove();
+	}
+	
+	return validated;
 }
 
-function closeModal(selectElements){
-	$(selectElements).find('option:eq(0)').attr('selected',true);
-	$(selectElements).val('0');
-	$(selectElements).formSelect();
+function checkFormValid() {
+	var validated = true;
+	var previousSelectVal = null;
+	// Check Source 1 and Source 2 have been selected
+	$('select').each(function() {
+		if (validated != false) {
+			validated = checkSelectValid(this); 
+		}
+	});
+	// Check Source 1 != Source 2
+	if (validated) {
+		var select1val = $('select:eq(0)').val();
+		var select2val = $('select:eq(1)').val();
+		if (select1val == select2val) {
+			validated = false;
+			alert('Sources need to be different');
+		}
+	}
+	// Check number of files for Source 1 and Source 2 is identical
+	if (validated == true) {
+		var nFilesSelected = 0;
+		$('input[type="file"]').each(function(){
+			var nFilesCurrent = this.files.length;
+			if (nFilesSelected == 0) {
+				nFilesSelected = nFilesCurrent;
+			} else {
+				if (nFilesCurrent != nFilesSelected) {
+					alert('Number of files for Source 1 does not match number for Source 2');
+					validated = false;
+				}
+			}
+		});
+	}
+	
+	return validated;
+}
+
+function openModal() {
+	$("div.modal").css('display', 'block');
+}
+
+function closeModal(){
+	$('select').each(function(){
+		var selectedValue = $(this).val();
+		if (selectedValue != null && selectedValue == 'new_source') {
+			$(this).find('option:eq(0)').attr('selected',true);
+			$(this).find('option:eq(1)').attr('selected',false);
+			$(this).val('default');
+		}
+		$(this).formSelect();
+	});
 	$("div.modal").css('display', 'none');
 	$("div.modal input#input-source").val('');
-	//$("div#new-test").removeClass('blurry');
 }
 
 function createSource(sourceName) {
-	//	function executeAjax(method, url, data, dataType, successFunction, errorFunction){
 	var parameters = $.param({ 'source': sourceName }, true);
 	executeAjax('POST', 'CreateSource', parameters, 'HTML', success, error, always);
 }
 	
 function success(data) {
-	var lastValue = $('select:first option:last').val();
+	var source = $("div.modal input#input-source").val();
 	console.log('data=' + data);
-	$("select").append('<option value="' + (lastValue + 1) + '">' + data + '</option>');
+	$("select").append('<option value="' + data.trim() + '">' + source + '</option>');
 	$("ul#list-sources").append('<li>' + data + '</li>'); 
-	var selectElements = $('select');
-	closeModal(selectElements);
+	closeModal();
 	showSuccessMessage('Source created');
 }
 
@@ -67,47 +143,5 @@ function error(jqXHR, textStatus, errorThrown) {
 
 function always() {
 	setTimeout(hideProgress, 1000);
-}
-
-function createSource2(sourceName) {
-	console.log("Source =" + sourceName);
-	$.ajax({
-		type : 'POST',
-		url : 'CreateSource', // Your Servlet mapping or JSP
-		data: { source: sourceName },
-		dataType : 'html', // Returns HTML as plain text; included script tags
-		// are evaluated when inserted in the DOM.
-		success : function exito(data, textStatus, xhr) {
-				console.log('Request completed: ' + xhr.status);
-				var lastValue = $('select:first option:last').val();
-				console.log('Last value = ' + lastValue);
-
-				$("select").append('<option value="' + (lastValue + 1) + '">' + sourceName + '</option>');
-				$("ul#list-sources").append('<li>' + sourceName + '</li>'); 
-				var selectElements = $('select');
-				closeModal(selectElements);
-				setTimeout(hideProgress, 1000);
-				showMessage('Source created');
-				/*
-				$("div.modal").css('display', 'none');	
-				$("#new-test").removeClass('blurry');
-				*/
-				/*
-				var values = response.split(";");
-				if (values[0] === '')
-					$('#accion').html("&nbsp");
-				else
-					$('#accion').html(values[0]);
-				if (values[1] === '')
-					$("#progreso").html("&nbsp");
-				else
-					$("#progreso").html(values[1]);
-				setTimeout(pollProgressPercentaje, 250 /*0.25 second*/
-						/*);
-				*/
-		}
-	});
-
-	return true;
 }
 </script>

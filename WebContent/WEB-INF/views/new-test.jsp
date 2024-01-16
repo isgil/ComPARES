@@ -6,30 +6,30 @@
 	<div id="new-test" class="content">
 		<!-- CONTENT -->
 		<div id="new-test" class="row s12 m12 l12 center">
-			<form class="item col s12 m12 l6 offset-l3 grey lighten-4" action="create-test" enctype="multipart/form-data">
+			<form id="form-new-test" class="item col s12 m12 l6 offset-l3 grey lighten-4" action="new-test.ctrl" enctype="multipart/form-data" method="POST">
 				<div class="input-field col s12">
-					<input style="width: 100%" id="test-name" type="text" class="validate">
+					<input style="width: 100%" id="test-name" name="test-name" type="text" class="validate" required>
           			<label for="test-name">Test name</label>
           		</div>
           		
           		<!-- EXPORT SOURCE 1 -->
 				<div class="vertical-separator-right col s6">
 					<h6>
-						<b>Export source 1</b>
+						<b><em>Source 1</em></b>
 					</h6>
 					<div class="input-field col s12">
 						<div class="col s12">
           					<div class="upload">
-								<input id="upload1" type="file" onchange="actualizarInput(this)" class="upload" name="dataFile"
-								accept="application/pdf,text/html,text/htm,text/xml,text/plain" />
+								<input id="upload-input1" type="file" onchange="updateSourceFiles(this)" class="upload" name="upload-input1"
+								accept="application/pdf,text/html,text/htm,text/xml,text/plain" multiple="multiple" required />
 							</div>
-							<input id="files-source1" class="file-selected" placeholder="Upload document" />
+							<input id="files-source1" class="file-selected" placeholder="Pick up documents" disabled />
 						</div>
 						<div class="input-field col s12">
 							<tag:SelectSource id="source1" sources="${sources}" />
 						</div>
 						<div class="input-field col s12">
-							<input style="width: 100%" id="title-mark1" type="text" class="validate">
+							<input style="width: 100%" id="title-mark1" name="title-mark1" type="text" class="validate">
           					<label for="title-mark1">Title mark</label>
           				</div>
 					</div>
@@ -38,21 +38,21 @@
 				<!-- EXPORT SOURCE 2 -->
 				<div class="vertical-separator-left col s6">
 					<h6>
-						<b>Export source 2</b>
+						<b><em>Source 2</em></b>
 					</h6>
 					<div class="input-field col s12">
 						<div class="col s12">
           					<div class="upload">
-								<input id="upload2" type="file" onchange="actualizarInput(this)" class="upload" name="dataFile"
-								accept="application/pdf,text/html,text/htm,text/xml,text/plain" />
+								<input id="upload-input2" type="file" onchange="updateSourceFiles(this)" class="upload" name="upload-input2"
+								accept="application/pdf,text/html,text/htm,text/xml,text/plain" multiple="multiple" required />
 							</div>
-							<input id="files-source2" class="file-selected" placeholder="Upload document" />
+							<input id="files-source2" class="file-selected" placeholder="Pick up documents" disabled />
 						</div>
 						<div class="input-field col s12">
 							<tag:SelectSource id="source2" sources="${sources}" />
 						</div>
 						<div class="input-field col s12">
-							<input style="width: 100%" id="title-mark2" type="text" class="validate">
+							<input style="width: 100%" id="title-mark2" name="title-mark2" type="text" class="validate">
           					<label for="title-mark2">Title mark</label>
           				</div>
 					</div>

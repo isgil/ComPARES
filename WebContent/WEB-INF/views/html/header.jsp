@@ -11,7 +11,7 @@
 			</li>
 			<li>
 				<div id="new-test">
-					<a class="waves-effect waves-light" href="new.ctrl"><i class="center material-icons">library_add</i><span>New test</span></a>
+					<a class="waves-effect waves-light" href="new-test.ctrl"><i class="center material-icons">library_add</i><span>New test</span></a>
 				</div>
 			</li>
 			<li>

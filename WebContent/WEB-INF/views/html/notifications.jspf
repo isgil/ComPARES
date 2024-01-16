@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<div id="notifications">
+
+	<c:set var="notifications" value="${sessionScope.notifications}" />
+	
+	<ul class="notification success">
+		<c:forEach var="success" items="${utiltld:getNotificationsSuccess(notifications)}">
+			<li>${success}</li>
+		</c:forEach>
+	</ul>
+
+	<ul class="notification error">
+		<c:forEach var="error" items="${utiltld:getNotificationsError(notifications)}">
+			<li>${error}</li>
+		</c:forEach>
+	</ul>
+	
+	<ul class="notification warning">
+		<c:forEach var="warning" items="${utiltld:getNotificationsWarning(notifications)}">
+			<li>${warning}</li>
+		</c:forEach>
+	</ul>
+	
+</div>

@@ -18,8 +18,8 @@
 								</c:choose>
 							</a>
 							<div class="sources">
-								<div class="chip orange lighten-4">Redalyc</div>
-								<div class="chip orange lighten-4">UMU</div>
+								<div class="chip orange lighten-4">${test.source1.name}</div>
+								<div class="chip orange lighten-4">${test.source2.name}</div>
 							</div>
 						</div>
 					</div>

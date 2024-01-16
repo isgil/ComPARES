@@ -20,5 +20,5 @@
 		<span class="icon scroll go2bottom" onclick="scrollToBottomSuavizado()"></span>
 	</div>
 
-	<%@ include file="notificaciones.jspf"%>
+	<%@ include file="notifications.jspf"%>
 	<%-- Inicio Contenido --%>

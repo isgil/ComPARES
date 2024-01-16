@@ -29,16 +29,7 @@
 	 
 	<!-- Test Name --> 
 	<h6><b>Test ${result.test.id} - ${result.test.name}</b></h6>
-	
-		<c:choose>
-			<c:when test = "${maxNumberOfTops > 15}">
-	            <tag:ResultsTable id="${i}" result="${result}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" vertical="false" />
-         	</c:when>         
-         	<c:otherwise>
-	            <tag:ResultsTable id="${i}" result="${result}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" vertical="false" />
-         	</c:otherwise>
-		</c:choose>
-	
+	<tag:ResultsTable id="${i}" result="${result}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" />
 	<c:set var="i" value="${i+1}"/>
 </div>
 </c:forEach>

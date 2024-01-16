@@ -8,23 +8,23 @@
 
 	<function>
 		<description>Devuelve las notificaciones de exito</description>
-		<name>getNotificacionesExito</name>
+		<name>getNotificationsSuccess</name>
 		<function-class>es.um.fcd.web.util.TLDFunctions</function-class>
-		<function-signature>java.util.List getNotificacionesExito(es.um.fcd.web.model.Notifications)</function-signature>
+		<function-signature>java.util.List getNotificationsSuccess(es.um.fcd.web.model.Notifications)</function-signature>
 	</function>
 	
 	<function>
 		<description>Devuelve las notificaciones de error</description>
-		<name>getNotificacionesError</name>
+		<name>getNotificationsError</name>
 		<function-class>es.um.fcd.web.util.TLDFunctions</function-class>
-		<function-signature>java.util.List getNotificacionesError(es.um.fcd.web.model.Notifications)</function-signature>
+		<function-signature>java.util.List getNotificationsError(es.um.fcd.web.model.Notifications)</function-signature>
 	</function>
 	
 	<function>
 		<description>Devuelve las notificaciones de advertencia</description>
-		<name>getNotificacionesAdvertencia</name>
+		<name>getNotificationsWarning</name>
 		<function-class>es.um.fcd.web.util.TLDFunctions</function-class>
-		<function-signature>java.util.List getNotificacionesAdvertencia(es.um.fcd.web.model.Notifications)</function-signature>
+		<function-signature>java.util.List getNotificationsWarning(es.um.fcd.web.model.Notifications)</function-signature>
 	</function>
 	
 	<function>

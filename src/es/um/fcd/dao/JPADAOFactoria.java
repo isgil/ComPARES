@@ -14,6 +14,11 @@ public class JPADAOFactoria extends DAOFactory {
 	public DAOTest getDAOTest() {
 		return new JPADAOTest(this.emf);
 	}
+	
+	@Override
+	public DAOTestFile getDAOTestFile() {
+		return new JPADAOTestFile(this.emf);
+	}
 
 	@Override
 	public DAOPar getDAOPar() {

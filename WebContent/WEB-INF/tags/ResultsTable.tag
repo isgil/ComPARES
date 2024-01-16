@@ -4,7 +4,6 @@
 <%@ attribute name="result" required="true" type="es.um.fcd.web.model.TestResults"%>
 <%@ attribute name="maxNumberOfTops" required="true" type="java.lang.Integer"%>
 <%@ attribute name="maxTopResults" required="true" type="java.util.LinkedHashMap"%>
-<%@ attribute name="vertical" required="true" type="java.lang.Boolean"%>
 
 <table id="${id}" class="results-table highlight centered">
 	<thead>
@@ -21,8 +20,7 @@
 		<c:forEach var="parResults" items="${result.testResults}">
 			<tr>
 				<c:set var="par" value="${parResults.key}"/>
-				<!--<td><div class="chip blue lighten-4">${par.fileName1}</div><br/><div class="chip blue lighten-4">${par.fileName2}</div></td>-->
-				<td title="${par.fileName1} || ${par.fileName2}"><div class="chip blue lighten-4">Par ${nPar}</div></td>
+				<td title="${par.testFile1.fileName} || ${par.testFile2.fileName}"><div class="chip blue lighten-4">Par ${nPar}</div></td>
 				<c:set var="numberOfTops" value="${fn:length(parResults.value)}"/>
 				<c:forEach var="topResults" items="${parResults.value}">
 					<c:set var="topValue" value="${topResults.value}"/>

@@ -12,7 +12,6 @@ import es.um.fcd.web.controller.ActionNewTest;
 import es.um.fcd.controller.FacadeSources;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Source;
-import es.um.fcd.web.controller.ActionNewSource;
 
 public class CreateSource extends MyHttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,8 +30,6 @@ public class CreateSource extends MyHttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*RequestDispatcher rd = request.getRequestDispatcher(new ActionNewSource().execute(request, response, getServletConfig().getServletContext()));
-		rd.forward(request, response);*/
 		String sourceName = request.getParameter("source");
 		// Creating new source
 		if (sourceName != null) {
@@ -43,8 +40,11 @@ public class CreateSource extends MyHttpServlet {
 				source = fcSources.get(sourceName);
 				if (source == null) {
 					System.out.println("Success");
-					fcSources.add(sourceName);
+					source = fcSources.add(sourceName);
 					response.setStatus(200);
+					PrintWriter output = response.getWriter();
+					output.println(source.getId());
+					return;
 				} else {
 					System.out.println("Fail");
 					response.setStatus(409);
@@ -54,7 +54,5 @@ public class CreateSource extends MyHttpServlet {
 				response.setStatus(500);
 			}
 		}
-		PrintWriter output = response.getWriter();
-		output.println(sourceName);		
 	}
 }

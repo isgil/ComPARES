@@ -1,3 +1,12 @@
+:root {
+	--color-bg-success: #e9ffca;
+	--color-txt-success: #296a23;
+	--color-bg-error: #ffe0e0;
+	--color-txt-error: #af2f1e; /*#af2f1e*/;
+	--color-bg-warning: rgb(255 212 66 / 52%);
+	--color-txt-warning: #956400; /*#af2f1e*/;
+}
+
 /* Menu horizontal */
 nav {
 	height: auto;
@@ -318,6 +327,20 @@ img.close:hover {
 	cursor: pointer;
 }
 
+ul#list-sources {
+	max-height: 200px;
+    overflow-y: auto;
+}
+
+input:not([type]):disabled {
+	border-bottom: none;
+}
+
+div.select-wrapper ul {
+	max-height: 300px;
+    overflow-y: auto;
+}
+
 div.bubble {
 	width: 100%;
 }
@@ -407,6 +430,32 @@ div.bubble-info .msg {
 
 .icon.scroll:hover {
 	transform: scale(1.25);
+}
+
+/****** Notificaciones ******/
+#notifications ul {
+	padding: 0;
+	margin: 0;
+}
+
+#notifications li {
+	margin: 0;
+	padding: 10px 40px;
+}
+
+#notifications .success li {
+	background-color: var(--color-bg-success);
+	color: var(--color-txt-success);
+}
+
+#notifications .error li {
+	background-color: var(--color-bg-error);
+	color: var(--color-txt-error);
+}
+
+#notifications .warning li {
+	background-color: var(--color-bg-warning);
+	color: var(--color-txt-warning);
 }
 
 /****************************/

@@ -47,6 +47,7 @@ public class TestUploader extends FileUploader {
 		System.out.println("TEST UPLOADER RUNNING");
 		Notifications notifications = getSesionNotifications(request.getSession());
 
+		/*
 		// Checks if there are files attached
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			notifications.pushError(Notifications.ERROR_NO_DOCUMENT_SELECTED);
@@ -217,5 +218,6 @@ public class TestUploader extends FileUploader {
 			rd.forward(request, response);
 			return;
 		}
+		*/
 	}
 }

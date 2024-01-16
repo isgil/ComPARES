@@ -5,6 +5,7 @@ import javax.persistence.Persistence;
 
 public abstract class DAOFactory {
 	public abstract DAOTest getDAOTest();
+	public abstract DAOTestFile getDAOTestFile();
 	public abstract DAOPar getDAOPar();
 	public abstract DAOSource getDAOSource();
 	public abstract DAOSettings getDAOSettings();

@@ -3,11 +3,10 @@
 <%@ attribute name="id" required="true" type="java.lang.String"%>
 <%@ attribute name="sources" required="true" type="java.util.List"%>
 
-<select id="${id}">
-	<option value="0" disabled selected>Source</option>
-	<option value="1">&#10133; New Source ...</option>
-	<c:set var="i" value="2" />
+<select id="${id}" name="${id}" required>
+	<option value="default" disabled selected>Source</option>
+	<option value="new_source">&#10133; New Source ...</option>
 	<c:forEach items="${sources}" var="source">
-		<option value="${i}">${source.name}</option>
+		<option value="${source.id}">${source.name}</option>
 	</c:forEach>
 </select>

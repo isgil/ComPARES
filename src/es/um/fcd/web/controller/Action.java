@@ -23,12 +23,13 @@ public abstract class Action {
 		return null;
 	}
 
-	public Notifications getNotificacionesSesion(HttpSession sesion) {
-		Notifications notifications = (Notifications) sesion.getAttribute("notificaciones");
+	public Notifications getNotificationsSession(HttpSession session) {
+		Notifications notifications = (Notifications) session.getAttribute("notifications");
 		if (notifications == null) {
 			notifications = new Notifications();
-			sesion.setAttribute("notificaciones", notifications);
+			session.setAttribute("notifications", notifications);
 		}
+		System.out.println("Notis success in getNotisSession " + notifications.getSuccess().size());
 
 		return notifications;
 	}

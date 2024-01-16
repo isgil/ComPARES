@@ -2,25 +2,23 @@ package es.um.fcd.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity(name="PAR")
 public class Par implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String fileName1;
-	private String fileName2;
-	private Source source1;
-	private Source source2;
-	private String titleMark1;
-	private String titleMark2;
-	private float top10;
-	private float top50;
-	private float top100;
-	private float top1000;
+	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+	private TestFile testFile1;
+	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+	private TestFile testFile2;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,13 +28,9 @@ public class Par implements Serializable {
 		super();
 	}
 
-	public Par(String fileName1, Source source1, String titleMark1, String fileName2, Source source2, String titleMark2){
-		this.fileName1 = fileName1;
-		this.source1 = source1;
-		this.titleMark1 = titleMark1;
-		this.titleMark2 = titleMark2;
-		this.fileName2 = fileName2;
-		this.source2 = source2;
+	public Par(TestFile testFile1, TestFile testFile2){
+		this.setTestFile1(testFile1);
+		this.setTestFile2(testFile2);
 	}
 
 	public Integer getId() {
@@ -47,83 +41,19 @@ public class Par implements Serializable {
 		this.id = id;
 	}
 
-	public String getFileName1() {
-		return fileName1;
+	public TestFile getTestFile1() {
+		return testFile1;
 	}
 
-	public void setFileName1(String file1) {
-		this.fileName1 = file1;
+	public void setTestFile1(TestFile testFile1) {
+		this.testFile1 = testFile1;
 	}
 
-	public String getFileName2() {
-		return fileName2;
+	public TestFile getTestFile2() {
+		return testFile2;
 	}
 
-	public void setFileName2(String file2) {
-		this.fileName2 = file2;
-	}
-	
-	public Source getSource1() {
-		return source1;
-	}
-
-	public void setSource1(Source source1) {
-		this.source1 = source1;
-	}
-
-	public Source getSource2() {
-		return source2;
-	}
-
-	public void setSource2(Source source2) {
-		this.source2 = source2;
-	}
-
-	public float getTop10() {
-		return top10;
-	}
-
-	public void setTop10(float top10) {
-		this.top10 = top10;
-	}
-
-	public float getTop50() {
-		return top50;
-	}
-
-	public void setTop50(float top50) {
-		this.top50 = top50;
-	}
-
-	public float getTop100() {
-		return top100;
-	}
-
-	public void setTop100(float top100) {
-		this.top100 = top100;
-	}
-
-	public float getTop1000() {
-		return top1000;
-	}
-
-	public void setTop1000(float top1000) {
-		this.top1000 = top1000;
-	}
-
-	public String getTitleMark1() {
-		return titleMark1;
-	}
-
-	public void setTitleMark1(String titleMark1) {
-		this.titleMark1 = titleMark1;
-	}
-
-	public String getTitleMark2() {
-		return titleMark2;
-	}
-
-	public void setTitleMark2(String titleMark2) {
-		this.titleMark2 = titleMark2;
-	}
+	public void setTestFile2(TestFile testFile2) {
+		this.testFile2 = testFile2;
+	}	
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Par;
-import es.um.fcd.model.Source;
+import es.um.fcd.model.TestFile;
 
 public class FacadePares extends Facade {
 	private static FacadePares instancia = null;
@@ -21,8 +21,8 @@ public class FacadePares extends Facade {
 		return instancia;
 	}
 	
-	public Par add(String fileName1, Source source1, String titleMark1, String fileName2, Source source2, String titleMark2) throws DAOException {
-		Par par = new Par(fileName1, source1, titleMark1, fileName2, source2, titleMark2);
+	public Par add(TestFile testFile1, TestFile TestFile2) throws DAOException {
+		Par par = new Par(testFile1, TestFile2);
 		return getDAOFactoria().getDAOPar().create(par);
 	}
 
@@ -35,12 +35,12 @@ public class FacadePares extends Facade {
 	}
 
 	public void delete(Par par) throws DAOException {
-		String filePath1 = par.getFileName1();
-		String filePath2 = par.getFileName2();
-		File file = new File(filePath1);
+		TestFile testFile1 = par.getTestFile1();
+		TestFile testFile2 = par.getTestFile2();
+		File file = new File(testFile1.getFullPhysicalName());
 		if (file.exists()) {
 			file.delete();
-			file = new File(filePath2);
+			file = new File(testFile2.getFullPhysicalName());
 			if (file.exists()) {
 				file.delete();
 			}

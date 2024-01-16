@@ -8,17 +8,17 @@ import es.um.fcd.web.model.Notifications;
 
 public class TLDFunctions {
 
-	public static List<String> getNotificacionesExito(Notifications notifications){
+	public static List<String> getNotificationsSuccess(Notifications notifications){
 		if(notifications == null) return new LinkedList<String>();
 		return notifications.popAllSuccess();
 	}
 	
-	public static List<String> getNotificacionesError(Notifications notifications){
+	public static List<String> getNotificationsError(Notifications notifications){
 		if(notifications == null) return new LinkedList<String>();
 		return notifications.popAllError();
 	}
 	
-	public static List<String> getNotificacionesAdvertencia(Notifications notifications){
+	public static List<String> getNotificationsWarning(Notifications notifications){
 		if(notifications == null) return new LinkedList<String>();
 		return notifications.popAllWarning();
 	}

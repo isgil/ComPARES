@@ -12,6 +12,9 @@ public class Notifications {
 	public static final String ERROR_SOURCE_INCORRECT = "The source was not determined properly";
 	public static final String ERROR_RETRIEVING_SOURCE = "The source could not be retrieved from the database";
 	public static final String ERROR_CREATING_TEST = "Error during the creation of the test";
+	public static final String SUCCESS_TEST_CREATED = "Test created successfully";
+	public static final String ERROR_SOURCE_1 = "Error while processing Source 1";
+	public static final String ERROR_SOURCE_2 = "Error while processing Source 2";
 	
 	public static final String getErrorFileUpload(List<String> filesWithUploadErrors) {
 		return "The following documents could not be uploaded to the system: " + Strings.getString(filesWithUploadErrors, ",", true);
