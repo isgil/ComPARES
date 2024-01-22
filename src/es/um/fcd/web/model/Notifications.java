@@ -16,6 +16,10 @@ public class Notifications {
 	public static final String ERROR_SOURCE_1 = "Error while processing Source 1";
 	public static final String ERROR_SOURCE_2 = "Error while processing Source 2";
 	
+	public static final String getErrorReadingTestFile(String testFile) {
+		return "The following test file could not be read: " + testFile;
+	}
+	
 	public static final String getErrorFileUpload(List<String> filesWithUploadErrors) {
 		return "The following documents could not be uploaded to the system: " + Strings.getString(filesWithUploadErrors, ",", true);
 	}

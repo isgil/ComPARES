@@ -21,8 +21,8 @@ public class FacadePares extends Facade {
 		return instancia;
 	}
 	
-	public Par add(TestFile testFile1, TestFile TestFile2) throws DAOException {
-		Par par = new Par(testFile1, TestFile2);
+	public Par add(TestFile testFileSource1, List<String> titlesSource1, TestFile testFileSource2, List<String> titlesSource2) throws DAOException {
+		Par par = new Par(testFileSource1, titlesSource1, testFileSource2, titlesSource2);
 		return getDAOFactoria().getDAOPar().create(par);
 	}
 
@@ -35,8 +35,8 @@ public class FacadePares extends Facade {
 	}
 
 	public void delete(Par par) throws DAOException {
-		TestFile testFile1 = par.getTestFile1();
-		TestFile testFile2 = par.getTestFile2();
+		TestFile testFile1 = par.getTestFileSource1();
+		TestFile testFile2 = par.getTestFileSource2();
 		File file = new File(testFile1.getFullPhysicalName());
 		if (file.exists()) {
 			file.delete();

@@ -38,8 +38,8 @@ public class FacadeTests extends Facade {
 
 	public void delete(Test test) throws DAOException {
 		for (Par par : test.getPares()) {
-			TestFile testFile1 = par.getTestFile1();
-			TestFile testFile2 = par.getTestFile2();
+			TestFile testFile1 = par.getTestFileSource1();
+			TestFile testFile2 = par.getTestFileSource2();
 			File file = new File(testFile1.getFullPhysicalName());
 			if (file.exists()) {
 				file.delete();

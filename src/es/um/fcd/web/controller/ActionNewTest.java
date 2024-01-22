@@ -1,6 +1,8 @@
 package es.um.fcd.web.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import es.um.fcd.controller.FacadeSources;
 import es.um.fcd.controller.FacadeTests;
+import es.um.fcd.controller.TestController;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Par;
 import es.um.fcd.model.Source;
@@ -120,7 +123,30 @@ public class ActionNewTest extends Action {
 			for (int i=0; i<testFilesSource1.size(); i++) {
 				TestFile testFileSource1 = testFilesSource1.get(i);
 				TestFile testFileSource2 = testFilesSource2.get(i);
-				Par par = new Par(testFileSource1, testFileSource2);
+				TestController tc = TestController.getInstancia();
+
+				List<String> titlesSource1;
+				try {
+					titlesSource1 = tc.getTitles(testFileSource1);
+				} catch (DAOException | IOException e) {
+					notifications.getError().add(Notifications.getErrorReadingTestFile(testFileSource1.getFullName()));
+					e.printStackTrace();
+					response.setStatus(500);
+					return new ActionLibrary().execute(request, response, application);
+				}
+				List<String> titlesSource2;
+				try {
+					titlesSource2 = tc.getTitles(testFileSource2);
+				} catch (DAOException | IOException e) {
+					notifications.getError().add(Notifications.getErrorReadingTestFile(testFileSource2.getFullName()));
+					e.printStackTrace();
+					response.setStatus(500);
+					return new ActionLibrary().execute(request, response, application);
+				}
+				for (String title : titlesSource1) {
+					System.out.println("Title = " + title);
+				}
+				Par par = new Par(testFileSource1, titlesSource1, testFileSource2, titlesSource2);
 				pares.add(par);
 			}
 			
@@ -147,7 +173,7 @@ public class ActionNewTest extends Action {
 				response.setStatus(500);
 				e.printStackTrace();
 			}
-			System.out.println("returning new-test.jsp");
+			
 			return "/WEB-INF/views/new-test.jsp";
 		}
 	}

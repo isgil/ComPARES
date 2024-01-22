@@ -41,10 +41,20 @@ public class Main {
 			TestFile testFile5 = new TestFile("export Source 5.txt", "path");
 			TestFile testFile6 = new TestFile("export Source 6.txt", "path");
 			
+			// TestFile titles
+			List<String> titles1 = new LinkedList<String>();
+			List<String> titles2 = new LinkedList<String>();
+			titles1.add("title11");
+			titles1.add("title12");
+			titles1.add("title13");
+			titles2.add("title21");
+			titles2.add("title22");
+			titles2.add("title23");
+			
 			// Par
-			Par par1 = new Par(testFile1, testFile2);
-			Par par2 = new Par(testFile3, testFile4);
-			Par par3 = new Par(testFile5, testFile6);
+			Par par1 = new Par(testFile1, titles1, testFile2, titles2);
+			Par par2 = new Par(testFile3, titles1, testFile4, titles2);
+			Par par3 = new Par(testFile5, titles1, testFile6, titles2);
 
 			// Source
 			source1 = daoSource.create(source1);
@@ -74,7 +84,7 @@ public class Main {
 			System.out.println("T1 S2 ID" + test1.getSource2().getId());
 			System.out.println("T1 P1 ID" + test1.getPares().get(0).getId());
 			System.out.println("T1 P2 ID" + test1.getPares().get(1).getId());
-			System.out.println("T1 P1 TF1 ID" + test1.getPares().get(0).getTestFile1().getId());
+			System.out.println("T1 P1 TF1 ID" + test1.getPares().get(0).getTestFileSource1().getId());
 			//System.out.println(test2.getId());
 			
 			//daoTest.create(test2);
@@ -82,7 +92,7 @@ public class Main {
 			System.out.println("T2 S1 ID" + test2.getSource1().getId());
 			System.out.println("T2 S2 ID" + test2.getSource2().getId());
 			System.out.println("T2 P1 ID" + test2.getPares().get(0).getId());
-			System.out.println("T2 P1 TF1 ID" + test2.getPares().get(0).getTestFile1().getId());
+			System.out.println("T2 P1 TF1 ID" + test2.getPares().get(0).getTestFileSource1().getId());
 			
 		} catch (DAOException e) {
 			AppLogger.log("DAO Error");

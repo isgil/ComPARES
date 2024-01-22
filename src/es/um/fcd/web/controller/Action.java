@@ -29,7 +29,6 @@ public abstract class Action {
 			notifications = new Notifications();
 			session.setAttribute("notifications", notifications);
 		}
-		System.out.println("Notis success in getNotisSession " + notifications.getSuccess().size());
 
 		return notifications;
 	}

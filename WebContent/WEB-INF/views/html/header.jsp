@@ -14,12 +14,14 @@
 					<a class="waves-effect waves-light" href="new-test.ctrl"><i class="center material-icons">library_add</i><span>New test</span></a>
 				</div>
 			</li>
+			<!-- 
 			<li>
 				<div id="settings">
 					<a class="waves-effect waves-light" href="config.ctrl"> <i class="center material-icons">settings</i><span>Settings</span>
 					</a>
 				</div>
 			</li>
+			 -->
 		</ul>
 		<h2 class="title-section brand-logo center">Library</h2>
 	</nav>		
