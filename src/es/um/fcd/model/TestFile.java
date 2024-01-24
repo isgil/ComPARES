@@ -27,7 +27,7 @@ public class TestFile implements Serializable {
 	}
 
 	public TestFile(String fileName, String path) {
-		this.fileName = fileName.substring(0, fileName.lastIndexOf(".")-1);
+		this.fileName = fileName.substring(0, fileName.lastIndexOf("."));
 		this.physicalFileName = UUID.randomUUID().toString();
 		this.extension = fileName.substring(fileName.lastIndexOf(".")+1);
 		this.path = path;

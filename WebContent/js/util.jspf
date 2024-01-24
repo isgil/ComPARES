@@ -101,7 +101,7 @@
 				value = input.files.length + ' documents selected';
 				icon = "folder-documents.svg";
 			}
-			$(input).parent().parent().find(".file-selected").val(value);
+			$(input).parent().next().val(value);
 			$(input).parent().css("background", "url(" + context + "/img/" + icon + ")");			
 		}
 	}
@@ -182,12 +182,13 @@
 		return true;
 	}
 	
-	function executeAjax(method, url, settings, dataType, successFunction, errorFunction, alwaysFunction){
+	function executeAjax(method, url, settings, dataType, async, successFunction, errorFunction, alwaysFunction){
 		$.ajax({
 			type : method,
 			url : url, // Your Servlet mapping or JSP
 			data : settings,
 			dataType : dataType, // Returns HTML as plain text; included script tags are evaluated when inserted in the DOM.
+			async: async
 		})
 		.done(function (data) { successFunction(data) })
 		.fail(function (jqXHR, textStatus, errorThrown) { errorFunction(jqXHR, textStatus, errorThrown) })

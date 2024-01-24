@@ -96,6 +96,15 @@ div.content a {
 	margin-right: 15px;
 }
 
+form.item {
+	padding: 40px !important;  
+}
+
+form div.par {
+	border-radius: 10px;
+    background-color: white;
+}
+
 .chip {
 	cursor: pointer;
 }
@@ -309,6 +318,31 @@ h2.title-section {
     /*background-color: #edc58a;*/
 }
 
+.par-list li {
+	margin: 10px 0;
+}
+/*
+div.input-list {
+	padding-left: 40px !important;
+}
+*/
+
+.btn-floating.add-file {
+	margin: 10px 0 0 0;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.btn-floating.add-file i {
+	line-height: 25px;
+    font-size: 1.1rem;
+}
+
+.par-list li:nth-child(even) {
+	color: #a3a3a3;
+}
+
 div.top-icons {
 	width: 100%;
     margin-bottom: -3em;
@@ -486,17 +520,10 @@ div.bubble-info .msg {
     top: 0px;
     cursor:pointer;
 }
-/*
+
 .file-selected {
-	border: 2px solid var(--secondary-color-details);
-	width: 320px;
-	overflow: hidden;
-	height: 44px;
-	padding-left: 60px;
-	margin-left: -40px;
-	font-size: 0.9em;
+	color: black;
 }
-*/
 
 input.file-selected {
 	margin-left: 15px;

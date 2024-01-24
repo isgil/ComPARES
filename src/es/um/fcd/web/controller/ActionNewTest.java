@@ -44,6 +44,7 @@ public class ActionNewTest extends Action {
 				List<FileItem> formItems = upload.parseRequest(request);
 				Iterator<FileItem> iter = formItems.iterator();
 				List<String> filesNotSaved = new LinkedList<String>();
+				boolean impar = true;
 				// Se recorren todos los campos
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
@@ -53,10 +54,12 @@ public class ActionNewTest extends Action {
 							String fileName = new File(item.getName()).getName();
 							testFile = new TestFile(fileName, filesDirectory);
 							FileLoader.saveFile(item, testFile.getFullPhysicalName());
-							if (item.getFieldName().equals("upload-input1")) {
+							if (impar) {
 								testFilesSource1.add(testFile);
-							} else if (item.getFieldName().equals("upload-input2")) {
+								impar = false;
+							} else {
 								testFilesSource2.add(testFile);
+								impar = true;
 							}
 						}
 					} catch (Exception e) {
@@ -142,9 +145,6 @@ public class ActionNewTest extends Action {
 					e.printStackTrace();
 					response.setStatus(500);
 					return new ActionLibrary().execute(request, response, application);
-				}
-				for (String title : titlesSource1) {
-					System.out.println("Title = " + title);
 				}
 				Par par = new Par(testFileSource1, titlesSource1, testFileSource2, titlesSource2);
 				pares.add(par);

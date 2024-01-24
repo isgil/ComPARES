@@ -12,7 +12,7 @@ function clickCheckbox() {
 	});
 	if (testIds.length > 0) {
 		var parameters = $.param({ 'id': testIds }, true);
-		executeAjax('POST', 'results.ctrl', parameters, 'HTML', success, error, always);
+		executeAjax('POST', 'results.ctrl', parameters, 'HTML', true, success, error, always);
 		//$('#test-list').removeClass('l6').addClass('l3');
 		//$('#results-wrapper').removeClass('l6').addClass('l9');
 		$('#results').removeClass('center');

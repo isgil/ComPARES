@@ -1,10 +1,11 @@
 <script type="text/javascript">
 $( document ).ready(function() {
-   $(".title-section").text($("nav #new-test span").text()).fadeIn(1000);
-   
-   $('select#source1').formSelect();
+    $(".title-section").text($("nav #new-test span").text()).fadeIn(1000);
+    $('select#source1').formSelect();
 	$('select#source2').formSelect();
-	$('button#add').click(toggleProgress);
+	$('button#add-source').click(toggleProgress);
+	$('a#add-input1').click(addPar);
+	$('a#add-input2').click(addPar);
 	$('img.close').click(function() {
 		var selectElements = $('select');
 		closeModal(selectElements);
@@ -39,6 +40,18 @@ $( document ).ready(function() {
 		}
 	  });
 });
+
+function addPar() {
+	var lastPar = $('input[type="file"]').length + 1;
+	console.log(lastPar);
+	var data1, data2;
+	var parameters = $.param({ 'inputFileId': lastPar }, true);
+	executeAjax('GET', 'CreateInput', parameters, 'HTML', false, function(data) {data1=data}, error, function(){});
+	var parameters = $.param({ 'inputFileId': (lastPar + 1) }, true);
+	executeAjax('GET', 'CreateInput', parameters, 'HTML', false, function(data) {data2=data}, error, function(){});
+	var element = '<div class="par row s12 m12 l12 center"><div class="input-list col s6 center-align">' + data1 + '</div><div class="input-list col s6 center-align">' + data2 + '</div></div>';
+	$('.par').last().after(element);
+}
 
 function checkSelectValid(select) {
 	var selectWrapper;
@@ -85,21 +98,6 @@ function checkFormValid() {
 			alert('Sources need to be different');
 		}
 	}
-	// Check number of files for Source 1 and Source 2 is identical
-	if (validated == true) {
-		var nFilesSelected = 0;
-		$('input[type="file"]').each(function(){
-			var nFilesCurrent = this.files.length;
-			if (nFilesSelected == 0) {
-				nFilesSelected = nFilesCurrent;
-			} else {
-				if (nFilesCurrent != nFilesSelected) {
-					alert('Number of files for Source 1 does not match number for Source 2');
-					validated = false;
-				}
-			}
-		});
-	}
 	
 	return validated;
 }
@@ -124,10 +122,10 @@ function closeModal(){
 
 function createSource(sourceName) {
 	var parameters = $.param({ 'source': sourceName }, true);
-	executeAjax('POST', 'CreateSource', parameters, 'HTML', success, error, always);
+	executeAjax('POST', 'CreateSource', parameters, 'HTML', true, successSource, error, alwaysSource);
 }
 	
-function success(data) {
+function successSource(data) {
 	var source = $("div.modal input#input-source").val();
 	console.log('data=' + data);
 	$("select").append('<option value="' + data.trim() + '">' + source + '</option>');
@@ -141,7 +139,7 @@ function error(jqXHR, textStatus, errorThrown) {
 	showErrorMessage('Error while processing');
 }
 
-function always() {
+function alwaysSource() {
 	setTimeout(hideProgress, 1000);
 }
 </script>

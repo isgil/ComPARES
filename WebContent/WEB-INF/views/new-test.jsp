@@ -12,53 +12,62 @@
           			<label for="test-name">Test name</label>
           		</div>
           		
-          		<!-- EXPORT SOURCE 1 -->
-				<div class="vertical-separator-right col s6">
-					<h6>
-						<b><em>Source 1</em></b>
-					</h6>
-					<div class="input-field col s12">
-						<div class="col s12">
-          					<div class="upload">
-								<input id="upload-input1" type="file" onchange="updateSourceFiles(this)" class="upload" name="upload-input1"
-								accept="application/pdf,text/html,text/htm,text/xml,text/plain" multiple="multiple" required />
-							</div>
-							<input id="files-source1" class="file-selected" placeholder="Pick up documents" disabled />
-						</div>
-						<div class="input-field col s12">
-							<tag:SelectSource id="source1" sources="${sources}" />
-						</div>
-						<div class="input-field col s12">
-							<input style="width: 100%" id="title-mark1" name="title-mark1" type="text" class="validate">
-          					<label for="title-mark1">Title mark</label>
-          				</div>
+          		<div class="row s12 m12 l12 center">
+          			<div class="col s6">
+	          			<h6>
+							<b><em>Source 1</em></b>
+						</h6>
+					</div>
+					<div class="col s6">
+	          			<h6>
+							<b><em>Source 2</em></b>
+						</h6>
+					</div>
+				</div>
+          		
+          		<div class="par row s12 m12 l12 center">
+          			<div class="input-list col s6 center-align">
+          				<% session.setAttribute("inputFileId", "1"); %>
+          				<%@ include file="/WEB-INF/views/parts/input-file.jspf"%>
+					</div>
+					<div class="input-list col s6 center-align">
+						<% session.setAttribute("inputFileId", "2"); %>
+          				<%@ include file="/WEB-INF/views/parts/input-file.jspf"%>
 					</div>
 				</div>
 				
-				<!-- EXPORT SOURCE 2 -->
-				<div class="vertical-separator-left col s6">
-					<h6>
-						<b><em>Source 2</em></b>
-					</h6>
-					<div class="input-field col s12">
-						<div class="col s12">
-          					<div class="upload">
-								<input id="upload-input2" type="file" onchange="updateSourceFiles(this)" class="upload" name="upload-input2"
-								accept="application/pdf,text/html,text/htm,text/xml,text/plain" multiple="multiple" required />
-							</div>
-							<input id="files-source2" class="file-selected" placeholder="Pick up documents" disabled />
-						</div>
-						<div class="input-field col s12">
-							<tag:SelectSource id="source2" sources="${sources}" />
-						</div>
-						<div class="input-field col s12">
-							<input style="width: 100%" id="title-mark2" name="title-mark2" type="text" class="validate">
-          					<label for="title-mark2">Title mark</label>
-          				</div>
+				<div class="row s12 m12 l12 center">
+					<div class="col s6">
+						<a id="add-input1" class="btn-floating btn-small add-file blue darken-1 waves-effect waves-light left"><i class="material-icons">add</i></a>
+					</div>
+					<div class="col s6">
+						<a id="add-input2" class="btn-floating btn-small add-file blue darken-1 waves-effect waves-light left"><i class="material-icons">add</i></a>
+					</div>
+          		</div>
+          		
+          		<div class="row s12 m12 l12 center">
+          			<div class="input-field col s6">
+						<tag:SelectSource id="source1" sources="${sources}" />
+					</div>
+					<div class="input-field col s6">
+						<tag:SelectSource id="source2" sources="${sources}" />
 					</div>
 				</div>
-				<div class="center col s12">
-					<button class="btn btn-small blue darken-1 waves-effect waves-light" type="submit" name="action">Add</button>
+						
+				<div class="row s12 m12 l12 center">
+					<div class="input-field col s6">
+						<input style="width: 100%" id="title-mark1" name="title-mark1" type="text" class="validate">
+	          			<label for="title-mark1">Title mark</label>
+	          		</div>
+	          		<div class="input-field col s6">
+						<input style="width: 100%" id="title-mark2" name="title-mark2" type="text" class="validate">
+	          			<label for="title-mark2">Title mark</label>
+	          		</div>
+				</div>
+				<div class="row s12 m12 l12 center">
+					<div class="center col s12">
+						<button id="create-test" class="btn btn-small blue darken-1 waves-effect waves-light" type="submit" name="action">Create</button>
+					</div>
 				</div>
 			</form>
 		</div>

@@ -21,10 +21,8 @@ public class TestFileStrategyTXT extends TestFileStrategy {
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
 		while ((line = buff.readLine()) != null) {
-			System.out.println("LINE|" + line);
 			if (line.contains("title")) {
 				String title = line.replaceFirst("title=", "");
-				System.out.println("TITLE|" + title);
 				titles.add(title);
 			}
 		}

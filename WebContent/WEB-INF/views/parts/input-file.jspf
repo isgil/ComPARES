@@ -1,0 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<div class="upload">
+	<input id="upload-input${inputFileId}" type="file" onchange="updateSourceFiles(this)"
+		class="upload" name="upload-input${inputFileId}"
+		accept="application/txt,text/xml,text/plain" 
+		required />
+</div>
+<input id="files-source${inputFileId}" class="file-selected" placeholder="Select file" disabled />

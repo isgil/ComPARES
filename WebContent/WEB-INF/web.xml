@@ -46,6 +46,17 @@
 		<url-pattern>/CreateSource</url-pattern>
 		<url-pattern>/create-source</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>Create Input</display-name>
+		<servlet-name>CreateInput</servlet-name>
+		<servlet-class>es.um.fcd.web.servlet.CreateInput</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateInput</servlet-name>
+		<url-pattern>/CreateInput</url-pattern>
+		<url-pattern>/create-input</url-pattern>
+	</servlet-mapping>
 	<jsp-config>
 		<taglib>
 			<taglib-uri>/utiltld</taglib-uri>
