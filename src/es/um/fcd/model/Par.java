@@ -1,16 +1,18 @@
 package es.um.fcd.model;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name="PAR")
@@ -20,13 +22,18 @@ public class Par implements Serializable {
 	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
 	@JoinColumn(name="TEST_FILE_SOURCE1")
 	private TestFile testFileSource1;
+	
 	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
 	@JoinColumn(name="TEST_FILE_SOURCE2")
 	private TestFile testFileSource2;
-	@Column(name="TITLES_SOURCE1")
-	private List<String> titlesSource1;
-	@Column(name="TITLES_SOURCE2")
-	private List<String> titlesSource2;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	@JoinTable(
+	        name = "REL_PAR_TITLE",
+	        joinColumns = @JoinColumn(name = "PAR_ID"),
+	        inverseJoinColumns = @JoinColumn(name = "TITLE_ID")
+	)
+	private List<Title> titles;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +43,10 @@ public class Par implements Serializable {
 		super();
 	}
 
-	public Par(TestFile testFileSource1, List<String> titlesSource1, TestFile testFileSource2, List<String> titlesSource2){
+	public Par(TestFile testFileSource1, TestFile testFileSource2, List<Title> titles){
 		this.testFileSource1 = testFileSource1;
-		this.titlesSource1 = titlesSource1;
 		this.testFileSource2 = testFileSource2;
-		this.titlesSource2 = titlesSource2;
+		this.titles = titles;
 	}
 
 	public Integer getId() {
@@ -67,19 +73,21 @@ public class Par implements Serializable {
 		this.testFileSource2 = testFileSource2;
 	}
 
-	public List<String> getTitlesSource1() {
-		return titlesSource1;
+	public List<Title> getTitles(Source source) {
+		List<Title> titlesSource = new LinkedList<Title>();
+		for (Title title : titles) {
+			if (title.getSource() == source) {
+				titlesSource.add(title);
+			}
+		}
+		return titlesSource;
+	}
+	
+	public List<Title> getTitles() {
+		return titles;
 	}
 
-	public void setTitlesSource1(List<String> titlesSource1) {
-		this.titlesSource1 = titlesSource1;
-	}
-
-	public List<String> getTitlesSource2() {
-		return titlesSource2;
-	}
-
-	public void setTitlesSource2(List<String> titlesSource2) {
-		this.titlesSource2 = titlesSource2;
+	public void setTitles(List<Title> titles) {
+		this.titles = titles;
 	}	
 }

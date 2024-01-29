@@ -9,6 +9,7 @@ public abstract class DAOFactory {
 	public abstract DAOPar getDAOPar();
 	public abstract DAOSource getDAOSource();
 	public abstract DAOSettings getDAOSettings();
+	public abstract DAOTitle getDAOTitle();
 	public abstract DAOUser getDAOUser();
 
 	private static EntityManagerFactory emf;

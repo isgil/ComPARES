@@ -14,6 +14,7 @@ import es.um.fcd.model.Par;
 import es.um.fcd.model.Source;
 import es.um.fcd.model.Test;
 import es.um.fcd.model.TestFile;
+import es.um.fcd.model.Title;
 import es.um.fcd.util.AppLogger;
 
 public class Main {
@@ -42,19 +43,24 @@ public class Main {
 			TestFile testFile6 = new TestFile("export Source 6.txt", "path");
 			
 			// TestFile titles
-			List<String> titles1 = new LinkedList<String>();
-			List<String> titles2 = new LinkedList<String>();
-			titles1.add("title11");
-			titles1.add("title12");
-			titles1.add("title13");
-			titles2.add("title21");
-			titles2.add("title22");
-			titles2.add("title23");
+			List<Title> titles = new LinkedList<Title>();
+			Title title1 = new Title("title11", 0, source1);
+			Title title2 = new Title("title12", 1, source1);
+			Title title3 = new Title("title13", 2, source1);
+			Title title4 = new Title("title21", 0, source2);
+			Title title5 = new Title("title22", 1, source2);
+			Title title6 = new Title("title23", 2, source2);
+			titles.add(title1);
+			titles.add(title2);
+			titles.add(title3);
+			titles.add(title4);
+			titles.add(title5);
+			titles.add(title6);
 			
 			// Par
-			Par par1 = new Par(testFile1, titles1, testFile2, titles2);
-			Par par2 = new Par(testFile3, titles1, testFile4, titles2);
-			Par par3 = new Par(testFile5, titles1, testFile6, titles2);
+			Par par1 = new Par(testFile1, testFile2, titles);
+			//Par par2 = new Par(testFile3, testFile4, titles);
+			//Par par3 = new Par(testFile5, testFile6, titles);
 
 			// Source
 			source1 = daoSource.create(source1);
@@ -63,11 +69,11 @@ public class Main {
 			// Test
 			List<Par> pares1 = new LinkedList<Par>();
 			pares1.add(par1);
-			pares1.add(par2);
+			//pares1.add(par2);
 			Test test1 = new Test("Test1", source1, source2, "title1", "title2", pares1);
 						
 			List<Par> pares2 = new LinkedList<Par>();
-			pares2.add(par3);
+			//pares2.add(par3);
 			Test test2 = new Test("Test2", source1, source2, "ti1", "ti2", pares2);
 			
 			
@@ -83,16 +89,16 @@ public class Main {
 			System.out.println("T1 S1 ID" + test1.getSource1().getId());
 			System.out.println("T1 S2 ID" + test1.getSource2().getId());
 			System.out.println("T1 P1 ID" + test1.getPares().get(0).getId());
-			System.out.println("T1 P2 ID" + test1.getPares().get(1).getId());
+			//System.out.println("T1 P2 ID" + test1.getPares().get(1).getId());
 			System.out.println("T1 P1 TF1 ID" + test1.getPares().get(0).getTestFileSource1().getId());
 			//System.out.println(test2.getId());
 			
 			//daoTest.create(test2);
-			System.out.println("T2 ID" + test2.getId());
-			System.out.println("T2 S1 ID" + test2.getSource1().getId());
-			System.out.println("T2 S2 ID" + test2.getSource2().getId());
-			System.out.println("T2 P1 ID" + test2.getPares().get(0).getId());
-			System.out.println("T2 P1 TF1 ID" + test2.getPares().get(0).getTestFileSource1().getId());
+			//System.out.println("T2 ID" + test2.getId());
+			//System.out.println("T2 S1 ID" + test2.getSource1().getId());
+			//System.out.println("T2 S2 ID" + test2.getSource2().getId());
+			//System.out.println("T2 P1 ID" + test2.getPares().get(0).getId());
+			//System.out.println("T2 P1 TF1 ID" + test2.getPares().get(0).getTestFileSource1().getId());
 			
 		} catch (DAOException e) {
 			AppLogger.log("DAO Error");

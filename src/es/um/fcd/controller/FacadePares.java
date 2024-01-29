@@ -8,6 +8,7 @@ import java.util.List;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Par;
 import es.um.fcd.model.TestFile;
+import es.um.fcd.model.Title;
 
 public class FacadePares extends Facade {
 	private static FacadePares instancia = null;
@@ -21,8 +22,8 @@ public class FacadePares extends Facade {
 		return instancia;
 	}
 	
-	public Par add(TestFile testFileSource1, List<String> titlesSource1, TestFile testFileSource2, List<String> titlesSource2) throws DAOException {
-		Par par = new Par(testFileSource1, titlesSource1, testFileSource2, titlesSource2);
+	public Par add(TestFile testFileSource1, List<Title> titlesSource1, TestFile testFileSource2, List<Title> titles) throws DAOException {
+		Par par = new Par(testFileSource1, testFileSource2, titles);
 		return getDAOFactoria().getDAOPar().create(par);
 	}
 

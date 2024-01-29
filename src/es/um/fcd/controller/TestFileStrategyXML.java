@@ -15,11 +15,12 @@ import org.xml.sax.InputSource;
 
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.TestFile;
+import es.um.fcd.model.Title;
 
 public class TestFileStrategyXML extends TestFileStrategy {
 
 	@Override
-	protected List<String> extractTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
+	protected List<Title> extractTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
 		/*
 		System.setProperty("javax.xml.parsers.SAXParserFactory", "org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl");
 

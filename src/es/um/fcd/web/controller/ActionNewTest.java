@@ -1,7 +1,6 @@
 package es.um.fcd.web.controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,6 +21,7 @@ import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Par;
 import es.um.fcd.model.Source;
 import es.um.fcd.model.TestFile;
+import es.um.fcd.model.Title;
 import es.um.fcd.util.AppLogger;
 import es.um.fcd.web.model.Notifications;
 import es.um.fcd.web.util.FileLoader;
@@ -128,25 +128,34 @@ public class ActionNewTest extends Action {
 				TestFile testFileSource2 = testFilesSource2.get(i);
 				TestController tc = TestController.getInstancia();
 
-				List<String> titlesSource1;
+				List<Title> titlesSource1;
 				try {
 					titlesSource1 = tc.getTitles(testFileSource1);
+					for (Title title : titlesSource1) {
+						title.setSource(source1db);
+					}
 				} catch (DAOException | IOException e) {
 					notifications.getError().add(Notifications.getErrorReadingTestFile(testFileSource1.getFullName()));
 					e.printStackTrace();
 					response.setStatus(500);
 					return new ActionLibrary().execute(request, response, application);
 				}
-				List<String> titlesSource2;
+				List<Title> titlesSource2;
 				try {
 					titlesSource2 = tc.getTitles(testFileSource2);
+					for (Title title : titlesSource2) {
+						title.setSource(source2db);
+					}
 				} catch (DAOException | IOException e) {
 					notifications.getError().add(Notifications.getErrorReadingTestFile(testFileSource2.getFullName()));
 					e.printStackTrace();
 					response.setStatus(500);
 					return new ActionLibrary().execute(request, response, application);
 				}
-				Par par = new Par(testFileSource1, titlesSource1, testFileSource2, titlesSource2);
+				List<Title> titles = new LinkedList<Title>();
+				titles.addAll(titlesSource1);
+				titles.addAll(titlesSource2);
+				Par par = new Par(testFileSource1, testFileSource2, titles);
 				pares.add(par);
 			}
 			

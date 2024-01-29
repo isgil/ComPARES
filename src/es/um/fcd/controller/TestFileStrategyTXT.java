@@ -9,21 +9,25 @@ import java.util.List;
 
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.TestFile;
+import es.um.fcd.model.Title;
 
 public class TestFileStrategyTXT extends TestFileStrategy {
 
 	@Override
-	protected List<String> extractTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
-		List<String> titles = new LinkedList<String>();
+	protected List<Title> extractTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
+		List<Title> titles = new LinkedList<Title>();
 		FileReader file = null;
 	
 		file = new FileReader(testFile.getFullPhysicalName());
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
+		int position = 0;
 		while ((line = buff.readLine()) != null) {
 			if (line.contains("title")) {
-				String title = line.replaceFirst("title=", "");
+				String titleStr = line.replaceFirst("title=", "");
+				Title title = new Title(titleStr, position);
 				titles.add(title);
+				position++;
 			}
 		}
 		file.close();

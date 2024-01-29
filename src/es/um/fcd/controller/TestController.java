@@ -6,6 +6,7 @@ import java.util.List;
 
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.TestFile;
+import es.um.fcd.model.Title;
 
 public class TestController {
 	private static TestController instancia = null;
@@ -20,10 +21,10 @@ public class TestController {
 		return instancia;
 	}
 
-	public List<String> getTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
+	public List<Title> getTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
 		String extension = testFile.getExtension();
 		TestFileStrategy tfs = null;
-		List<String> titles = null;
+		List<Title> titles = null;
 		if (extension.equalsIgnoreCase("txt")) {
 			tfs = new TestFileStrategyTXT();
 			titles = tfs.getTitles(testFile);

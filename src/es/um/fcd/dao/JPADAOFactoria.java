@@ -39,4 +39,9 @@ public class JPADAOFactoria extends DAOFactory {
 	public DAOUser getDAOUser() {
 		return new JPADAOUser(this.emf);
 	}
+
+	@Override
+	public DAOTitle getDAOTitle() {
+		return new JPADAOTitle(this.emf);
+	}
 }
