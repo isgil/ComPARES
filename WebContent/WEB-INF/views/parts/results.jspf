@@ -6,20 +6,20 @@
 <%@ page import="java.util.LinkedHashMap" %>
 
 <!-- For each Test -->
-<c:forEach begin="1" end="${fn:length(results)}" var="i">
+<c:forEach begin="1" end="${fn:length(testsResults)}" var="i">
 <div class="test-result">
-	<c:set var="result" value="${results[i-1]}"/>
+	<c:set var="testResult" value="${testsResults[i-1]}"/>
 	<c:set var="maxNumberOfTops" value="0"/>
 	<c:set var="maxTopResults"/>
 	<!-- For each Par -->
-	<c:forEach var="parResults" items="${result.testResults}">
-		<!-- Get number of Tops generated -->
-		<c:set var="topResultsLength" value="${fn:length(parResults.value)}" />
-		<!-- If number of tops for this Par is bigger, updates Max values -->
-		<c:if test="${maxNumberOfTops < topResultsLength}">
-			<c:set var="maxNumberOfTops" value="${fn:length(parResults.value)}"/>
-			<c:set var="maxTopResults" value="${parResults.value}"/>
-		</c:if>
+	<c:forEach var="parResult" items="${testResult.parResults}">
+			<!-- Get number of Tops generated -->
+			<c:set var="topResultsLength" value="${fn:length(parResult.topResults)}" />
+			<!-- If number of tops for this Par is bigger, updates Max values -->
+			<c:if test="${maxNumberOfTops < topResultsLength}">
+				<c:set var="maxNumberOfTops" value="${topResultsLength}"/>
+				<c:set var="maxTopResults" value="${parResult.topResults}"/>
+			</c:if>
 	</c:forEach>
 	
 	<%--
@@ -28,8 +28,8 @@
 	 --%>	
 	 
 	<!-- Test Name --> 
-	<h6><b>Test ${result.test.id} - ${result.test.name}</b></h6>
-	<tag:ResultsTable id="${i}" result="${result}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" />
+	<h6><b>Test ${testResult.test.id} - ${testResult.test.name}</b></h6>
+	<tag:ResultsTable id="${i}" testResult="${testResult}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" />
 	<c:set var="i" value="${i+1}"/>
 </div>
 </c:forEach>
@@ -37,10 +37,14 @@
 $(document).ready(function() {
     $('table').each(function() {
     	$(this).DataTable({
+    		autoWidth: true,
             scrollX: true, // Enable horizontal scrolling
             fixedColumns: {
                 leftColumns: 1, // Number of columns to fix on the left
-            }
+            },
+            columnDefs: [
+                { "width": "15%", "targets": 0 }
+            ]
     	});
     });
 });

@@ -2,7 +2,6 @@ package es.um.fcd.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -65,6 +64,11 @@ public class Title implements Serializable {
 
 	public void setSource(Source source) {
 		this.source = source;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return title.equalsIgnoreCase(((Title)obj).getTitle());
 	}
 
 }

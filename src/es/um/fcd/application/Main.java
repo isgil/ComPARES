@@ -20,6 +20,10 @@ import es.um.fcd.util.AppLogger;
 public class Main {
 
 	public static void main(String[] args) {
+		int v1 = 10;
+		int v2 = 20;
+		System.out.println(Math.abs(v1 - v2));
+		/*
 		DAOFactory daoFactoria;
 		try {
 			daoFactoria = DAOFactory.getDAOFactoria(DAOFactory.JPA);
@@ -77,13 +81,13 @@ public class Main {
 			Test test2 = new Test("Test2", source1, source2, "ti1", "ti2", pares2);
 			
 			
-			/*
-			daoSource.create(source3);
-			daoSource.create(source4);
-			daoPar.create(par1);
-			daoPar.create(par2);
-			daoPar.create(par3);
-			*/
+			
+			//daoSource.create(source3);
+			//daoSource.create(source4);
+			//daoPar.create(par1);
+			//daoPar.create(par2);
+			//daoPar.create(par3);
+			
 			test1 = daoTest.create(test1);
 			System.out.println("T1 ID" + test1.getId());
 			System.out.println("T1 S1 ID" + test1.getSource1().getId());
@@ -104,6 +108,7 @@ public class Main {
 			AppLogger.log("DAO Error");
 			e.printStackTrace();
 		}
+		*/
 	}
 
 }

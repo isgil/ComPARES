@@ -5,7 +5,7 @@
 	<div id="library" class="content">
 		<!-- CONTENT -->
 		<div class="row">
-			<div id="test-list" class="test-list col s12 m12 l3">
+			<div id="test-list" class="test-list col s12 m12 l4">
 				<c:forEach items="${tests}" var="test">
 					<div class="test row">
 						<div class="item col s12 m12 l12 grey lighten-4">
@@ -25,7 +25,7 @@
 					</div>
 				</c:forEach>
 			</div>
-			<div id="results-wrapper" class="results-wrapper col s12 m12 l9">
+			<div id="results-wrapper" class="results-wrapper col s12 m12 l8">
 				<div id="results" class="item results row center grey lighten-4">
 					<b><span>No results to display</span></b>
 				</div>

@@ -1,6 +1,8 @@
 package es.um.fcd.model;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -80,6 +82,13 @@ public class Par implements Serializable {
 				titlesSource.add(title);
 			}
 		}
+		return titlesSource;
+	}
+	
+	public List<Title> getTitlesSorted(Source source) {
+		List<Title> titlesSource = getTitles(source);
+		Collections.sort(titlesSource, Comparator.comparing(Title::getPosition));
+		
 		return titlesSource;
 	}
 	
