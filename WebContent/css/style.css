@@ -118,6 +118,15 @@ div.sources {
 	float: right;
 }
 
+div.chip.test-name {
+	margin-top: -1px;
+	overflow: hidden;
+}
+
+div.chip.test-id {
+	margin-left: -12px;
+}
+
 div.results-wrapper {
 	padding-left: 40px !important;
 }
@@ -206,6 +215,17 @@ div.table-wrapper {
 	overflow-x: auto;
 }
 */
+
+div.actions {
+	background-color: white;
+	padding: 10px !important;
+	margin-bottom: 50px;
+}
+
+div.actions button {
+	margin-top: 0;
+}
+
 div.test-result {
 	margin: 10px 20px;
 	margin-top: 0;
@@ -576,6 +596,7 @@ input.custom-checkbox+label.custom-checkbox {
 	background-position: 0 0;
 	vertical-align: middle;
 	cursor: pointer;
+	margin-bottom: 10px;
 }
 
 input.custom-checkbox:checked+label.custom-checkbox {

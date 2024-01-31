@@ -2,17 +2,42 @@
 $( document ).ready(function() {
    $(".title-section").text($("nav #library span").text()).fadeIn(1000);
    $("input.custom-checkbox").click(clickCheckbox);
-});	
+});
 
-function clickCheckbox() {
+function clickExport() {
+	alert('Not implemented yet');
+}
+
+function clickRemove() {
+	var testIds = getActiveCheckboxes();
+	if (testIds.length > 0) {
+		var parameters = $.param({ 'id': testIds }, true);
+		executeAjax('POST', 'remove.ctrl', parameters, 'HTML', true, successRemoval, error, always);
+	} else {
+		alert('Please select the tests you want to get removed');
+	}
+}
+
+function successRemoval(data) {
+	console.log('tests removed!');
+	window.location.reload();
+}
+
+function getActiveCheckboxes() {
 	var testIds = [];
 	$("input.custom-checkbox:checked").each(function(){
 		console.log('val = ' + $(this).val());
 		testIds.push($(this).val());
 	});
+	
+	return testIds;
+}
+
+function clickCheckbox() {
+	var testIds = getActiveCheckboxes();
 	if (testIds.length > 0) {
 		var parameters = $.param({ 'id': testIds }, true);
-		executeAjax('POST', 'results.ctrl', parameters, 'HTML', true, success, error, always);
+		executeAjax('POST', 'results.ctrl', parameters, 'HTML', true, successResults, error, always);
 		//$('#test-list').removeClass('l6').addClass('l3');
 		//$('#results-wrapper').removeClass('l6').addClass('l9');
 		$('#results').removeClass('center');
@@ -25,7 +50,7 @@ function clickCheckbox() {
 	}
 };
 
-function success(data) {
+function successResults(data) {
 	console.log('success!');
 	$(".results").html(data);
 }

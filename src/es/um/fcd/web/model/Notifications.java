@@ -15,6 +15,8 @@ public class Notifications {
 	public static final String SUCCESS_TEST_CREATED = "Test created successfully";
 	public static final String ERROR_SOURCE_1 = "Error while processing Source 1";
 	public static final String ERROR_SOURCE_2 = "Error while processing Source 2";
+	public static final String ERROR_REMOVING_TESTS = "Error while removing test";
+	public static final String ERROR_NO_TEST_SELECTED_TO_REMOVE = "No tests selected to remove";
 	
 	public static final String getErrorReadingTestFile(String testFile) {
 		return "The following test file could not be read: " + testFile;
@@ -26,6 +28,10 @@ public class Notifications {
 
 	public static String getExitoFicherosSubidos(int filesUploadedSuccessfully) {
 		return filesUploadedSuccessfully + " files were uploaded successfully";
+	}
+	
+	public static String getErrorRemovingTests(List<Integer> testsNotRemoved) {
+		return "The following tests could not be removed: " + Strings.getString(testsNotRemoved, ",", true);
 	}
 	
 	/*

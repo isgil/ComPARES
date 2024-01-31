@@ -8,11 +8,18 @@
 <table id="${id}" class="results-table highlight centered">
 	<thead>
 		<tr>
-			<th></th>
-			<c:forEach var="topResults" items="${maxTopResults}">
-				<c:set var="top" value="${topResults.key}"/>
-				<th>${top}</th>
-			</c:forEach>
+			<th>Par</th>
+			<c:choose>
+				<c:when test="${maxNumberOfTops == 0}">
+					<th>Tops</th>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="topResults" items="${maxTopResults}">
+						<c:set var="top" value="${topResults.key}"/>
+						<th>${top}</th>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,14 +30,21 @@
 				<td title="${par.testFileSource1.fileName} || ${par.testFileSource2.fileName}"><div class="chip blue lighten-4">Par ${nPar}</div></td>
 				<c:set var="topResults" value="${parResult.topResults}" />
 				<c:set var="numberOfTops" value="${fn:length(topResults)}"/>
-				<c:forEach var="topResult" items="${topResults}">
-					<c:set var="topValue" value="${topResult.value}"/>
-					<td>${topValue}</td>
-				</c:forEach>
-				<c:forEach begin="${numberOfTops+1}" end="${maxNumberOfTops}" var="t">
-					<td>-</td>
-					<c:set var="t" value="${t+1}"/>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${maxNumberOfTops == 0}">
+						<td>No results available</td>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="topResult" items="${topResults}">
+							<c:set var="topValue" value="${topResult.value}"/>
+							<td>${topValue}</td>
+						</c:forEach>
+						<c:forEach begin="${numberOfTops+1}" end="${maxNumberOfTops}" var="t">
+							<td>-</td>
+							<c:set var="t" value="${t+1}"/>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</tr>
 			<c:set var="nPar" value="${nPar+1}"/>
 		</c:forEach>

@@ -20,9 +20,9 @@ import es.um.fcd.util.AppLogger;
 public class Main {
 
 	public static void main(String[] args) {
-		int v1 = 10;
-		int v2 = 20;
-		System.out.println(Math.abs(v1 - v2));
+		Title title1 = new Title("Region de Murcia", 1);
+		Title title2 = new Title("Región de murcia", 1);
+		System.out.println(title1.equals(title2));
 		/*
 		DAOFactory daoFactoria;
 		try {

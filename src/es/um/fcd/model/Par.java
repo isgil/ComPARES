@@ -21,11 +21,11 @@ import javax.persistence.OneToOne;
 public class Par implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	@JoinColumn(name="TEST_FILE_SOURCE1")
 	private TestFile testFileSource1;
 	
-	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	@JoinColumn(name="TEST_FILE_SOURCE2")
 	private TestFile testFileSource2;
 	

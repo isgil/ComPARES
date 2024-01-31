@@ -1,11 +1,16 @@
 package es.um.fcd.model;
 
 import java.io.Serializable;
+import java.text.Normalizer;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.apache.commons.text.similarity.LevenshteinDistance;
+
+import es.um.fcd.util.Strings;
 
 @Entity(name="TITLE")
 public class Title implements Serializable {
@@ -67,8 +72,19 @@ public class Title implements Serializable {
 	}
 	
 	@Override
+	// Two strings will be considered equal if they match at least 90%
 	public boolean equals(Object obj) {
-		return title.equalsIgnoreCase(((Title)obj).getTitle());
+		int lenght = title.length();
+		int thresholdDistance = Math.round((10*lenght)/100);
+		if (thresholdDistance == 0) thresholdDistance = 1;
+		String titleCompared = ((Title)obj).getTitle();
+		String title1 = Strings.removeAccents(title.toLowerCase());
+		String title2 = Strings.removeAccents(titleCompared.toLowerCase());
+		System.out.println("Comparing: " + title1 + "|" + title2 + " -- Thresshold: " + thresholdDistance);
+		int similarity = Strings.getSimilarity(title1, title2);
+		if (similarity <= thresholdDistance) return true;
+		return false;
 	}
+	
 
 }
