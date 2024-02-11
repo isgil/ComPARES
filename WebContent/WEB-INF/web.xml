@@ -57,6 +57,17 @@
 		<url-pattern>/CreateInput</url-pattern>
 		<url-pattern>/create-input</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>RemoveTests</display-name>
+		<servlet-name>RemoveTests</servlet-name>
+		<servlet-class>es.um.fcd.web.servlet.RemoveTests</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoveTests</servlet-name>
+		<url-pattern>/RemoveTests</url-pattern>
+		<url-pattern>/remove-tests</url-pattern>
+	</servlet-mapping>
 	<jsp-config>
 		<taglib>
 			<taglib-uri>/utiltld</taglib-uri>

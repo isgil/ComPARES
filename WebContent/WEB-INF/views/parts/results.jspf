@@ -6,8 +6,8 @@
 <%@ page import="java.util.LinkedHashMap" %>
 
 <div class="item row actions">
-	<button id="export" class="btn btn-small blue darken-1 waves-effect waves-light" type="button" name="action">Export</button>
-	<button id="remove" class="btn btn-small red darken-1 waves-effect waves-light right" type="button" name="action">Remove</button>
+	<button id="remove" class="btn btn-small red lighten-2 waves-effect waves-light right" type="submit" name="action">Remove</button>
+	<button id="export" class="btn btn-small blue darken-1 waves-effect waves-light right" type="button" name="action">Export</button>
 </div>
 <!-- For each Test -->
 <c:forEach begin="1" end="${fn:length(testsResults)}" var="i">
@@ -39,7 +39,7 @@
 </c:forEach>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('button#remove').click(clickRemove);
+	//$('button#remove').click(clickRemove);
 	
     $('table').each(function() {
     	$(this).DataTable({

@@ -17,6 +17,7 @@ public class Notifications {
 	public static final String ERROR_SOURCE_2 = "Error while processing Source 2";
 	public static final String ERROR_REMOVING_TESTS = "Error while removing test";
 	public static final String ERROR_NO_TEST_SELECTED_TO_REMOVE = "No tests selected to remove";
+	public static final String TESTS_REMOVED_SUCCESSFULLY = "Tests were removed successfully";
 	
 	public static final String getErrorReadingTestFile(String testFile) {
 		return "The following test file could not be read: " + testFile;

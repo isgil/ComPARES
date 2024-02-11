@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import es.um.fcd.controller.FacadeTests;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Test;
+import es.um.fcd.web.model.Notifications;
 
 public class ActionLibrary extends Action {
 	
@@ -17,6 +18,8 @@ public class ActionLibrary extends Action {
 		try {
 			List<Test> tests = (List<Test>) fcTests.getAll();
 			request.setAttribute("tests", tests);
+			Notifications notifications = getNotificationsSession(request.getSession());
+			System.out.println("ActionLibrary -> " + notifications.getSuccess().size());
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

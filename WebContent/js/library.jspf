@@ -12,7 +12,7 @@ function clickRemove() {
 	var testIds = getActiveCheckboxes();
 	if (testIds.length > 0) {
 		var parameters = $.param({ 'id': testIds }, true);
-		executeAjax('POST', 'remove.ctrl', parameters, 'HTML', true, successRemoval, error, always);
+		executeAjax('POST', 'remove-tests', parameters, 'HTML', false, successRemoval, error, always);
 	} else {
 		alert('Please select the tests you want to get removed');
 	}
@@ -20,7 +20,7 @@ function clickRemove() {
 
 function successRemoval(data) {
 	console.log('tests removed!');
-	window.location.reload();
+	//window.location.reload();
 }
 
 function getActiveCheckboxes() {

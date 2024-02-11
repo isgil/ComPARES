@@ -36,7 +36,7 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="topResult" items="${topResults}">
-							<c:set var="topValue" value="${topResult.value}"/>
+							<c:set var="topValue" value="${topResult.value}%"/>
 							<td>${topValue}</td>
 						</c:forEach>
 						<c:forEach begin="${numberOfTops+1}" end="${maxNumberOfTops}" var="t">

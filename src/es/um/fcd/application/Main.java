@@ -20,10 +20,11 @@ import es.um.fcd.util.AppLogger;
 public class Main {
 
 	public static void main(String[] args) {
-		Title title1 = new Title("Region de Murcia", 1);
+		/*Title title1 = new Title("Region de Murcia", 1);
 		Title title2 = new Title("Región de murcia", 1);
 		System.out.println(title1.equals(title2));
-		/*
+		*/
+		
 		DAOFactory daoFactoria;
 		try {
 			daoFactoria = DAOFactory.getDAOFactoria(DAOFactory.JPA);
@@ -108,7 +109,7 @@ public class Main {
 			AppLogger.log("DAO Error");
 			e.printStackTrace();
 		}
-		*/
+		
 	}
 
 }

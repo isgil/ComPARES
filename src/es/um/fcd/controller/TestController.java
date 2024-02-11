@@ -77,7 +77,8 @@ public class TestController {
 						}						
 						accumulatedDistance += distance;
 					}
-					results.put(top, accumulatedDistance);
+					int proximity = 100 - (100 * accumulatedDistance) / (top * top);
+					results.put(top, proximity);
 					System.out.println("Accumulated distance: " + accumulatedDistance);
 				} else {
 					// No more tops to calculate

@@ -216,14 +216,15 @@ div.table-wrapper {
 }
 */
 
-div.actions {
+div.item.row.actions {
 	background-color: white;
 	padding: 10px !important;
-	margin-bottom: 50px;
+	margin: 0 20px 50px 20px;
 }
 
 div.actions button {
 	margin-top: 0;
+	margin-left: 10px;
 }
 
 div.test-result {
@@ -243,8 +244,18 @@ table.dataTable {
 	width: 100% !important;
 }
 
-.dataTables_wrapper .dataTables_paginate, .dataTables_wrapper .dataTables_length {
-	display: none;
+
+.dataTables_wrapper .dataTables_paginate, .dataTables_wrapper .dataTables_length, .dataTables_info, .dtfc-right-top-blocker {
+	display: none !important;
+}
+
+/* Search in table */
+.dataTables_filter {
+	display: none !important;
+}
+
+table.dataTable thead>tr>th.sorting {
+	padding-right: 10px;
 }
 
 .dataTables_wrapper .dataTables_filter {

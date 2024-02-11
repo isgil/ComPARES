@@ -1,8 +1,11 @@
 package es.um.fcd.web.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +18,7 @@ public class ActionRemove extends Action {
 	public String execute(HttpServletRequest request, HttpServletResponse response, ServletContext application) {
 		System.out.println("Removing tests");
 		Notifications notifications = getNotificationsSession(request.getSession());
-		String[] testIds = request.getParameterValues("id");
+		String[] testIds = request.getParameterValues("test");
 		if (testIds == null || testIds.length == 0) {
 			notifications.getError().add(Notifications.ERROR_NO_TEST_SELECTED_TO_REMOVE);
 		} else {
@@ -28,6 +31,8 @@ public class ActionRemove extends Action {
 				List<Integer> testsNotRemoved = ft.delete(ids);
 				if (testsNotRemoved != null && !testsNotRemoved.isEmpty()) {
 					notifications.getError().add(Notifications.getErrorRemovingTests(testsNotRemoved));
+				} else {
+					notifications.getSuccess().add(Notifications.TESTS_REMOVED_SUCCESSFULLY);
 				}
 			} catch (DAOException e) {
 				notifications.getError().add(Notifications.ERROR_REMOVING_TESTS);
