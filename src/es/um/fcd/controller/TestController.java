@@ -37,8 +37,11 @@ public class TestController {
 		if (extension.equalsIgnoreCase("txt")) {
 			tfs = new TestFileStrategyTXT();
 			titles = tfs.getTitles(testFile);
-		} else if (extension.equalsIgnoreCase("xml")) {
-			tfs = new TestFileStrategyXML();
+		} else if (extension.equalsIgnoreCase("ris")) {
+			tfs = new TestFileStrategyRIS();
+			titles = tfs.getTitles(testFile);
+		} else if (extension.equalsIgnoreCase("bib")) {
+			tfs = new TestFileStrategyBIB();
 			titles = tfs.getTitles(testFile);
 		} else {
 			throw new IOException("File extension not recognized");
@@ -58,8 +61,11 @@ public class TestController {
 			List<Title> titlesSource2 = par.getTitlesSorted(source2);
 			int minNumTitles = (titlesSource1.size() <= titlesSource2.size()) ? titlesSource1.size() : titlesSource2.size();
 			Map<Integer, Integer> results = new LinkedHashMap<Integer, Integer>();
+			double mean = 0;
+			int numTops = 0;
 			for (int top : tops) {
 				if (top <= minNumTitles) {
+					numTops++;
 					System.out.println("Calculating top " + top);
 					List<Title> titlesSource2forTop = titlesSource2.subList(0, top);
 					int accumulatedDistance = 0;
@@ -79,13 +85,15 @@ public class TestController {
 					}
 					int proximity = 100 - (100 * accumulatedDistance) / (top * top);
 					results.put(top, proximity);
+					mean += proximity;
 					System.out.println("Accumulated distance: " + accumulatedDistance);
 				} else {
 					// No more tops to calculate
 					break;
 				}
 			}
-			ParResult parResult = new ParResult(par, results);
+			mean = mean / numTops;
+			ParResult parResult = new ParResult(par, results, mean);
 			paresResults.add(parResult);
 		}
 		TestResult testResult = new TestResult(test, paresResults);

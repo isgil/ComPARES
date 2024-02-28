@@ -16,8 +16,9 @@
 				<c:otherwise>
 					<c:forEach var="topResults" items="${maxTopResults}">
 						<c:set var="top" value="${topResults.key}"/>
-						<th>${top}</th>
+						<th>TOP ${top}</th>
 					</c:forEach>
+					<th>Mean</th>
 				</c:otherwise>
 			</c:choose>
 		</tr>
@@ -43,6 +44,7 @@
 							<td>-</td>
 							<c:set var="t" value="${t+1}"/>
 						</c:forEach>
+						<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${parResult.mean}"/>%</td>
 					</c:otherwise>
 				</c:choose>
 			</tr>
