@@ -80,7 +80,7 @@ public class Title implements Serializable {
 		String titleCompared = ((Title)obj).getTitle();
 		String title1 = Strings.removeAccents(title.toLowerCase());
 		String title2 = Strings.removeAccents(titleCompared.toLowerCase());
-		System.out.println("Comparing: " + title1 + "|" + title2 + " -- Thresshold: " + thresholdDistance);
+		//System.out.println("Comparing: " + title1 + "|" + title2 + " -- Thresshold: " + thresholdDistance);
 		int similarity = Strings.getSimilarity(title1, title2);
 		if (similarity <= thresholdDistance) return true;
 		return false;

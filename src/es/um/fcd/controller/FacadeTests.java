@@ -10,6 +10,7 @@ import es.um.fcd.model.Par;
 import es.um.fcd.model.Source;
 import es.um.fcd.model.Test;
 import es.um.fcd.model.TestFile;
+import es.um.fcd.model.Title;
 
 public class FacadeTests extends Facade {
 	private static FacadeTests instancia = null;
@@ -25,6 +26,14 @@ public class FacadeTests extends Facade {
 	
 	public Test add(String testName, Source source1, Source source2, String titleMark1, String titleMark2, List<Par> pares) throws DAOException {		
 		Test test = new Test(testName, source1, source2, titleMark1, titleMark2, pares);
+		List<Title> titles = test.getPares().get(0).getTitles(source1);
+		for (Title title : titles) {
+			System.out.println(title.getTitle());
+		}
+		titles = test.getPares().get(0).getTitles(source2);
+		for (Title title : titles) {
+			System.out.println(title.getTitle());
+		}
 		return getDAOFactoria().getDAOTest().create(test);
 	}
 

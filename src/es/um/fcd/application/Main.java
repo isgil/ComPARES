@@ -1,10 +1,14 @@
 package es.um.fcd.application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import es.um.fcd.controller.FacadePares;
 import es.um.fcd.controller.FacadeTests;
+import es.um.fcd.controller.TestController;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.dao.DAOFactory;
 import es.um.fcd.dao.DAOPar;
@@ -19,12 +23,12 @@ import es.um.fcd.util.AppLogger;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, DAOException, IOException {
 		/*Title title1 = new Title("Region de Murcia", 1);
 		Title title2 = new Title("Región de murcia", 1);
 		System.out.println(title1.equals(title2));
 		*/
-		
+		/*
 		DAOFactory daoFactoria;
 		try {
 			daoFactoria = DAOFactory.getDAOFactoria(DAOFactory.JPA);
@@ -109,7 +113,13 @@ public class Main {
 			AppLogger.log("DAO Error");
 			e.printStackTrace();
 		}
+		*/
 		
+		TestFile testFile1 = new TestFile("scopus_b1_532.bib", "C:\\Users\\david\\Downloads");
+		TestFile testFile2 = new TestFile("wos_b1_576.ris", "C:\\Users\\david\\Downloads");
+		
+		TestController.getInstancia().getTitles(testFile1);
+		TestController.getInstancia().getTitles(testFile2);
 	}
 
 }

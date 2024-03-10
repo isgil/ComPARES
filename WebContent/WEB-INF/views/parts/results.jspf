@@ -5,10 +5,6 @@
 <%@ page import="java.util.LinkedList" %>
 <%@ page import="java.util.LinkedHashMap" %>
 
-<div class="item row actions">
-	<button id="remove" class="btn btn-small red lighten-2 waves-effect waves-light right" type="submit" name="action">Remove</button>
-	<button id="export" class="btn btn-small blue darken-1 waves-effect waves-light right" type="button" name="action">Export</button>
-</div>
 <!-- For each Test -->
 <c:forEach begin="1" end="${fn:length(testsResults)}" var="i">
 <div class="test-result">
@@ -39,8 +35,6 @@
 </c:forEach>
 <script type="text/javascript">
 $(document).ready(function() {
-	//$('button#remove').click(clickRemove);
-	
     $('table').each(function() {
     	$(this).DataTable({
     		autoWidth: true,
@@ -55,4 +49,6 @@ $(document).ready(function() {
     });
 
 });
+
+
 </script>

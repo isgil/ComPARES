@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -31,9 +33,14 @@ public class TestFileStrategyRIS extends TestFileStrategy {
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
 		int position = 0;
+		Pattern pattern = Pattern.compile("TI\\s+- (.*)");
+		Matcher matcher = null;
 		while ((line = buff.readLine()) != null) {
-			if (line.contains("TI  - ")) {
-				String titleStr = line.replaceFirst("TI  - ", "");
+			matcher = pattern.matcher(line);
+			if (matcher.find()) {
+				String titleStr = matcher.group(1);
+				titleStr = titleStr.replaceAll("</?[^>]+>", "");
+				titleStr = titleStr.replaceAll("[^\\p{L}\\p{ASCII}]", "");
 				Title title = new Title(titleStr, position);
 				titles.add(title);
 				position++;

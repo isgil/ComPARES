@@ -135,6 +135,10 @@ table.highlight>tbody>tr:hover {
     background-color: rgb(215 215 215 / 50%);
 }
 
+table {
+	overflow: scroll-x;
+}
+
 table tbody tr td:first-child, table tbody th td:first-child {
 	/*text-align:left;*/
 	white-space: nowrap;
@@ -217,9 +221,16 @@ div.table-wrapper {
 */
 
 div.item.row.actions {
-	background-color: white;
+	display: none;
+	background-color: #f5f5f5;
 	padding: 10px !important;
-	margin: 0 20px 50px 20px;
+	/*margin-bottom: 20px;*/
+}
+
+div.preloader-wrapper {
+	margin-top: 20px;
+    position: absolute;
+    margin-left: 27%;
 }
 
 div.actions button {
@@ -269,9 +280,13 @@ input[type=search]:not(.browser-default) {
 	font-size: 1em;
 }
 
+.results-wrapper .default-message {
+	/*display: none;*/
+}
 
-.collection .results {
+div#results {
 	margin-top: 20px;
+	display: none;
 }
 
 div.container.config div.collection.library {

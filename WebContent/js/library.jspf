@@ -2,10 +2,32 @@
 $( document ).ready(function() {
    $(".title-section").text($("nav #library span").text()).fadeIn(1000);
    $("input.custom-checkbox").click(clickCheckbox);
+   $('button#calculate-tops').click(clickCalculateTops);
 });
+
+
 
 function clickExport() {
 	alert('Not implemented yet');
+}
+
+function clickCalculateTops() {
+	console.log('Calculating tops');
+	var testIds = getActiveCheckboxes();
+	if (testIds.length > 0) {
+		var parameters = $.param({ 'id': testIds }, true);
+		executeAjax('POST', 'results.ctrl', parameters, 'HTML', true, successResults, error, always);
+		//$('#test-list').removeClass('l6').addClass('l3');
+		//$('#results-wrapper').removeClass('l6').addClass('l9');
+		$('.preloader-wrapper').toggleClass('active');
+		//$('.preloader-wrapper').show();
+	} else {
+		//$('#test-list').removeClass('l3').addClass('l6');
+		//$('#results-wrapper').removeClass('l9').addClass('l6');
+		$('div.default-message').show();
+		$(".results").html('');
+	}
+	$(".results").hide();
 }
 
 function clickRemove() {
@@ -36,23 +58,22 @@ function getActiveCheckboxes() {
 function clickCheckbox() {
 	var testIds = getActiveCheckboxes();
 	if (testIds.length > 0) {
-		var parameters = $.param({ 'id': testIds }, true);
-		executeAjax('POST', 'results.ctrl', parameters, 'HTML', true, successResults, error, always);
-		//$('#test-list').removeClass('l6').addClass('l3');
-		//$('#results-wrapper').removeClass('l6').addClass('l9');
-		$('#results').removeClass('center');
+		$('div.actions').show();
+		$('div.default-message').hide();
 	} else {
 		//$('#test-list').removeClass('l3').addClass('l6');
 		//$('#results-wrapper').removeClass('l9').addClass('l6');
-		$('#results').addClass('center');
-		var data = '<b><span>No results to display</span></b>'
-		$(".results").html(data);
+		$('div.actions').hide();
+		$('div.default-message').show();
+		$(".results").html('');
+		$(".results").hide();
 	}
 };
 
 function successResults(data) {
 	console.log('success!');
 	$(".results").html(data);
+	$(".results").show();
 }
 
 function error() {
@@ -61,6 +82,8 @@ function error() {
 }
 
 function always() {
+	$('.preloader-wrapper').toggleClass('active');
+	//$('.preloader-wrapper').hide();
 	/*console.log('always!');*/
 }
 </script>

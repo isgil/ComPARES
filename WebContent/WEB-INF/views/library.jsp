@@ -36,8 +36,32 @@
 					</c:choose>
 				</div>
 				<div id="results-wrapper" class="results-wrapper col s12 m12 l8">
-					<div id="results" class="item results row center grey lighten-4">
-						<b><span>No results to display</span></b>
+					<div class="default-message center"><p><b>Select one or more tests to view the details</b></p></div>
+					<div class="item row actions">
+						<button id="calculate-tops"
+							class="btn btn-small blue darken-1 waves-effect waves-light left"
+							type="button" name="action">Calculate TOPs</button>
+						<button id="remove"
+							class="btn btn-small red lighten-2 waves-effect waves-light right"
+							type="submit" name="action">Remove</button>
+						<button id="export"
+							class="btn btn-small blue darken-1 waves-effect waves-light right"
+							type="button" name="action">Export</button>
+					</div>
+					<div class="preloader-wrapper big">
+						<div class="spinner-layer spinner-blue-only">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+					</div>
+					<div id="results" class="item results row grey lighten-4">
 					</div>
 				</div>
 			</div>

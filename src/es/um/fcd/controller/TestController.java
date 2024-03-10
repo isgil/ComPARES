@@ -77,10 +77,10 @@ public class TestController {
 						if (pos != -1) {
 							Title titleSource2 = titlesSource2forTop.get(pos);
 							distance = Math.abs(titleSource1.getPosition() - titleSource2.getPosition());
-							System.out.println("Distance between " + titleSource1.getTitle() + " / " + titleSource2.getTitle() + ": " + distance);
+							//System.out.println("Distance between " + titleSource1.getTitle() + " / " + titleSource2.getTitle() + ": " + distance);
 						} else {
-							System.out.println("Distance between " + titleSource1.getTitle() + " / " + titleSource1.getTitle() + ": " + distance);
-						}						
+							//System.out.println("Distance between " + titleSource1.getTitle() + " / " + titleSource1.getTitle() + ": " + distance);
+						}				
 						accumulatedDistance += distance;
 					}
 					int proximity = 100 - (100 * accumulatedDistance) / (top * top);
