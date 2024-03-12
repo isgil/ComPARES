@@ -28,7 +28,7 @@ public class Main {
 		Title title2 = new Title("Región de murcia", 1);
 		System.out.println(title1.equals(title2));
 		*/
-		/*
+		
 		DAOFactory daoFactoria;
 		try {
 			daoFactoria = DAOFactory.getDAOFactoria(DAOFactory.JPA);
@@ -53,12 +53,12 @@ public class Main {
 			
 			// TestFile titles
 			List<Title> titles = new LinkedList<Title>();
-			Title title1 = new Title("title11", 0, source1);
-			Title title2 = new Title("title12", 1, source1);
-			Title title3 = new Title("title13", 2, source1);
-			Title title4 = new Title("title21", 0, source2);
-			Title title5 = new Title("title22", 1, source2);
-			Title title6 = new Title("title23", 2, source2);
+			Title title1 = new Title("title11", 0, -1);
+			Title title2 = new Title("title12", 1, -1);
+			Title title3 = new Title("title13", 2, -1);
+			Title title4 = new Title("title21", -1, 0);
+			Title title5 = new Title("title22", -1, 1);
+			Title title6 = new Title("title23", -1, 2);
 			titles.add(title1);
 			titles.add(title2);
 			titles.add(title3);
@@ -113,13 +113,14 @@ public class Main {
 			AppLogger.log("DAO Error");
 			e.printStackTrace();
 		}
-		*/
 		
+		/*
 		TestFile testFile1 = new TestFile("scopus_b1_532.bib", "C:\\Users\\david\\Downloads");
 		TestFile testFile2 = new TestFile("wos_b1_576.ris", "C:\\Users\\david\\Downloads");
 		
 		TestController.getInstancia().getTitles(testFile1);
 		TestController.getInstancia().getTitles(testFile2);
+		*/
 	}
 
 }

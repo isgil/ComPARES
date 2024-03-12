@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import es.um.fcd.dao.DAOException;
-import es.um.fcd.model.Source;
 import es.um.fcd.model.Title;
 
 public class FacadeTitles extends Facade {
@@ -20,8 +19,8 @@ public class FacadeTitles extends Facade {
 		return instancia;
 	}
 	
-	public Title add(String titleStr, int position, Source source) throws DAOException {		
-		Title title = new Title(titleStr, position, source);
+	public Title add(String titleStr, int positionSource1, int positionSource2) throws DAOException {		
+		Title title = new Title(titleStr, positionSource1, positionSource2);
 		return getDAOFactoria().getDAOTitle().create(title);
 	}
 

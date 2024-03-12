@@ -75,7 +75,29 @@ public class Par implements Serializable {
 	public void setTestFileSource2(TestFile testFileSource2) {
 		this.testFileSource2 = testFileSource2;
 	}
-
+	
+	public List<Title> getTitlesSource1() {
+		List<Title> titlesSource1 = new LinkedList<Title>();
+		for (Title title : titles) {
+			if (title.getPositionSource1() != -1) {
+				titlesSource1.add(title);
+			}
+		}
+		
+		return titlesSource1;
+	}
+	
+	public List<Title> getTitlesSource2() {
+		List<Title> titlesSource2 = new LinkedList<Title>();
+		for (Title title : titles) {
+			if (title.getPositionSource2() != -1) {
+				titlesSource2.add(title);
+			}
+		}
+		
+		return titlesSource2;
+	}
+/*
 	public List<Title> getTitles(Source source) {
 		List<Title> titlesSource = new LinkedList<Title>();
 		for (Title title : titles) {
@@ -92,7 +114,7 @@ public class Par implements Serializable {
 		
 		return titlesSource;
 	}
-	
+*/
 	public List<Title> getTitles() {
 		return titles;
 	}

@@ -227,6 +227,28 @@ div.item.row.actions {
 	/*margin-bottom: 20px;*/
 }
 
+div.preloader-wrapper-bg {
+	top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    position: fixed;
+    border-radius: 5px;
+    background-color: white;
+}
+
+div#new-test div.preloader-wrapper {
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
 div.preloader-wrapper {
 	margin-top: 20px;
     position: absolute;

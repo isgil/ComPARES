@@ -128,33 +128,15 @@ public class ActionNewTest extends Action {
 				TestFile testFileSource2 = testFilesSource2.get(i);
 				TestController tc = TestController.getInstancia();
 
-				List<Title> titlesSource1;
+				List<Title> titles;
 				try {
-					titlesSource1 = tc.getTitles(testFileSource1);
-					for (Title title : titlesSource1) {
-						title.setSource(source1db);
-					}
+					titles = tc.getTitles(testFileSource1, testFileSource2);
 				} catch (DAOException | IOException e) {
 					notifications.getError().add(Notifications.getErrorReadingTestFile(testFileSource1.getFullName()));
 					e.printStackTrace();
 					response.setStatus(500);
 					return new ActionLibrary().execute(request, response, application);
 				}
-				List<Title> titlesSource2;
-				try {
-					titlesSource2 = tc.getTitles(testFileSource2);
-					for (Title title : titlesSource2) {
-						title.setSource(source2db);
-					}
-				} catch (DAOException | IOException e) {
-					notifications.getError().add(Notifications.getErrorReadingTestFile(testFileSource2.getFullName()));
-					e.printStackTrace();
-					response.setStatus(500);
-					return new ActionLibrary().execute(request, response, application);
-				}
-				List<Title> titles = new LinkedList<Title>();
-				titles.addAll(titlesSource1);
-				titles.addAll(titlesSource2);
 				Par par = new Par(testFileSource1, testFileSource2, titles);
 				pares.add(par);
 			}

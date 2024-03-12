@@ -1,22 +1,13 @@
 package es.um.fcd.controller;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.InputSource;
 
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.TestFile;
@@ -32,7 +23,7 @@ public class TestFileStrategyRIS extends TestFileStrategy {
 		file = new FileReader(testFile.getFullPhysicalName());
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
-		int position = 0;
+		//int position = 0;
 		Pattern pattern = Pattern.compile("TI\\s+- (.*)");
 		Matcher matcher = null;
 		while ((line = buff.readLine()) != null) {
@@ -41,9 +32,9 @@ public class TestFileStrategyRIS extends TestFileStrategy {
 				String titleStr = matcher.group(1);
 				titleStr = titleStr.replaceAll("</?[^>]+>", "");
 				titleStr = titleStr.replaceAll("[^\\p{L}\\p{ASCII}]", "");
-				Title title = new Title(titleStr, position);
+				Title title = new Title(titleStr);
 				titles.add(title);
-				position++;
+				//position++;
 			}
 		}
 		file.close();

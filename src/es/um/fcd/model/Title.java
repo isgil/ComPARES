@@ -1,14 +1,12 @@
 package es.um.fcd.model;
 
 import java.io.Serializable;
-import java.text.Normalizer;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import es.um.fcd.util.Strings;
 
@@ -18,25 +16,26 @@ public class Title implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;	
+	private Integer id;
+	@Column(length = 512)
 	private String title;
-	private int position;
-	private Source source;
+	private int positionSource1;
+	private int positionSource2;
 
 	public Title() {
 		super();
 	}
 	
-	public Title(String title, int position, Source source) {
+	public Title(String title) {
 		this.title = title;
-		this.position = position;
-		this.source = source;
+		this.positionSource1 = -1;
+		this.positionSource2 = -1;
 	}
 	
-	public Title(String title, int position) {
+	public Title(String title, int positionSource1, int positionSource2) {
 		this.title = title;
-		this.position = position;
-		this.source = null;
+		this.positionSource1 = positionSource1;
+		this.positionSource2 = positionSource2;
 	}
 
 	public Integer getId() {
@@ -55,22 +54,22 @@ public class Title implements Serializable {
 		this.title = title;
 	}
 
-	public int getPosition() {
-		return position;
+	public int getPositionSource1() {
+		return positionSource1;
 	}
 
-	public void setPosition(int position) {
-		this.position = position;
-	}
-
-	public Source getSource() {
-		return source;
-	}
-
-	public void setSource(Source source) {
-		this.source = source;
+	public void setPositionSource1(int positionSource1) {
+		this.positionSource1 = positionSource1;
 	}
 	
+	public int getPositionSource2() {
+		return positionSource2;
+	}
+
+	public void setPositionSource2(int positionSource2) {
+		this.positionSource2 = positionSource2;
+	}
+
 	@Override
 	// Two strings will be considered equal if they match at least 90%
 	public boolean equals(Object obj) {

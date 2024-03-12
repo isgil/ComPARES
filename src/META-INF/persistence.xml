@@ -11,7 +11,7 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<!--  Activar esta property para poder lanzar el Main y crear los primeros objetos en el servidor  -->
 			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://fcd1.inf.um.es:3306/compares" />-->
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/compares" />	
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/compares?useUnicode=yes&amp;characterEncoding=UTF-8"/>	
 			<property name="javax.persistence.jdbc.user" value="documentacion" />
 			<property name="javax.persistence.jdbc.password" value="D0cumentac10n" />
 			<!--			

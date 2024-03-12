@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div class="modal">
+<div id="modal-new-source" class="modal">
 	<div class="item grey lighten-4 row">
 		<!-- <a target="_blank" href="https://icons8.com/icon/63688/cancel">Close</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>-->
 		<div class="top-icons"><img class="close" /></div>

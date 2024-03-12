@@ -4,6 +4,23 @@
 
 <body>
 	<div id="new-test" class="content">
+		<div id="modal-loader" class="modal">
+			<div class="preloader-wrapper-bg">
+				<div class="preloader-wrapper big">
+					<div class="spinner-layer spinner-blue-only">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- CONTENT -->
 		<div id="new-test" class="row s12 m12 l12 center">
 			<form id="form-new-test" class="item col s12 m12 l6 offset-l3 grey lighten-4" action="new-test.ctrl" enctype="multipart/form-data" method="POST">

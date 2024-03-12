@@ -2,19 +2,20 @@ package es.um.fcd.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Par;
-import es.um.fcd.model.Source;
 import es.um.fcd.model.Test;
 import es.um.fcd.model.TestFile;
 import es.um.fcd.model.Title;
-import es.um.fcd.web.model.TestResult;
 import es.um.fcd.web.model.ParResult;
+import es.um.fcd.web.model.TestResult;
 
 public class TestController {
 	private static TestController instancia = null;
@@ -29,8 +30,8 @@ public class TestController {
 			instancia = new TestController();
 		return instancia;
 	}
-
-	public List<Title> getTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
+	
+	private List<Title> getTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
 		String extension = testFile.getExtension();
 		TestFileStrategy tfs = null;
 		List<Title> titles = null;
@@ -49,17 +50,50 @@ public class TestController {
 		
 		return titles;
 	}
+
+	public List<Title> getTitles(TestFile testFileSource1, TestFile testFileSource2) throws DAOException, FileNotFoundException, IOException {
+		List<Title> titlesSource1 = getTitles(testFileSource1);
+		List<Title> titlesSource2 = getTitles(testFileSource2);
+		
+		return processTitles(titlesSource1, titlesSource2);
+	}
+	
+	private List<Title> processTitles(List<Title> titlesSource1, List<Title> titlesSource2) {
+		List<Title> titles = new LinkedList<Title>();
+		Set<Integer> titlesMatchedSource2 = new HashSet<Integer>();
+		int positionSource1 = 1;
+		for (Title title : titlesSource1) {
+			int positionSource2 = titlesSource2.indexOf(title);
+			if (positionSource2 != -1) {
+				titlesMatchedSource2.add(positionSource2);
+			}
+			title.setPositionSource1(positionSource1);
+			title.setPositionSource2(positionSource2);
+			titles.add(title);
+			positionSource1++;
+		}
+		int numTitlesSource2 = titlesSource2.size();
+		for (int i=1; i<=numTitlesSource2; i++) {
+			if (!titlesMatchedSource2.contains(i)) {
+				Title title = titlesSource2.get(i-1);
+				title.setPositionSource1(-1);
+				title.setPositionSource2(i);
+				titles.add(title);
+			}
+		}
+		
+		return titles;
+	}
 	
 	public TestResult getTestResult(Test test) {
 		List<Par> pares = test.getPares();
-		Source source1 = test.getSource1();
-		Source source2 = test.getSource2();
 		List<ParResult> paresResults = new LinkedList<ParResult>();
 		for (Par par : pares) {
 			System.out.println("Calculating par " + par.getId());
-			List<Title> titlesSource1 = par.getTitlesSorted(source1);
-			List<Title> titlesSource2 = par.getTitlesSorted(source2);
-			int minNumTitles = (titlesSource1.size() <= titlesSource2.size()) ? titlesSource1.size() : titlesSource2.size();
+			List<Title> titles = par.getTitles();
+			int numTitlesSource1 = par.getTitlesSource1().size();
+			int numTitlesSource2 = par.getTitlesSource2().size();
+			int minNumTitles = (numTitlesSource1 <= numTitlesSource2) ? numTitlesSource1 : numTitlesSource2;
 			Map<Integer, Integer> results = new LinkedHashMap<Integer, Integer>();
 			double mean = 0;
 			int numTops = 0;
@@ -67,26 +101,23 @@ public class TestController {
 				if (top <= minNumTitles) {
 					numTops++;
 					System.out.println("Calculating top " + top);
-					List<Title> titlesSource2forTop = titlesSource2.subList(0, top);
 					int accumulatedDistance = 0;
-					//generate top
-					for (int t=0; t<top; t++) {
-						Title titleSource1 = titlesSource1.get(t);
-						int pos = titlesSource2forTop.indexOf(titleSource1);
-						int distance = top;
-						if (pos != -1) {
-							Title titleSource2 = titlesSource2forTop.get(pos);
-							distance = Math.abs(titleSource1.getPosition() - titleSource2.getPosition());
-							//System.out.println("Distance between " + titleSource1.getTitle() + " / " + titleSource2.getTitle() + ": " + distance);
-						} else {
-							//System.out.println("Distance between " + titleSource1.getTitle() + " / " + titleSource1.getTitle() + ": " + distance);
-						}				
-						accumulatedDistance += distance;
+					for (Title title : titles) {
+						int posSource1 = title.getPositionSource1();
+						int posSource2 = title.getPositionSource2();
+						int distance = 0;
+						if ((posSource1 <= top && posSource1 != -1) /*|| (posSource2 <= top && posSource2 != -1)*/) {
+							if (posSource1 > top || posSource2 > top) distance = top;
+							else distance = Math.abs(posSource1 - posSource2);
+							accumulatedDistance += distance;
+							if (top == 5) 
+							System.out.println("Top / Pos1 / Pos2 / Distance: " + top + "/" + posSource1 + " / " + posSource2 + " / " + distance);
+						}
 					}
+					System.out.println("Total accumulated distance: " + accumulatedDistance);
 					int proximity = 100 - (100 * accumulatedDistance) / (top * top);
 					results.put(top, proximity);
 					mean += proximity;
-					System.out.println("Accumulated distance: " + accumulatedDistance);
 				} else {
 					// No more tops to calculate
 					break;

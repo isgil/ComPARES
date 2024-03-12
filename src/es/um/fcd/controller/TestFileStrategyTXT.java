@@ -21,13 +21,13 @@ public class TestFileStrategyTXT extends TestFileStrategy {
 		file = new FileReader(testFile.getFullPhysicalName());
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
-		int position = 0;
+		//int position = 0;
 		while ((line = buff.readLine()) != null) {
 			if (line.contains("title")) {
 				String titleStr = line.replaceFirst("title=", "");
-				Title title = new Title(titleStr, position);
+				Title title = new Title(titleStr);
 				titles.add(title);
-				position++;
+				//position++;
 			}
 		}
 		file.close();

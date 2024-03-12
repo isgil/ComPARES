@@ -4,6 +4,7 @@ $( document ).ready(function() {
     $('select#source1').formSelect();
 	$('select#source2').formSelect();
 	$('button#add-source').click(toggleProgress);
+	$('button#create-test').click(toggleLoader);
 	$('a#add-input1').click(addPar);
 	$('a#add-input2').click(addPar);
 	$('img.close').click(function() {
@@ -40,6 +41,11 @@ $( document ).ready(function() {
 		}
 	  });
 });
+
+function toggleLoader(){
+	$('div#modal-loader').show();
+	$('.preloader-wrapper').toggleClass('active');
+}
 
 function addPar() {
 	var lastPar = $('input[type="file"]').length + 1;
@@ -103,7 +109,7 @@ function checkFormValid() {
 }
 
 function openModal() {
-	$("div.modal").css('display', 'block');
+	$("div#modal-new-source").css('display', 'block');
 }
 
 function closeModal(){
@@ -116,8 +122,8 @@ function closeModal(){
 		}
 		$(this).formSelect();
 	});
-	$("div.modal").css('display', 'none');
-	$("div.modal input#input-source").val('');
+	$("div#modal-new-source").css('display', 'none');
+	$("div#modal-new-source input#input-source").val('');
 }
 
 function createSource(sourceName) {
@@ -126,10 +132,10 @@ function createSource(sourceName) {
 }
 	
 function successSource(data) {
-	var source = $("div.modal input#input-source").val();
+	var source = $("div#modal-new-source input#input-source").val();
 	console.log('data=' + data);
 	$("select").append('<option value="' + data.trim() + '">' + source + '</option>');
-	$("ul#list-sources").append('<li>' + data + '</li>'); 
+	$("ul#list-sources").append('<li>' + source + '</li>'); 
 	closeModal();
 	showSuccessMessage('Source created');
 }
