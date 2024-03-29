@@ -5,6 +5,16 @@
 	<%@ include file="/js/util.jspf"%>
 	<%@ include file="header.jsp"%>
 	<div class="background-fixed"></div>
+	<div id="cargando">
+		<div id="cargando-box">
+			<img src="img/loading.gif" />
+			<div id="progreso">&nbsp</div>
+			<br />
+			<br />
+			<br />
+			<div id="accion"></div>
+		</div>
+	</div>
 	<%-- El siguiente bloque muestra el progreso de una petición --%>
 	<div class="progress">
       <div class="indeterminate"></div>

@@ -73,10 +73,12 @@ public class Title implements Serializable {
 	@Override
 	// Two strings will be considered equal if they match at least 90%
 	public boolean equals(Object obj) {
-		int lenght = title.length();
-		int thresholdDistance = Math.round((10*lenght)/100);
-		if (thresholdDistance == 0) thresholdDistance = 1;
 		String titleCompared = ((Title)obj).getTitle();
+		int lenghtThis = title.length();
+		int lengthOther = titleCompared.length();
+		int thresholdDistance = Math.round((10*lenghtThis)/100);
+		if (thresholdDistance == 0) thresholdDistance = 1;
+		if (Math.abs(lenghtThis - lengthOther) > thresholdDistance) return false;
 		String title1 = Strings.removeAccents(title.toLowerCase());
 		String title2 = Strings.removeAccents(titleCompared.toLowerCase());
 		//System.out.println("Comparing: " + title1 + "|" + title2 + " -- Thresshold: " + thresholdDistance);

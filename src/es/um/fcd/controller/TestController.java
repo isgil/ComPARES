@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Par;
 import es.um.fcd.model.Test;
@@ -51,26 +53,31 @@ public class TestController {
 		return titles;
 	}
 
-	public List<Title> getTitles(TestFile testFileSource1, TestFile testFileSource2) throws DAOException, FileNotFoundException, IOException {
+	public List<Title> getTitles(TestFile testFileSource1, TestFile testFileSource2, HttpSession session) throws DAOException, FileNotFoundException, IOException {
 		List<Title> titlesSource1 = getTitles(testFileSource1);
 		List<Title> titlesSource2 = getTitles(testFileSource2);
 		
-		return processTitles(titlesSource1, titlesSource2);
+		return processTitles(titlesSource1, titlesSource2, session);
 	}
 	
-	private List<Title> processTitles(List<Title> titlesSource1, List<Title> titlesSource2) {
+	private List<Title> processTitles(List<Title> titlesSource1, List<Title> titlesSource2, HttpSession session) {
 		List<Title> titles = new LinkedList<Title>();
+		int totalTitles = titlesSource1.size() + titlesSource2.size();
+		int titlesProcessed = 0;
 		Set<Integer> titlesMatchedSource2 = new HashSet<Integer>();
 		int positionSource1 = 1;
 		for (Title title : titlesSource1) {
 			int positionSource2 = titlesSource2.indexOf(title);
 			if (positionSource2 != -1) {
 				titlesMatchedSource2.add(positionSource2);
+				titlesProcessed += 1;
 			}
 			title.setPositionSource1(positionSource1);
 			title.setPositionSource2(positionSource2);
 			titles.add(title);
 			positionSource1++;
+			titlesProcessed += 1;
+			session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
 		}
 		int numTitlesSource2 = titlesSource2.size();
 		for (int i=1; i<=numTitlesSource2; i++) {
@@ -79,8 +86,11 @@ public class TestController {
 				title.setPositionSource1(-1);
 				title.setPositionSource2(i);
 				titles.add(title);
+				titlesProcessed += 1;
+				session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
 			}
 		}
+		System.out.println("Titles processed = " + titlesProcessed);
 		
 		return titles;
 	}

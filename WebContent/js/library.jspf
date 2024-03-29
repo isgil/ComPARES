@@ -1,89 +1,132 @@
 <script type="text/javascript">
-$( document ).ready(function() {
-   $(".title-section").text($("nav #library span").text()).fadeIn(1000);
-   $("input.custom-checkbox").click(clickCheckbox);
-   $('button#calculate-tops').click(clickCalculateTops);
-});
-
-
-
-function clickExport() {
-	alert('Not implemented yet');
-}
-
-function clickCalculateTops() {
-	console.log('Calculating tops');
-	var testIds = getActiveCheckboxes();
-	if (testIds.length > 0) {
-		var parameters = $.param({ 'id': testIds }, true);
-		executeAjax('POST', 'results.ctrl', parameters, 'HTML', true, successResults, error, always);
-		//$('#test-list').removeClass('l6').addClass('l3');
-		//$('#results-wrapper').removeClass('l6').addClass('l9');
-		$('.preloader-wrapper').toggleClass('active');
-		//$('.preloader-wrapper').show();
-	} else {
-		//$('#test-list').removeClass('l3').addClass('l6');
-		//$('#results-wrapper').removeClass('l9').addClass('l6');
-		$('div.default-message').show();
-		$(".results").html('');
-	}
-	$(".results").hide();
-}
-
-function clickRemove() {
-	var testIds = getActiveCheckboxes();
-	if (testIds.length > 0) {
-		var parameters = $.param({ 'id': testIds }, true);
-		executeAjax('POST', 'remove-tests', parameters, 'HTML', false, successRemoval, error, always);
-	} else {
-		alert('Please select the tests you want to get removed');
-	}
-}
-
-function successRemoval(data) {
-	console.log('tests removed!');
-	//window.location.reload();
-}
-
-function getActiveCheckboxes() {
-	var testIds = [];
-	$("input.custom-checkbox:checked").each(function(){
-		console.log('val = ' + $(this).val());
-		testIds.push($(this).val());
+	$(document).ready(function() {
+		$(".title-section").text($("nav #library span").text()).fadeIn(1000);
+		$("input.custom-checkbox").click(clickCheckbox);
+		$('button#select-all-nothing').click(selectAllNothing);
+		$('button#calculate-tops').click(clickCalculateTops);
+		$('button#remove').click(removeTests);
 	});
 	
-	return testIds;
-}
+	function removeTests() {
+		if (window.confirm("Remove selected tests?")) {
+			return true;
+		} else {
+		    return false;
+		}
+	}
 
-function clickCheckbox() {
-	var testIds = getActiveCheckboxes();
-	if (testIds.length > 0) {
-		$('div.actions').show();
-		$('div.default-message').hide();
-	} else {
-		//$('#test-list').removeClass('l3').addClass('l6');
-		//$('#results-wrapper').removeClass('l9').addClass('l6');
-		$('div.actions').hide();
-		$('div.default-message').show();
-		$(".results").html('');
+	function prepareExports() {
+		$('div.test-result').each(function() {
+			//EXCEL
+			const resultsTable = $(this).find('table');
+			const test = $(this).find('h6').text();
+			const ws = XLSX.utils.table_to_sheet(resultsTable[0]);
+			XLSX.utils.book_append_sheet(wb, ws, test);
+			
+			// HTML
+			html += '<html>'
+			html += '<head>';
+			html += '<style>table, th, td {border: 1px solid black; border-collapse: collapse; text-align: center; padding: 5px; white-space: nowrap} table {margin: 0px 20px 50px 20px;} th {background-color: #e1e0e0;}</style>'
+			html += '</head>';
+			html += '<body>';
+			html += '<h3>' + test + '</h3>';
+			html += '<table>' + resultsTable.html() + '</table>';
+			html += '</body>';
+			html += '</html>'
+		});
+	}
+
+	function exportResultsHTML() {
+		var blob = new Blob([ html ], {
+			type : "text/plain;charset=utf-8"
+		});
+		saveAs(blob, 'export.html');
+	}
+
+	function exportResultsExcel() {
+		// Save the workbook (you can trigger a download or handle it as needed)
+		XLSX.writeFile(wb, "export.xls");
+	}
+
+	function clickCalculateTops() {
+		console.log('Calculating tops');
+		var testIds = getActiveCheckboxes();
+		if (testIds.length > 0) {
+			var parameters = $.param({
+				'id' : testIds
+			}, true);
+			executeAjax('POST', 'results.ctrl', parameters, 'HTML', true,
+					successResults, error, always);
+			//$('#test-list').removeClass('l6').addClass('l3');
+			//$('#results-wrapper').removeClass('l6').addClass('l9');
+			$('.preloader-wrapper').toggleClass('active');
+			//$('.preloader-wrapper').show();
+		} else {
+			//$('#test-list').removeClass('l3').addClass('l6');
+			//$('#results-wrapper').removeClass('l9').addClass('l6');
+			$('div.default-message').show();
+			$(".results").html('');
+		}
 		$(".results").hide();
 	}
-};
 
-function successResults(data) {
-	console.log('success!');
-	$(".results").html(data);
-	$(".results").show();
-}
+	function clickRemove() {
+		var testIds = getActiveCheckboxes();
+		if (testIds.length > 0) {
+			var parameters = $.param({
+				'id' : testIds
+			}, true);
+			executeAjax('POST', 'remove-tests', parameters, 'HTML', false,
+					successRemoval, error, always);
+		} else {
+			alert('Please select the tests you want to get removed');
+		}
+	}
 
-function error() {
-	console.log('error!');
-	/*$(".results").html();*/
-}
+	function successRemoval(data) {
+		console.log('tests removed!');
+		//window.location.reload();
+	}
 
-function always() {
-	$('.preloader-wrapper').toggleClass('active');
-	//$('.preloader-wrapper').hide();
-	/*console.log('always!');*/
-}
+	function getActiveCheckboxes() {
+		var testIds = [];
+		$("input.custom-checkbox:checked").each(function() {
+			console.log('val = ' + $(this).val());
+			testIds.push($(this).val());
+		});
+
+		return testIds;
+	}
+
+	function clickCheckbox() {
+		var testIds = getActiveCheckboxes();
+		if (testIds.length > 0) {
+			$('div.actions').show();
+			$('div.default-message').hide();
+		} else {
+			//$('#test-list').removeClass('l3').addClass('l6');
+			//$('#results-wrapper').removeClass('l9').addClass('l6');
+			$('div.actions').hide();
+			$('div.default-message').show();
+			$(".results").html('');
+			$(".results").hide();
+		}
+	};
+
+	function successResults(data) {
+		console.log('success!');
+		$(".results").html(data);
+		$(".results").show();
+	}
+
+	function error() {
+		console.log('error!');
+		/*$(".results").html();*/
+	}
+
+	function always() {
+		$('.preloader-wrapper').toggleClass('active');
+		//$('.preloader-wrapper').hide();
+		/*console.log('always!');*/
+	}
 </script>

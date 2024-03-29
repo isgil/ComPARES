@@ -34,7 +34,15 @@
 </div>
 </c:forEach>
 <script type="text/javascript">
+var wb;
+var html = '';
 $(document).ready(function() {
+	wb = XLSX.utils.book_new();
+	prepareExports();
+	
+	$('button#export-excel').click(exportResultsExcel);
+	$('button#export-html').click(exportResultsHTML);
+	
     $('table').each(function() {
     	$(this).DataTable({
     		autoWidth: true,
@@ -47,7 +55,6 @@ $(document).ready(function() {
             ]
     	});
     });
-
 });
 
 

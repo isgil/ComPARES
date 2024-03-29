@@ -3,11 +3,12 @@
 		return $('input:checked').length;
 	}
 
-	function selectAllNothing(boton, idElementoContenedor) {
-		var valor = (boton.getAttribute("value") === "todo") ? true : false;
-		$('#' + idElementoContenedor).find("input").each(function() {
-			$(this).prop('checked', valor);
-			boton.setAttribute("value", (valor === true) ? "nada" : "todo");
+	function selectAllNothing() {
+		var numChecked = getNumElementsSelected();
+		var checked = true;
+		if (numChecked > 0) checked = false;
+		$('input').each(function(){
+			$(this).prop('checked', checked);
 		});
 	}
 
@@ -105,75 +106,36 @@
 			$(input).parent().css("background", "url(" + context + "/img/" + icon + ")");			
 		}
 	}
-
-	function mostrarPantallaCarga(texto, loop) {
-		if (texto !== '') {
-			$('#accion').html(texto + "...");
-		} else {
-			$('#accion').html("&nbsp");
-		}
-		$("#progreso").html("&nbsp");
-		$("#cargando").fadeIn(300);
-
-		if (loop) setTimeout(pollProgress, 250);
-	}
 	
-	function mostrarPantallaCargaPorcentaje() {
+	function showLoadScreen() {
 		$('#accion').html("&nbsp");
 		$("#progreso").html("&nbsp");
 		$("#cargando").fadeIn(300);
 
-		setTimeout(pollProgressPercentaje, 250);
+		setTimeout(pollProgress, 250);
 	}
 	
-	function cerrarPantallaCarga() {
+	function closeLoadScreen() {
 		$("#cargando").fadeOut(300);
-	}
-	
-	function pollProgressPercentaje() {
-		$.ajax({
-			type : 'GET',
-			url : 'ActualizarProgreso', // Your Servlet mapping or JSP
-			data : {},
-			dataType : 'html', // Returns HTML as plain text; included script tags
-			// are evaluated when inserted in the DOM.
-			success : function exito(response) {
-				if (response !== 'null') {
-					var values = response.split(";");
-					if (values[0] === '') 
-						$('#accion').html("&nbsp");
-					else 
-						$('#accion').html(values[0]); 
-					if (values[1] === '') 
-						$("#progreso").html("&nbsp");
-					else 
-						$("#progreso").html(values[1]);
-					setTimeout(pollProgressPercentaje, 250 /*0.25 second*/);
-				}
-			}
-		});
-
-		return true;
 	}
 
 	function pollProgress() {
 		$.ajax({
 			type : 'GET',
-			url : 'ActualizarProgreso', // Your Servlet mapping or JSP
+			url : 'UpdateProgress', // Your Servlet mapping or JSP
 			data : {},
 			dataType : 'html', // Returns HTML as plain text; included script tags
 			// are evaluated when inserted in the DOM.
 			success : function exito(response) {
 				if (response !== 'null') {
-					var values = response.split(";");
-					if (values[0] === '') 
+					if (response === '') {
 						$('#accion').html("&nbsp");
-					else 
-						$('#accion').html(values[0]); 
-					if (values[1] === '') 
-						$("#progreso").html("&nbsp");
-					else 
-						$("#progreso").html(values[1]);
+						$('#progreso').html("&nbsp");
+					}
+					else {
+						$('#accion').html("Processing");
+						$('#progreso').html(response + "%");
+					}
 					setTimeout(pollProgress, 250);
 				}
 			}

@@ -4,7 +4,7 @@ $( document ).ready(function() {
     $('select#source1').formSelect();
 	$('select#source2').formSelect();
 	$('button#add-source').click(toggleProgress);
-	$('button#create-test').click(toggleLoader);
+	//$('button#create-test').click(toggleLoader);
 	$('a#add-input1').click(addPar);
 	$('a#add-input2').click(addPar);
 	$('img.close').click(function() {
@@ -34,7 +34,7 @@ $( document ).ready(function() {
 		console.log('validating');
 		var select = $('select#source1');
 		if (checkFormValid()) {
-			// code if valid
+			showLoadScreen();
 		} else {
 			// Prevent form submission
 			event.preventDefault();	

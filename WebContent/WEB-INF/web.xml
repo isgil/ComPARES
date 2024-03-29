@@ -68,6 +68,17 @@
 		<url-pattern>/RemoveTests</url-pattern>
 		<url-pattern>/remove-tests</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>UpdateProgress</display-name>
+		<servlet-name>UpdateProgress</servlet-name>
+		<servlet-class>es.um.fcd.web.servlet.UpdateProgress</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateProgress</servlet-name>
+		<url-pattern>/UpdateProgress</url-pattern>
+		<url-pattern>/updateprogress</url-pattern>
+	</servlet-mapping>
 	<jsp-config>
 		<taglib>
 			<taglib-uri>/utiltld</taglib-uri>

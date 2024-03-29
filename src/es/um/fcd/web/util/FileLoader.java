@@ -8,7 +8,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class FileLoader {
 
-	private static final int THRESHOLD_SIZE = 1024 * 1024 * 3; // 3MB
+	private static final int THRESHOLD_SIZE = 1024 * 1024 * 40; // 3MB originally, 20 currently
 	private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
 	private static final int REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
 
