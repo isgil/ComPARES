@@ -136,7 +136,7 @@ table.highlight>tbody>tr:hover {
 }
 
 table {
-	overflow: scroll-x;
+	overflow-x: scroll;
 }
 
 table tbody tr td:first-child, table tbody th td:first-child {
@@ -608,6 +608,39 @@ div.bubble-info .msg {
 }
 
 /****************************/
+
+/* Config */
+form#form-config {
+	width: 50%;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+table#tops-enabled {
+	margin-bottom: 20px;
+}
+
+table#tops-enabled td {
+	user-select: none;
+}
+
+table#tops-enabled td.selected {
+	background-color: #c2f5c2; 
+}
+
+table#tops-enabled td:hover {
+	cursor: pointer;
+}
+
+table#tops-enabled input {
+	display: none;
+}
+
+table#tops-enabled td {
+	padding: 10px;
+}
+
+
 
 
 /* Upload icon */
