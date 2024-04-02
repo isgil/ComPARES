@@ -1,9 +1,9 @@
 package es.um.fcd.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,13 +16,12 @@ public class Settings implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(unique = true, nullable = false)
 	
-	private boolean allTops;
-	private List<Integer> topConfiguration;
+	Map<String, Object> settings;
 
 	public Settings() {
 		super();
+		settings = new HashMap<String, Object>();
 	}
 
 	public Integer getId() {
@@ -32,20 +31,12 @@ public class Settings implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public boolean isAllTops() {
-		return allTops;
+
+	public Map<String, Object> getSettings() {
+		return settings;
 	}
 
-	public void setAllTops(boolean allTops) {
-		this.allTops = allTops;
-	}
-
-	public List<Integer> getTopConfiguration() {
-		return topConfiguration;
-	}
-
-	public void setTopConfiguration(List<Integer> topConfiguration) {
-		this.topConfiguration = topConfiguration;
+	public void setTopConfiguration(Map<String, Object> settings) {
+		this.settings = settings;
 	}
 }

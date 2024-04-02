@@ -2,6 +2,7 @@ package es.um.fcd.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -21,7 +22,7 @@ import es.um.fcd.web.model.TestResult;
 
 public class TestController {
 	private static TestController instancia = null;
-	private static int[] tops = {5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000};
+	private static List<Integer> defaultTops = Arrays.asList(5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000);
 
 	private TestController() {
 		// seccionesLeidas = new LinkedList<String>();
@@ -66,9 +67,12 @@ public class TestController {
 		int titlesProcessed = 0;
 		Set<Integer> titlesMatchedSource2 = new HashSet<Integer>();
 		int positionSource1 = 1;
+		// Match titles from source1 with source 2
+		// Non-matched titles will have position -1 in source2
 		for (Title title : titlesSource1) {
 			int positionSource2 = titlesSource2.indexOf(title);
 			if (positionSource2 != -1) {
+				positionSource2++;
 				titlesMatchedSource2.add(positionSource2);
 				titlesProcessed += 1;
 			}
@@ -79,6 +83,9 @@ public class TestController {
 			titlesProcessed += 1;
 			session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
 		}
+		// All matching titles from source 2 will not be processed
+		// Here we will only include the position for titles unique in source 2
+		// For source 1 all titles will have position -1
 		int numTitlesSource2 = titlesSource2.size();
 		for (int i=1; i<=numTitlesSource2; i++) {
 			if (!titlesMatchedSource2.contains(i)) {
@@ -95,7 +102,7 @@ public class TestController {
 		return titles;
 	}
 	
-	public TestResult getTestResult(Test test) {
+	public TestResult getTestResult(Test test) throws DAOException {
 		List<Par> pares = test.getPares();
 		List<ParResult> paresResults = new LinkedList<ParResult>();
 		for (Par par : pares) {
@@ -105,28 +112,34 @@ public class TestController {
 			int numTitlesSource2 = par.getTitlesSource2().size();
 			int minNumTitles = (numTitlesSource1 <= numTitlesSource2) ? numTitlesSource1 : numTitlesSource2;
 			Map<Integer, Integer> results = new LinkedHashMap<Integer, Integer>();
+			List<Integer> tops = FacadeSettings.getInstancia().getTops();
+			if (tops == null) {
+				tops = defaultTops;
+			}			
 			double mean = 0;
 			int numTops = 0;
 			for (int top : tops) {
 				if (top <= minNumTitles) {
 					numTops++;
 					System.out.println("Calculating top " + top);
-					int accumulatedDistance = 0;
+					double accumulatedDistance = 0;
 					for (Title title : titles) {
 						int posSource1 = title.getPositionSource1();
 						int posSource2 = title.getPositionSource2();
-						int distance = 0;
+						double distance = 0;
 						if ((posSource1 <= top && posSource1 != -1) /*|| (posSource2 <= top && posSource2 != -1)*/) {
 							if (posSource1 > top || posSource2 > top) distance = top;
 							else distance = Math.abs(posSource1 - posSource2);
 							accumulatedDistance += distance;
-							if (top == 5) 
-							System.out.println("Top / Pos1 / Pos2 / Distance: " + top + "/" + posSource1 + " / " + posSource2 + " / " + distance);
+							if (distance > 0) {
+								System.out.println("Title = " + title.getTitle() + " / " + title.getPositionSource1() + " / " + title.getPositionSource2());
+							}
 						}
 					}
 					System.out.println("Total accumulated distance: " + accumulatedDistance);
-					int proximity = 100 - (100 * accumulatedDistance) / (top * top);
-					results.put(top, proximity);
+					double proximity = 100 - (100 * accumulatedDistance) / (top * top);
+					System.out.println("Proximity = " + proximity);
+					results.put(top, (int) proximity);
 					mean += proximity;
 				} else {
 					// No more tops to calculate

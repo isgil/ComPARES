@@ -1,13 +1,18 @@
 <script type="text/javascript">
 	function getNumElementsSelected() {
-		return $('input:checked').length;
+		return $('input[type="checkbox"]:checked').length;
+	}
+	
+	function areAllSelected() {		
+		return ($('input[type="checkbox"]:checked').length === $('input[type="checkbox"]').length);
 	}
 
 	function selectAllNothing() {
-		var numChecked = getNumElementsSelected();
 		var checked = true;
-		if (numChecked > 0) checked = false;
-		$('input').each(function(){
+		if (areAllSelected()) {
+			checked = false;	
+		}
+		$('input[type="checkbox"]').each(function(){
 			$(this).prop('checked', checked);
 		});
 	}

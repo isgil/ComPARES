@@ -19,7 +19,6 @@ public class ActionLibrary extends Action {
 			List<Test> tests = (List<Test>) fcTests.getAll();
 			request.setAttribute("tests", tests);
 			Notifications notifications = getNotificationsSession(request.getSession());
-			System.out.println("ActionLibrary -> " + notifications.getSuccess().size());
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,6 +1,5 @@
 package es.um.fcd.dao;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -38,44 +37,36 @@ public class JPADAOSettings implements DAOSettings {
 		return settings;
 	}
 
-	@Override
-	public Settings find(int id) throws DAOException {
-		EntityManager em = emf.createEntityManager();
-		Settings settings = em.find(Settings.class, id);
-		em.close();
-		
-		return settings;
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Settings> findAll() throws DAOException {
+	public Settings getAll() throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		
 		String queryString = "SELECT s FROM SETTINGS s";
 		Query query = em.createQuery(queryString);
-		List<Settings> settings = (List<Settings>) query.getResultList();
+		List<Settings> result = (List<Settings>) query.getResultList();
 		em.close();
 
-		return settings;
+		if (result.isEmpty())
+			return null;
+		return result.get(0);
 	}
 	
 	@Override
-	public void delete(Settings settings) throws DAOException {
-		Settings s = find(settings.getId());
+	public Settings update(Settings settings) throws DAOException {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
 		tx.begin();
 		try {
-			s = em.merge(s);
-			em.remove(s);
+			em.merge(settings);
 			tx.commit();
-			em.close();
 		} catch (Exception e) {
+			AppLogger.logException(e);
 			tx.rollback();
-			em.close();
-			throw new DAOException("Error removing settings");
 		}
-	};
+		em.close();
+		
+		return settings;
+	}
 }

@@ -19,7 +19,7 @@
 		$('div.test-result').each(function() {
 			//EXCEL
 			const resultsTable = $(this).find('table');
-			const test = $(this).find('h6').text();
+			const test = $(this).find('h6 span#id').text();
 			const ws = XLSX.utils.table_to_sheet(resultsTable[0]);
 			XLSX.utils.book_append_sheet(wb, ws, test);
 			

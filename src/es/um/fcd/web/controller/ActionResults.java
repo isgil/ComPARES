@@ -34,7 +34,13 @@ public class ActionResults extends Action {
 		TestController tc = TestController.getInstancia();
 		List<TestResult> testsResults = new LinkedList<TestResult>();
 		for (Test test : tests) {
-			TestResult result = tc.getTestResult(test);
+			TestResult result = null;
+			try {
+				result = tc.getTestResult(test);
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			testsResults.add(result);
 		}
 		

@@ -10,7 +10,7 @@
 				<div id="test-list" class="test-list col s12 m12 l4">
 					<c:choose>
 						<c:when test="${tests.size() == 0}">
-							<div class="item col s12 m12 l12 grey lighten-4 center"><span><b>There are no tests in the system</b></span></div>
+							<div class="default-message center"><p><b>There are no tests in the system</b></p></div>
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${tests}" var="test">
@@ -36,7 +36,9 @@
 					</c:choose>
 				</div>
 				<div id="results-wrapper" class="results-wrapper col s12 m12 l8">
-					<div class="default-message center"><p><b>Select one or more tests to view the details</b></p></div>
+					<c:if test="${tests.size() > 0}">
+						<div class="default-message center"><p><b>Select one or more tests to view the details</b></p></div>
+					</c:if>
 					<div class="item row actions">
 						<button id="select-all-nothing"
 							class="btn btn-small blue darken-1 waves-effect waves-light left"

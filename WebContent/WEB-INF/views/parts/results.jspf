@@ -28,7 +28,7 @@
 	 --%>	
 	 
 	<!-- Test Name --> 
-	<h6><b>Test ${testResult.test.id} - ${testResult.test.name}</b></h6>
+	<h6><span id="id"><b>Test ${testResult.test.id}</b></span> - ${testResult.test.name}</h6>
 	<tag:ResultsTable id="${i}" testResult="${testResult}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" />
 	<c:set var="i" value="${i+1}"/>
 </div>
