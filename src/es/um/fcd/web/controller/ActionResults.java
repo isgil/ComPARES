@@ -2,7 +2,6 @@ package es.um.fcd.web.controller;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import es.um.fcd.controller.TestController;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Test;
 import es.um.fcd.web.model.TestResult;
-import es.um.fcd.web.model.ParResult;
 
 public class ActionResults extends Action {
 
@@ -43,18 +41,19 @@ public class ActionResults extends Action {
 			}
 			testsResults.add(result);
 		}
-		
+		/*
 		for (TestResult testResult : testsResults) {
 			System.out.println("Test: " + testResult.getTest().getName());
 			List<ParResult> parResults = testResult.getParResults();
 			for (ParResult parResult : parResults) {
 				System.out.println("--Par: " + parResult.getPar().getId());
-				Map<Integer, Integer> topResults = parResult.getTopResults();
+				Map<Integer, Double> topResults = parResult.getTopResults();
 				for (Integer top : topResults.keySet()) {
 					System.out.println("----Top: " + top + " --> " + topResults.get(top));
 				}
 			}
 		}
+		*/
 		
 		//request.setAttribute("results", generateDummyResults(tests));
 		request.setAttribute("testsResults", testsResults);

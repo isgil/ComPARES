@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,13 +19,12 @@ public class TestFileStrategyRIS extends TestFileStrategy {
 
 	@Override
 	protected List<Title> extractTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
-		List<Title> titles = new LinkedList<Title>();
+		Map<String, Title> titles = new LinkedHashMap<String, Title>();
 		FileReader file = null;
 	
 		file = new FileReader(testFile.getFullPhysicalName());
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
-		//int position = 0;
 		Pattern pattern = Pattern.compile("TI\\s+- (.*)");
 		Matcher matcher = null;
 		while ((line = buff.readLine()) != null) {
@@ -33,12 +34,12 @@ public class TestFileStrategyRIS extends TestFileStrategy {
 				titleStr = titleStr.replaceAll("</?[^>]+>", "");
 				titleStr = titleStr.replaceAll("[^\\p{L}\\p{ASCII}]", "");
 				Title title = new Title(titleStr);
-				titles.add(title);
-				//position++;
+				titles.put(titleStr.toLowerCase(), title);
 			}
 		}
 		file.close();
+		List<Title> listOfTitles = new LinkedList<Title>(titles.values());
 
-		return titles;
+		return listOfTitles;
 	}
 }

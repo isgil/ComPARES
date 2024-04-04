@@ -26,8 +26,8 @@
 	en el prelude, ya que, si lo pusiéramos en el pie, la parte de los
 	scripts se resolvería antes de que en el DOM estuviera insertado el icono --%>
 	<div id="scroll" class="bottom-right">
-		<span class="icon scroll back2top" onclick="scrollToTopSuavizado()"></span>
-		<span class="icon scroll go2bottom" onclick="scrollToBottomSuavizado()"></span>
+		<span class="icon scroll back2top" onclick="scrollTopSmooth()"></span>
+		<span class="icon scroll go2bottom" onclick="scrollBottomSmooth()"></span>
 	</div>
 
 	<%@ include file="notifications.jspf"%>

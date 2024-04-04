@@ -87,6 +87,10 @@ public class Par implements Serializable {
 		return titlesSource1;
 	}
 	
+	public int getNumTitlesSource1() {
+		return getTitlesSource1().size();
+	}
+	
 	public List<Title> getTitlesSource2() {
 		List<Title> titlesSource2 = new LinkedList<Title>();
 		for (Title title : titles) {
@@ -96,6 +100,10 @@ public class Par implements Serializable {
 		}
 		
 		return titlesSource2;
+	}
+	
+	public int getNumTitlesSource2() {
+		return getTitlesSource2().size();
 	}
 /*
 	public List<Title> getTitles(Source source) {

@@ -6,10 +6,10 @@ import es.um.fcd.model.Par;
 
 public class ParResult {
 	private Par par;
-	private Map<Integer, Integer> topResults;
+	private Map<Integer, Double> topResults;
 	private double mean;
 	
-	public ParResult(Par par, Map<Integer, Integer> topResults, double mean) {
+	public ParResult(Par par, Map<Integer, Double> topResults, double mean) {
 		this.par = par;
 		this.topResults = topResults;
 		this.mean = mean;
@@ -23,11 +23,11 @@ public class ParResult {
 		this.par = par;
 	}
 	
-	public Map<Integer, Integer> getTopResults() {
+	public Map<Integer, Double> getTopResults() {
 		return topResults;
 	}
 	
-	public void setTopResults(Map<Integer, Integer> topResults) {
+	public void setTopResults(Map<Integer, Double> topResults) {
 		this.topResults = topResults;
 	}
 

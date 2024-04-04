@@ -3,6 +3,7 @@ package es.um.fcd.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -17,8 +18,10 @@ import es.um.fcd.model.Par;
 import es.um.fcd.model.Test;
 import es.um.fcd.model.TestFile;
 import es.um.fcd.model.Title;
+import es.um.fcd.web.model.AdvancedParResult;
 import es.um.fcd.web.model.ParResult;
 import es.um.fcd.web.model.TestResult;
+import es.um.fcd.web.model.TopResult;
 
 public class TestController {
 	private static TestController instancia = null;
@@ -50,6 +53,11 @@ public class TestController {
 		} else {
 			throw new IOException("File extension not recognized");
 		}
+		
+		System.out.println("Titles read: " + titles.size());
+		/*for (Title title : titles) {
+			System.out.println(title.getTitle());
+		}*/
 		
 		return titles;
 	}
@@ -105,17 +113,19 @@ public class TestController {
 	public TestResult getTestResult(Test test) throws DAOException {
 		List<Par> pares = test.getPares();
 		List<ParResult> paresResults = new LinkedList<ParResult>();
+		Map<Integer, TopResult> mapTopResults = new LinkedHashMap<Integer, TopResult>();
+		int parIndex = 0;
 		for (Par par : pares) {
 			System.out.println("Calculating par " + par.getId());
 			List<Title> titles = par.getTitles();
-			int numTitlesSource1 = par.getTitlesSource1().size();
-			int numTitlesSource2 = par.getTitlesSource2().size();
-			int minNumTitles = (numTitlesSource1 <= numTitlesSource2) ? numTitlesSource1 : numTitlesSource2;
-			Map<Integer, Integer> results = new LinkedHashMap<Integer, Integer>();
+			int minNumTitles = par.getTitlesSource1().size();
+			//int numTitlesSource2 = par.getTitlesSource2().size();
+			//int minNumTitles = (numTitlesSource1 <= numTitlesSource2) ? numTitlesSource1 : numTitlesSource2;
+			Map<Integer, Double> results = new LinkedHashMap<Integer, Double>();
 			List<Integer> tops = FacadeSettings.getInstancia().getTops();
 			if (tops == null) {
 				tops = defaultTops;
-			}			
+			}
 			double mean = 0;
 			int numTops = 0;
 			for (int top : tops) {
@@ -123,23 +133,42 @@ public class TestController {
 					numTops++;
 					System.out.println("Calculating top " + top);
 					double accumulatedDistance = 0;
+					TopResult topResult = mapTopResults.get(top);
+					if (topResult == null) {
+						topResult = new TopResult(top);
+						mapTopResults.put(top, topResult);
+					}
+					List<AdvancedParResult> advancedParResults = topResult.getAdvancedParResults();
+					AdvancedParResult advancedParResult = null;
+					if (advancedParResults.size() <= parIndex) {
+						advancedParResult = new AdvancedParResult(par);
+						topResult.getAdvancedParResults().add(advancedParResult);
+					} else {
+						advancedParResults.get(parIndex);
+					}
 					for (Title title : titles) {
 						int posSource1 = title.getPositionSource1();
 						int posSource2 = title.getPositionSource2();
 						double distance = 0;
 						if ((posSource1 <= top && posSource1 != -1) /*|| (posSource2 <= top && posSource2 != -1)*/) {
-							if (posSource1 > top || posSource2 > top) distance = top;
+							if (posSource2 > top || posSource2 == -1) distance = top;
 							else distance = Math.abs(posSource1 - posSource2);
-							accumulatedDistance += distance;
-							if (distance > 0) {
-								System.out.println("Title = " + title.getTitle() + " / " + title.getPositionSource1() + " / " + title.getPositionSource2());
+
+							// Advanced | Same position +1							
+							if (posSource2 <= top && posSource2 != -1) {
+								advancedParResult.addMatching();
 							}
+							// Advanced | Same position +1
+							if (distance == 0) {
+								advancedParResult.addSamePosition();
+							}
+							accumulatedDistance += distance;
 						}
 					}
 					System.out.println("Total accumulated distance: " + accumulatedDistance);
 					double proximity = 100 - (100 * accumulatedDistance) / (top * top);
-					System.out.println("Proximity = " + proximity);
-					results.put(top, (int) proximity);
+					results.put(top, proximity);
+					advancedParResult.setProximity(proximity);
 					mean += proximity;
 				} else {
 					// No more tops to calculate
@@ -149,8 +178,10 @@ public class TestController {
 			mean = mean / numTops;
 			ParResult parResult = new ParResult(par, results, mean);
 			paresResults.add(parResult);
+			parIndex++;
 		}
-		TestResult testResult = new TestResult(test, paresResults);
+		List<TopResult> topsResults = new LinkedList<TopResult>(mapTopResults.values());
+		TestResult testResult = new TestResult(test, paresResults, topsResults);
 		
 		return testResult;
 	}

@@ -26,11 +26,8 @@ public class UpdateProgress extends MyHttpServlet {
 		Integer value = (Integer) request.getSession().getAttribute("loadPercentage");
 		PrintWriter outPrintWriter = response.getWriter();
 		if (value != null) {
-			System.out.println("progreso = " + value);
 			outPrintWriter.print(value);
-		} /*else {
-			outPrintWriter.print("");
-		}*/
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

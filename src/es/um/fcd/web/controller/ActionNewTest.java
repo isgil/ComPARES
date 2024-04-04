@@ -136,6 +136,7 @@ public class ActionNewTest extends Action {
 					notifications.getError().add(Notifications.getErrorReadingTestFile(testFileSource1.getFullName()));
 					e.printStackTrace();
 					response.setStatus(500);
+					request.getSession().setAttribute("loadPercentage", 0);
 					return new ActionLibrary().execute(request, response, application);
 				}
 				Par par = new Par(testFileSource1, testFileSource2, titles);
@@ -149,11 +150,13 @@ public class ActionNewTest extends Action {
 				notifications.getSuccess().add(Notifications.SUCCESS_TEST_CREATED);
 			} catch (DAOException e) {
 				response.setStatus(500);
+				request.getSession().setAttribute("loadPercentage", 0);
 				notifications.getError().add(Notifications.ERROR_CREATING_TEST);
 				e.printStackTrace();
 			}
 			//request.setAttribute("test", test);
 			response.setStatus(200);
+			request.getSession().setAttribute("loadPercentage", 0);
 			return new ActionLibrary().execute(request, response, application);
 		} else {
 			FacadeSources fcSources = FacadeSources.getInstancia();

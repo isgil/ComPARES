@@ -39,7 +39,7 @@
 					<c:if test="${tests.size() > 0}">
 						<div class="default-message center"><p><b>Select one or more tests to view the details</b></p></div>
 					</c:if>
-					<div class="item row actions">
+					<div id="main-actions" class="item row actions">
 						<button id="select-all-nothing"
 							class="btn btn-small blue darken-1 waves-effect waves-light left"
 							type="button" name="action">Select All</button>
@@ -49,6 +49,11 @@
 						<button id="remove"
 							class="btn btn-small red lighten-2 waves-effect waves-light right"
 							type="submit" name="action">Remove</button>
+					</div>
+					<div id="secondary-actions" class="item row actions secondary-actions">
+						<button id="toggle-results"
+							class="btn btn-small blue darken-1 waves-effect waves-light left"
+							type="button" name="action">Show advanced</button>
 						<button id="export-excel"
 							class="btn btn-small purple darken-3 waves-effect waves-light right"
 							type="button" name="action">Export Excel</button>

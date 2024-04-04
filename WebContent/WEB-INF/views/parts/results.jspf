@@ -13,13 +13,13 @@
 	<c:set var="maxTopResults"/>
 	<!-- For each Par -->
 	<c:forEach var="parResult" items="${testResult.parResults}">
-			<!-- Get number of Tops generated -->
-			<c:set var="topResultsLength" value="${fn:length(parResult.topResults)}" />
-			<!-- If number of tops for this Par is bigger, updates Max values -->
-			<c:if test="${maxNumberOfTops < topResultsLength}">
-				<c:set var="maxNumberOfTops" value="${topResultsLength}"/>
-				<c:set var="maxTopResults" value="${parResult.topResults}"/>
-			</c:if>
+		<!-- Get number of Tops generated -->
+		<c:set var="topResultsLength" value="${fn:length(parResult.topResults)}" />
+		<!-- If number of tops for this Par is bigger, updates Max values -->
+		<c:if test="${maxNumberOfTops < topResultsLength}">
+			<c:set var="maxNumberOfTops" value="${topResultsLength}"/>
+			<c:set var="maxTopResults" value="${parResult.topResults}"/>
+		</c:if>
 	</c:forEach>
 	
 	<%--
@@ -27,23 +27,36 @@
 	<p>Max Top Results = ${maxTopResults}</p>
 	 --%>	
 	 
-	<!-- Test Name --> 
-	<h6><span id="id"><b>Test ${testResult.test.id}</b></span> - ${testResult.test.name}</h6>
-	<tag:ResultsTable id="${i}" testResult="${testResult}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" />
+	<!-- Test Name -->
+	<div class="chip test-name white lighten-4">
+		<div class="chip test-id grey lighten-2">${testResult.test.id}</div>
+		<span id="test-name"> 
+		<c:choose>
+			<c:when test="${!empty testResult.test.name}">${testResult.test.name}</c:when>
+			<c:otherwise>[Sin título]</c:otherwise>
+		</c:choose>
+		</span>
+	</div>
+	<tag:ResultsTable id="bas-${i}" testResult="${testResult}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" />
+	<tag:AdvancedResultsTable id="adv-${i}" testResult="${testResult}" />
 	<c:set var="i" value="${i+1}"/>
 </div>
 </c:forEach>
 <script type="text/javascript">
-var wb;
-var html = '';
+var wbBasic;
+var wbAdvanced;
+var htmlBasic = '';
+var htmlAdvanced = '';
 $(document).ready(function() {
-	wb = XLSX.utils.book_new();
+	wbBasic = XLSX.utils.book_new();
+	wbAdvanced = XLSX.utils.book_new();
 	prepareExports();
 	
 	$('button#export-excel').click(exportResultsExcel);
 	$('button#export-html').click(exportResultsHTML);
+	$('div.test-name').click(clickTestName);
 	
-    $('table').each(function() {
+    $('table.basic-results-table').each(function() {
     	$(this).DataTable({
     		autoWidth: true,
             scrollX: true, // Enable horizontal scrolling
@@ -56,6 +69,5 @@ $(document).ready(function() {
     	});
     });
 });
-
 
 </script>
