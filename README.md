@@ -42,6 +42,9 @@ SELECT * FROM <dbSchema>.FULL_DB_VIEW;
 - *Export CSV*: Exports the tables (basic or advanced, depending on the option displayed) in CSV format.
 
 #### New Test
+
+![alt text](https://github.com/david0010/ComPARES/blob/main/doc/NewTest.JPG?raw=true)
+
 For each source, we can have 1 or more search export. System will face search exports in Pairs (Pares in Spanish); this means that we can have for each test 1 or more pairs. '+' button adds a new Pair.
 
 Each test will require a Title, at least 1 Pair and 2 Sources. Title mark is optional.
@@ -51,7 +54,16 @@ Each test will require a Title, at least 1 Pair and 2 Sources. Title mark is opt
 
 Examples of all of these types of files in **input-examples/***
 
+#### *New source*
+
+![alt text](https://github.com/david0010/ComPARES/blob/main/doc/NewSource.JPG?raw=true)
+
+New sources can be added here
+
 #### Settings
+
+![alt text](https://github.com/david0010/ComPARES/blob/main/doc/Settings.JPG?raw=true)
+
 Here the user can define the number of TOPs that the application will generate for each test.
 
 ## Authors and acknowledgment
