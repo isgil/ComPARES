@@ -6,10 +6,7 @@
 <body>
 	<div class="container about">
 		<div class="center item grey lighten-4">
-			<h6>
-				<b>About</b>
-			</h6>
-			<p>ComPARES v1.0 (2024)
+			<h6><b>ComPARES v1.0 (2024)</b></h6>
 			<br/><br/>
 			<h6>
 				<b>Authors</b>
