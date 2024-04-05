@@ -131,7 +131,7 @@ public class ActionNewTest extends Action {
 				List<Title> titles;
 				request.getSession().setAttribute("loadPercentage", 0);
 				try {
-					titles = tc.getTitles(testFileSource1, testFileSource2, request.getSession());
+					titles = tc.getTitles(testFileSource1, titleMark1, testFileSource2, titleMark2, request.getSession());
 				} catch (DAOException | IOException e) {
 					notifications.getError().add(Notifications.getErrorReadingTestFile(testFileSource1.getFullName()));
 					e.printStackTrace();

@@ -18,14 +18,16 @@ import es.um.fcd.model.Title;
 public class TestFileStrategyBIB extends TestFileStrategy {
 
 	@Override
-	protected List<Title> extractTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
+	protected List<Title> extractTitles(TestFile testFile, String customTitleMark) throws DAOException, FileNotFoundException, IOException {
 		Map<String, Title> titles = new LinkedHashMap<String, Title>();
 		FileReader file = null;
+		String titleMark = (customTitleMark != null && !customTitleMark.isEmpty()) ? customTitleMark : "title";
+		
 	
 		file = new FileReader(testFile.getFullPhysicalName());
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
-		Pattern pattern = Pattern.compile("\\s+title = \\{(.*)\\}");
+		Pattern pattern = Pattern.compile("\\s+" + titleMark + " = \\{(.*)\\}");
 		Matcher matcher = null;
 		while ((line = buff.readLine()) != null) {
 			matcher = pattern.matcher(line);

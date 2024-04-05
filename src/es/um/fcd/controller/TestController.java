@@ -37,19 +37,19 @@ public class TestController {
 		return instancia;
 	}
 	
-	private List<Title> getTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
+	private List<Title> getTitles(TestFile testFile, String titleMark) throws DAOException, FileNotFoundException, IOException {
 		String extension = testFile.getExtension();
 		TestFileStrategy tfs = null;
 		List<Title> titles = null;
 		if (extension.equalsIgnoreCase("txt")) {
 			tfs = new TestFileStrategyTXT();
-			titles = tfs.getTitles(testFile);
+			titles = tfs.extractTitles(testFile, titleMark);
 		} else if (extension.equalsIgnoreCase("ris")) {
 			tfs = new TestFileStrategyRIS();
-			titles = tfs.getTitles(testFile);
+			titles = tfs.extractTitles(testFile, titleMark);
 		} else if (extension.equalsIgnoreCase("bib")) {
 			tfs = new TestFileStrategyBIB();
-			titles = tfs.getTitles(testFile);
+			titles = tfs.extractTitles(testFile, titleMark);
 		} else {
 			throw new IOException("File extension not recognized");
 		}
@@ -62,9 +62,10 @@ public class TestController {
 		return titles;
 	}
 
-	public List<Title> getTitles(TestFile testFileSource1, TestFile testFileSource2, HttpSession session) throws DAOException, FileNotFoundException, IOException {
-		List<Title> titlesSource1 = getTitles(testFileSource1);
-		List<Title> titlesSource2 = getTitles(testFileSource2);
+	public List<Title> getTitles(TestFile testFileSource1, String titleMarkSource1, TestFile testFileSource2, String titleMarkSource2, HttpSession session) throws DAOException, FileNotFoundException, IOException {
+
+		List<Title> titlesSource1 = getTitles(testFileSource1, titleMarkSource1);
+		List<Title> titlesSource2 = getTitles(testFileSource2, titleMarkSource2);
 		
 		return processTitles(titlesSource1, titlesSource2, session);
 	}

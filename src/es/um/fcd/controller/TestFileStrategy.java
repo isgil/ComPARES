@@ -10,11 +10,5 @@ import es.um.fcd.model.Title;
 
 public abstract class TestFileStrategy {
 	
-	abstract protected List<Title> extractTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException;
-
-	public List<Title> getTitles(TestFile testFile) throws DAOException, FileNotFoundException, IOException {
-		List<Title> titles = extractTitles(testFile);
-
-		return titles;
-	}
+	abstract protected List<Title> extractTitles(TestFile testFile, String titleMark) throws DAOException, FileNotFoundException, IOException;
 }
