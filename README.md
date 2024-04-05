@@ -51,6 +51,12 @@ Examples of all of these types of files in **input-examples/***
 #### Settings
 Here the user can define the number of TOPs that the application will generate for each test.
 
+## Authors and acknowledgment
+Isidoro Gil Leiva as creator
+David López Martínez as developer
+
+Application create date: 2024 
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
