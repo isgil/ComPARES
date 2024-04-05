@@ -612,6 +612,14 @@ table#tops-enabled td {
 }
 
 
+/* About */
+div.about div {
+	max-width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
 
 
 /* Upload icon */

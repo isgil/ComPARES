@@ -30,6 +30,9 @@ SELECT * FROM <dbSchema>.FULL_DB_VIEW;
 - **Settings**: Defines the number of TOPs that will be generated.
 
 #### Library
+
+![alt text](https://github.com/david0010/ComPARES/blob/main/image.jpg?raw=true)
+
 - *Select ALL*: Select ALL or no tests.
 - *Calculate TOPs*: Once at least 1 test has been selected, this option will produce all the TOPs possible or the number of TOPs configured in the Settings section.
 - *Remove*: Removes selected test(s)

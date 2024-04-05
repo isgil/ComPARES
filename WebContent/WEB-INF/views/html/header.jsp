@@ -20,6 +20,12 @@
 					</a>
 				</div>
 			</li>
+			<li>
+				<div id="about">
+					<a class="waves-effect waves-light" href="about.ctrl"> <i class="center material-icons">info</i><span>About</span>
+					</a>
+				</div>
+			</li>
 		</ul>
 		<h2 class="title-section brand-logo center">Library</h2>
 	</nav>		
