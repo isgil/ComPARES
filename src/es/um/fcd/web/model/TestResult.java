@@ -1,5 +1,6 @@
 package es.um.fcd.web.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import es.um.fcd.model.Test;
@@ -12,7 +13,7 @@ public class TestResult {
 	public TestResult(Test test, List<ParResult> parResults, List<TopResult> topResults) {
 		this.test = test;
 		this.parResults = parResults;
-		this.topResults = topResults;
+		this.topResults = topResults;		
 	}
 	
 	public Test getTest() {
@@ -37,5 +38,32 @@ public class TestResult {
 
 	public void setTopResults(List<TopResult> topResults) {
 		this.topResults = topResults;
+	}
+	
+	public double getMeanPares() {
+		double mean = 0;
+		for (ParResult result : parResults) {
+			mean += result.getMean();
+		}
+		
+		return mean / parResults.size();
+	}
+	
+	public double getMeanTops() {
+		double mean = 0;
+		for (TopResult result : topResults) {
+			mean += result.getMean();
+		}
+		
+		return mean / topResults.size();
+	}
+	
+	public List<Double> getAllParResultsMeans() {
+		List<Double> allParResultsMeans = new LinkedList<Double>();
+		for (TopResult topResult : topResults) {
+			allParResultsMeans.add(topResult.getMean());
+		}
+		
+		return allParResultsMeans;
 	}
 }

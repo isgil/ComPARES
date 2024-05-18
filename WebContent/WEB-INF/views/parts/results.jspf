@@ -38,7 +38,7 @@
 		</span>
 	</div>
 	<tag:ResultsTable id="bas-${i}" testResult="${testResult}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" />
-	<tag:AdvancedResultsTable id="adv-${i}" testResult="${testResult}" />
+	<tag:AdvancedResultsTable id="adv-${i}" testName="${testResult.test.name}" testResult="${testResult}" />
 	<c:set var="i" value="${i+1}"/>
 </div>
 </c:forEach>
@@ -59,6 +59,7 @@ $(document).ready(function() {
     $('table.basic-results-table').each(function() {
     	$(this).DataTable({
     		autoWidth: true,
+    		ordering: false,
             scrollX: true, // Enable horizontal scrolling
             fixedColumns: {
                 leftColumns: 1, // Number of columns to fix on the left

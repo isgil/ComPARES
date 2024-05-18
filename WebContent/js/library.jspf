@@ -168,6 +168,10 @@
 			$('div.default-message').show();
 			$(".results").html('');
 			$(".results").hide();
+			if (modeAdvanced) {
+				$('button#toggle-results').html('Show advanced');
+				modeAdvanced = false;
+			}
 		}
 	};
 

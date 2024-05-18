@@ -30,7 +30,11 @@
 				<c:set var="par" value="${parResult.par}"/>
 				<c:set var="numTitlesSource1" value="${parResult.par.getNumTitlesSource1()}"/>
 				<c:set var="numTitlesSource2" value="${parResult.par.getNumTitlesSource2()}"/>
-				<td title="${par.testFileSource1.fileName} (${numTitlesSource1} docs) || ${par.testFileSource2.fileName} (${numTitlesSource2} docs)"><div class="chip blue lighten-4">Par ${nPar}</div></td>
+				<td>
+				<!-- <div class="chip blue lighten-4">Par ${nPar}: </div><br/>-->
+				<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div><br/>
+				<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
+				</td>
 				<c:set var="topResults" value="${parResult.topResults}" />
 				<c:set var="numberOfTops" value="${fn:length(topResults)}"/>
 				<c:choose>
@@ -52,5 +56,20 @@
 			</tr>
 			<c:set var="nPar" value="${nPar+1}"/>
 		</c:forEach>
+		<tr>
+			<td><b>Top Mean</b></td>
+			<c:forEach var="mean" items="${testResult.getAllParResultsMeans()}">
+				<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${mean}"/>%</td>
+			</c:forEach>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${testResult.getMeanPares()}"/>%</td>
+		</tr>
+		<!-- 
+		<tr>
+			<c:forEach var="nTop" begin="1" end="${maxNumberOfTops + 1}">
+				<td></td>
+			</c:forEach>
+			
+		</tr>
+		 -->
 	</tbody>
 </table>
