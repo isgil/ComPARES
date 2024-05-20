@@ -70,9 +70,22 @@ public class JPADAOTest implements DAOTest {
 		try {
 			c = em.merge(c);
 			em.remove(c);
+			String queryString = "SELECT count(1) FROM TEST t";
+			Query query = em.createQuery(queryString);
+			Long numTestsRemaining = (Long) query.getSingleResult();
+			System.out.println("numTestsRemaining=" + numTestsRemaining);
+			if (numTestsRemaining == 0) {
+				em.createNativeQuery("SET FOREIGN_KEY_CHECKS=0").executeUpdate();
+				queryString = "TRUNCATE TABLE TEST";
+				query = em.createNativeQuery(queryString);
+				query.executeUpdate();
+				em.createNativeQuery("SET FOREIGN_KEY_CHECKS=1").executeUpdate();
+				System.out.println("Table truncated");
+			}
 			tx.commit();
 			em.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			tx.rollback();
 			em.close();
 			throw new DAOException("Error removing test");

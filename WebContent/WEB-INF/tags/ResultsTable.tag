@@ -56,20 +56,13 @@
 			</tr>
 			<c:set var="nPar" value="${nPar+1}"/>
 		</c:forEach>
-		<tr>
-			<td><b>Top Mean</b></td>
-			<c:forEach var="mean" items="${testResult.getAllParResultsMeans()}">
-				<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${mean}"/>%</td>
-			</c:forEach>
-			<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${testResult.getMeanPares()}"/>%</td>
-		</tr>
-		<!-- 
-		<tr>
-			<c:forEach var="nTop" begin="1" end="${maxNumberOfTops + 1}">
-				<td></td>
-			</c:forEach>
-			
-		</tr>
-		 -->
+		
+			<tr>
+				<td><b>Top Mean</b></td>
+				<c:forEach var="mean" items="${testResult.getAllParResultsMeans()}">
+					<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${mean}"/>%</td>
+				</c:forEach>
+				<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${testResult.getMeanPares()}"/>%</td>
+			</tr>
 	</tbody>
 </table>
