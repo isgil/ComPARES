@@ -79,32 +79,40 @@ public class TestController {
 		// Match titles from source1 with source 2
 		// Non-matched titles will have position -1 in source2
 		for (Title title : titlesSource1) {
-			int positionSource2 = titlesSource2.indexOf(title);
-			if (positionSource2 != -1) {
-				positionSource2++;
-				titlesMatchedSource2.add(positionSource2);
+			int positionSource2 = -1;
+			try {
+				positionSource2 = titlesSource2.indexOf(title);
+				if (positionSource2 != -1) {
+					titlesSource2.set(positionSource2, null);
+					positionSource2++;
+					titlesMatchedSource2.add(positionSource2);
+					titlesProcessed += 1;
+				}
+				title.setPositionSource1(positionSource1);
+				title.setPositionSource2(positionSource2);
+				titles.add(title);
+				positionSource1++;
 				titlesProcessed += 1;
+				session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
+			} catch(NullPointerException e) {
+				// Skip element
 			}
-			title.setPositionSource1(positionSource1);
-			title.setPositionSource2(positionSource2);
-			titles.add(title);
-			positionSource1++;
-			titlesProcessed += 1;
-			session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
 		}
 		// All matching titles from source 2 will not be processed
 		// Here we will only include the position for titles unique in source 2
 		// For source 1 all titles will have position -1
 		int numTitlesSource2 = titlesSource2.size();
 		for (int i=1; i<=numTitlesSource2; i++) {
-			if (!titlesMatchedSource2.contains(i)) {
+			//if (!titlesMatchedSource2.contains(i)) {
 				Title title = titlesSource2.get(i-1);
-				title.setPositionSource1(-1);
-				title.setPositionSource2(i);
-				titles.add(title);
-				titlesProcessed += 1;
-				session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
-			}
+				if (title != null) {
+					title.setPositionSource1(-1);
+					title.setPositionSource2(i);
+					titles.add(title);
+					titlesProcessed += 1;
+					session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
+				}
+			//}
 		}
 		System.out.println("Titles processed = " + titlesProcessed);
 		

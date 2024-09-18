@@ -20,13 +20,16 @@ public class TestFileStrategyTXT extends TestFileStrategy {
 		Map<String, Title> titles = new LinkedHashMap<String, Title>();
 		FileReader file = null;
 		String titleMark = (customTitleMark != null && !customTitleMark.isEmpty()) ? customTitleMark : "title";
+		System.out.println("Title mark=" + titleMark);
 	
 		file = new FileReader(testFile.getFullPhysicalName());
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
 		while ((line = buff.readLine()) != null) {
 			if (line.contains(titleMark)) {
-				String titleStr = line.replaceFirst(titleMark + "=", "");
+				String titleStr = line.replaceFirst("\\s*" + titleMark + "\\s*[^A-Za-z0-9]\\s*", "");
+				titleStr = titleStr.replaceAll("</?[^>]+>", "");
+				titleStr = titleStr.replaceAll("[^\\p{L}\\p{ASCII}]", "");
 				Title title = new Title(titleStr);
 				titles.put(titleStr.toLowerCase(), title);
 			}

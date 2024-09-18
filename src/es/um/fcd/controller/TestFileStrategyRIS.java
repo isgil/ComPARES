@@ -26,7 +26,7 @@ public class TestFileStrategyRIS extends TestFileStrategy {
 		file = new FileReader(testFile.getFullPhysicalName());
 		BufferedReader buff = new BufferedReader(file);
 		String line = "";
-		Pattern pattern = Pattern.compile(titleMark + "\\s+- (.*)");
+		Pattern pattern = Pattern.compile("\\s*" + titleMark + "\\s*[^A-Za-z0-9]\\s*(.*)");
 		Matcher matcher = null;
 		while ((line = buff.readLine()) != null) {
 			matcher = pattern.matcher(line);
