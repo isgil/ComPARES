@@ -37,7 +37,6 @@
 						<td>
 							<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div>
 							<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
-						<!--<td title="${par.testFileSource1.fileName} || ${par.testFileSource2.fileName}"><div class="chip blue lighten-4">Par ${nPar}</div></td> -->
 						</td>
 						<td><fmt:formatNumber value="${(advancedParResult.matching / topResult.top) * 100}" pattern="#.##" />%</td>
 						<td>${advancedParResult.samePosition}</td>
@@ -45,14 +44,6 @@
 						<c:set var="nPar" value="${nPar+1}"/>
 						</tr>
 					</c:forEach>
-					<!-- 
-					<tr>
-						<td class="top-header">Mean</td>
-						<td></td>
-						<td></td>
-						<td><fmt:formatNumber value="${topResult.mean}" pattern="#.##" />%</td>
-					</tr>
-					 -->
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>

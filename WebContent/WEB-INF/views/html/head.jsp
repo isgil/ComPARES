@@ -14,9 +14,13 @@
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/fc-4.3.0/fh-3.4.0/sc-2.3.0/datatables.min.css" rel="stylesheet">
 	<script src="https://cdn.datatables.net/v/dt/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/fc-4.3.0/fh-3.4.0/sc-2.3.0/datatables.min.js"></script>
 	
-	<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+	<script src="js/xlsx.bundle.js"></script>
+	
+	
+	<!--<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>-->
 	<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script> -->
+	
     
     <link type="text/css" rel="stylesheet" href="css/style.css" />
     

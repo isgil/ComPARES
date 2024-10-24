@@ -4,6 +4,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page import="java.util.LinkedHashMap" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 
 <!-- For each Test -->
 <c:forEach begin="1" end="${fn:length(testsResults)}" var="i">
@@ -48,11 +50,13 @@ var wbAdvanced;
 var htmlBasic = '';
 var htmlAdvanced = '';
 $(document).ready(function() {
+	/*
 	wbBasic = XLSX.utils.book_new();
 	wbAdvanced = XLSX.utils.book_new();
+	*/
 	prepareExports();
 	
-	$('button#export-excel').click(exportResultsExcel);
+	/*$('button#export-excel').click(exportResultsExcel);*/
 	$('button#export-html').click(exportResultsHTML);
 	$('div.test-name').click(clickTestName);
 	

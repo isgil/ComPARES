@@ -2,12 +2,14 @@ package es.um.fcd.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -176,6 +178,8 @@ public class TestController {
 					}
 					System.out.println("Total accumulated distance: " + accumulatedDistance);
 					double proximity = 100 - (100 * accumulatedDistance) / (top * top);
+					/*NumberFormat nf = NumberFormat.getInstance(Locale.FRANCE);
+					nf.format(proximity);*/
 					results.put(top, proximity);
 					advancedParResult.setProximity(proximity);
 					mean += proximity;

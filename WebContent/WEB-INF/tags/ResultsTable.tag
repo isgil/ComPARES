@@ -31,7 +31,6 @@
 				<c:set var="numTitlesSource1" value="${parResult.par.getNumTitlesSource1()}"/>
 				<c:set var="numTitlesSource2" value="${parResult.par.getNumTitlesSource2()}"/>
 				<td>
-				<!-- <div class="chip blue lighten-4">Par ${nPar}: </div><br/>-->
 				<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div><br/>
 				<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
 				</td>

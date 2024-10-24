@@ -102,5 +102,13 @@
 			<version>1.2.5</version>
 			<scope>runtime</scope>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/js-xlsx-style -->
+		<dependency>
+		    <groupId>org.webjars.bower</groupId>
+		    <artifactId>js-xlsx-style</artifactId>
+		    <version>0.8.6</version>
+		</dependency>
+
 	</dependencies>
 </project>

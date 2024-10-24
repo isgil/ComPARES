@@ -142,6 +142,8 @@ table {
 	overflow-y: scroll;
 }
 
+/*table.basic-results-table tr td:not(:first-child):not(:empty):after {content: '%'}*/
+
 table.basic-results-table tr td:first-child, table.basic-results-table tbody th td:first-child {
 	white-space: nowrap;
 	max-width: 20%;

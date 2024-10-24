@@ -54,9 +54,9 @@
 						<button id="toggle-results"
 							class="btn btn-small blue darken-1 waves-effect waves-light left"
 							type="button" name="action">Show advanced</button>
-						<button id="export-excel"
+						<!-- <button id="export-excel"
 							class="btn btn-small purple darken-3 waves-effect waves-light right"
-							type="button" name="action">Export Excel</button>
+							type="button" name="action">Export Excel</button> -->
 						<button id="export-html"
 							class="btn btn-small purple darken-3 waves-effect waves-light right"
 							type="button" name="action">Export HTML</button>

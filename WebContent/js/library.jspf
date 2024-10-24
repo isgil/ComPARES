@@ -1,4 +1,5 @@
 <script type="text/javascript">
+	/*import XLSX from "xlsx-js-style";*/
 	var modeAdvanced = false;
 
 	$(document).ready(function() {
@@ -54,10 +55,34 @@
 			const resultsAdvancedTable = $(this).find('table.advanced-results-table');
 			const testId = $(this).find('div.test-id').text();
 			const testName = $(this).find('span#test-name').text();
-			const wsBasic = XLSX.utils.table_to_sheet(resultsBasicTable[0]);
-			const wsAdvanced = XLSX.utils.table_to_sheet(resultsAdvancedTable[0]);
+			//const wsBasic = XLSX.utils.table_to_sheet(resultsBasicTable[0]);
+			//const wsAdvanced = XLSX.utils.table_to_sheet(resultsAdvancedTable[0]);
+			/*
+			var wsBasic = XLSX.utils.table_to_sheet(resultsBasicTable[0]);
+			// Define a custom number format function
+			const numberFormat = (cell) => {
+			    if (typeof cell.v === 'string') {
+			        cell.v = cell.v.replace(',', '.');
+			    }
+			    cell.z = '0.00'; // or use your desired format
+			    return cell;
+			};
+
+			// Apply the custom format to all cells in the sheet
+			Object.keys(wsBasic).forEach(key => {
+			    if (wsBasic[key].t === 'n') {
+			        numberFormat(wsBasic[key]);
+			    }
+			});
+			
+			
+			
+			var wsAdvanced = XLSX.utils.table_to_sheet(resultsAdvancedTable[0]);
+			wsBasic = customizeWorksheet(wsBasic);
+			wsAdvanced = customizeWorksheet(wsAdvanced);
 			XLSX.utils.book_append_sheet(wbBasic, wsBasic, testId);
 			XLSX.utils.book_append_sheet(wbAdvanced, wsAdvanced, testId);
+			*/
 			
 			var htmlTestName = '<h3>Test ' + testId + ' - <i>' + testName + '</i></h3>';
 			htmlBasic += htmlTestName;
@@ -69,6 +94,113 @@
 		htmlBasic = htmlWrapperStart + htmlBasic + htmlWrapperEnd;
 		htmlAdvanced = htmlWrapperStart + htmlAdvanced + htmlWrapperEnd;	
 	}
+	
+	/*
+	function customizeWorksheet(worksheet){
+		// define your headers 
+		const headers = [
+		    "FirstName",
+		    "LastName",
+		    "Email",
+		]
+
+		// set column widths
+		const colWidths = [
+		        { wch: 30 },
+		        { wch: 30 },
+		        { wch: 50 },
+		]
+		
+		// consider if you have vertical headers
+		const headerRowHeight = [
+		    { hpt: 80 },
+		]
+		
+		// Create a new worksheet: 
+		const worksheet = XLSX.utils.json_to_sheet([])
+		
+		// Add the headers to the worksheet: 
+		XLSX.utils.sheet_add_aoa(worksheet, [headers])
+		
+		// add data to sheet 
+		XLSX.utils.sheet_add_json(worksheet, userData, {
+    		skipHeader: true,
+    		origin: -1
+		})
+		
+		
+		const colWidths = [
+	        { wch: 35 },
+		];
+		
+		worksheet['!cols'] = colWidths;
+		
+		// get size of sheet 
+		const range = XLSX.utils.decode_range(worksheet["!ref"] ?? "")
+		const rowCount = range.e.r
+		const columnCount = range.e.c
+		
+		console.log('rowcount=' + rowCount);
+		console.log('columncount=' + columnCount);
+		
+		// Add formatting by looping through data in sheet 
+		for (let row = 0; row <= rowCount; row++) {
+		    for (let col = 0; col <= columnCount; col++) {
+		        const cellRef = XLSX.utils.encode_cell({ r: row, c: col })
+		        console.log('worksheet[' + cellRef + ']=' + worksheet[cellRef]);
+		        
+		        if (worksheet[cellRef] != null) {
+		        	// cell value:
+		        	//var cell = worksheet[cellRef];
+	                //console.log(cell.v);
+		        	
+		        	if (col === 0)
+		        	worksheet[cellRef].s = {
+			        	alignment: {
+			        		wrapText: true
+			        	}
+		        	}
+		        	
+		        	if (row !== 0 && col !==0) {
+			        	// Add this format to every cell
+			        	worksheet[cellRef].s = {
+			        		...worksheet[cellRef].s,
+			        		alignment: {
+			        			horizontal: "center"
+			        		},
+			        	}
+		        	}
+		        	
+		        	if (col !== 0) {
+		        		worksheet[cellRef].s = {
+		        			...worksheet[cellRef].s,
+				           	alignment: {
+					            horizontal: "center",
+					            vertical: "center",
+				           	}
+				        }
+		        	} 
+	
+			        // Format headers bold
+			        if (row === 0 || col === 0) {
+			            worksheet[cellRef].s = {
+			                //spreads in previous cell settings
+			                ...worksheet[cellRef].s, 
+			                font: { bold: true },
+			                fill: {
+			                	patternType: "solid",
+			                	fgColor: {rgb: "d8d8d8" }
+			                }
+			            }
+			        }
+		        }
+
+		    }
+		}
+
+		return worksheet;
+	}
+	*/
 	
 	function getCurrentDateTime() {
 	    const now = new Date();
@@ -106,7 +238,6 @@
 	}
 
 	function clickCalculateTops() {
-		console.log('Calculating tops');
 		$(".results").hide();
 		var testIds = getActiveCheckboxes();
 		if (testIds.length > 0) {
@@ -149,7 +280,7 @@
 	function getActiveCheckboxes() {
 		var testIds = [];
 		$("input.custom-checkbox:checked").each(function() {
-			console.log('val = ' + $(this).val());
+			//console.log('val = ' + $(this).val());
 			testIds.push($(this).val());
 		});
 
@@ -176,7 +307,6 @@
 	};
 
 	function successResults(data) {
-		console.log('success!');
 		$(".results").html(data);
 		$(".results").show();
 		$('div#secondary-actions').show();
