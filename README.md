@@ -18,9 +18,10 @@ Use UTF-8 encoding for the schema definition to ensure all the symbols and speci
 
 Once the application runs for the first time, the schema will be populated with all the tables required thanks to JPA configuration. As an alternative, an export of the schema with all the tables and a useful optional View created can be found in sql/**compares.sql**
 
-View **FULL_DB_VIEW** will show a representation of the full database.
+View **COMPARES_FULL_VIEW** will show a representation of the full database.
+
 ```bash
-SELECT * FROM <dbSchema>.FULL_DB_VIEW;
+SELECT * FROM <dbSchema>.COMPARES_FULL_VIEW;
 ```
 
 ## Usage
