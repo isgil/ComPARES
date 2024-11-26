@@ -11,7 +11,7 @@ Once the project has been cloned locally, generate the war file and deploy it to
 Any Tomcat supporting Java 8 should be fine.
 
 ```bash
-git clone https://github.com/david0010/ComPARES.git
+git clone https://github.com/isgil/ComPARES.git
 ```
 Database expected is MySQL; To set it up, define the database details in META-INF/**persistance.xml**
 Use UTF-8 encoding for the schema definition to ensure all the symbols and special characters are properly managed.
