@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.LinkedList" %>
+<%@ page import="java.util.LinkedHashMap" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+
+<div class="item par-info-wrapper grey lighten-4">
+	<div class="top-icons"><img class="close" /></div>
+	<div class="par-info">
+		<div class="grey lighten-4">
+			<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div>
+			<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
+			<br/><br/>
+	
+			<tag:DistancesTable par="${par}" source1="${source1}" source2="${source2}" />
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	table = $('.distances-table').DataTable({
+		fixedHeader : {
+			header : true,
+			footer : true
+		},
+		// Inicialmente la tabla se ordenará mediante la columna TF-IDF
+		"order": [[1, 'asc'], [2, 'asc']],
+		// Todas las columnas podrán ordenarse
+		"aoColumnDefs" : [ {
+			"bSortable" : false,
+			
+		} ],
+		// Las columnas se ordenan primero descendentemente
+		"aoColumns": [
+			{ "orderSequence": [ "desc", "asc" ] },
+	        { "orderSequence": [ "desc", "asc" ] },
+	        { "orderSequence": [ "desc", "asc" ] },
+	        { "orderSequence": [ "desc", "asc" ] }
+	    ],
+	    
+		"paging" : false,
+		"ordering" : true,
+		"searching" : false,
+		"info" : false
+	});
+	
+	$('img.close').click(closeModal);
+	
+	function closeModal(){
+		$('#distances').html('');
+		$('#distances').hide();
+	}
+
+</script>
+		

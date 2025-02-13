@@ -1,6 +1,8 @@
 <%@ include file="../views/html/include.jsp"%>
 <%@ tag body-content="empty"%>
 <%@ attribute name="id" required="true" type="java.lang.String"%>
+<%@ attribute name="source1" required="true" type="java.lang.String"%>
+<%@ attribute name="source2" required="true" type="java.lang.String"%>
 <%@ attribute name="testName" required="true" type="java.lang.String"%>
 <%@ attribute name="testResult" required="true" type="es.um.fcd.web.model.TestResult"%>
 
@@ -35,8 +37,10 @@
 						</c:if>
 						<c:set var="par" value="${advancedParResult.par}"/>
 						<td>
-							<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div>
-							<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
+							<div id="${par.id}-${source1}-${source2}">
+								<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div>
+								<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
+							</div>
 						</td>
 						<td><fmt:formatNumber value="${(advancedParResult.matching / topResult.top) * 100}" pattern="#.##" />%</td>
 						<td>${advancedParResult.samePosition}</td>

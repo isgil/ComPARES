@@ -258,6 +258,29 @@
 			$('div#secondary-actions').hide();
 		}
 	}
+	
+	function clickViewDistances() {
+		var parId = $(this).parent().attr('id');
+		console.log('par id = ' + parId);
+		
+		var parameters = $.param({
+			'id' : parId
+		}, true);
+		executeAjax('POST', 'distances.ctrl', parameters, 'HTML', true, successDistances, error, always);
+		$('.preloader-wrapper').toggleClass('active');
+		
+		//$('.preloader-wrapper').show();
+		//$('#test-list').removeClass('l3').addClass('l6');
+		//$('#results-wrapper').removeClass('l9').addClass('l6');
+		//$(".distances").html('');
+		//$('div#secondary-actions').hide();
+	}
+	
+	function successDistances(data){
+		console.log('par retrieved!');
+		$("#distances").html(data);
+		$("#distances").show();
+	}
 
 	function clickRemove() {
 		var testIds = getActiveCheckboxes();

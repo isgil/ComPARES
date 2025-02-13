@@ -41,6 +41,9 @@ SELECT * FROM <dbSchema>.COMPARES_FULL_VIEW;
 - *Show Basic*: Shows the original tables.
 - *Export HTML*: Exports the tables (basic or advanced, depending on the option displayed) in HTML format.
 - *Export CSV*: Exports the tables (basic or advanced, depending on the option displayed) in CSV format.
+- *View distances*: This screen is open whenever a Par is clicked in the results section. It displays all the titles read for each Par document and the position of each title in the corresponding source file.
+
+![alt text](https://github.com/david0010/ComPARES/blob/main/doc/Distances.JPG?raw=true)
 
 #### New Test
 

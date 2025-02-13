@@ -69,6 +69,11 @@ public class Title implements Serializable {
 	public void setPositionSource2(int positionSource2) {
 		this.positionSource2 = positionSource2;
 	}
+	
+	public int getDistance() {
+		if (this.positionSource1 == -1 || this.positionSource2 == -1) return -1;
+		else return Math.abs(this.positionSource1 - this.positionSource2);
+	}
 
 	@Override
 	// Two strings will be considered equal if they match at least 90%

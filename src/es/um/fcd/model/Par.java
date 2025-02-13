@@ -129,5 +129,5 @@ public class Par implements Serializable {
 
 	public void setTitles(List<Title> titles) {
 		this.titles = titles;
-	}	
+	}
 }

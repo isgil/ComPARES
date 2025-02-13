@@ -1,6 +1,8 @@
 <%@ include file="../views/html/include.jsp"%>
 <%@ tag body-content="empty"%>
 <%@ attribute name="id" required="true" type="java.lang.String"%>
+<%@ attribute name="source1" required="true" type="java.lang.String"%>
+<%@ attribute name="source2" required="true" type="java.lang.String"%>
 <%@ attribute name="testResult" required="true" type="es.um.fcd.web.model.TestResult"%>
 <%@ attribute name="maxNumberOfTops" required="true" type="java.lang.Integer"%>
 <%@ attribute name="maxTopResults" required="true" type="java.util.LinkedHashMap"%>
@@ -31,8 +33,10 @@
 				<c:set var="numTitlesSource1" value="${parResult.par.getNumTitlesSource1()}"/>
 				<c:set var="numTitlesSource2" value="${parResult.par.getNumTitlesSource2()}"/>
 				<td>
-				<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div><br/>
-				<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
+				<div id="${par.id}-${source1}-${source2}">
+					<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div><br/>
+					<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
+				</div>
 				</td>
 				<c:set var="topResults" value="${parResult.topResults}" />
 				<c:set var="numberOfTops" value="${fn:length(topResults)}"/>

@@ -107,6 +107,11 @@ form div.par {
 
 .chip {
 	cursor: pointer;
+	user-select: none;
+}
+
+div#test-list .chip, div#distances .chip {
+	cursor: default;
 }
 
 div.content .chip {
@@ -118,7 +123,7 @@ div.sources {
 	float: right;
 }
 
-div.chip.test-name {
+div#test-list .test-name {
 	margin-top: -1px;
 	overflow: hidden;
 }
@@ -129,6 +134,28 @@ div.chip.test-id {
 
 div.results-wrapper {
 	padding-left: 40px !important;
+}
+
+div.par-info {
+	width: 100%;
+    height: 90%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 20px;
+    /* border-radius: 10px; */
+    overflow-y: scroll;
+    padding-right: 50px;
+}
+
+div.par-info-wrapper {
+	top: 0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    width: 80%;
+    height: 80%;
+    padding: 30px 0px 0px 50px !important;
 }
 
 /* TABLE ******************************/
@@ -193,6 +220,22 @@ td.top-header {
 
 table.advanced-results-table {
 	display: none;
+}
+
+table.distances-table td, table.distances-table th {
+	padding: 5px 10px;
+}
+
+table.distances-table td:first-child {
+	text-align: left;
+}
+
+table.distances-table tr.missing td {
+	background-color: #ffd2d2;
+}
+
+table.distances-table tr.exact td {
+	background-color: #d6ffd6;
 }
 
 /********************************/
@@ -444,6 +487,10 @@ div.input-list {
 	color: #a3a3a3;
 }
 
+div#distances div.top-icons {
+    margin-left: -30px;
+}
+
 div.top-icons {
 	width: 100%;
     margin-bottom: -3em;
@@ -633,6 +680,11 @@ div.about div {
 	margin-right: auto;
 }
 
+div.about ul {
+	text-align: left;
+	margin-left: 15%;
+}
+
 
 
 
@@ -679,11 +731,23 @@ input.file-selected {
 	display: none;
 }
 
-div.content .modal {
+div#new-test .modal {
 	top: 0;
     padding-top: 15%;
     padding-left: 30%;
     padding-right: 30%;
+    background-color: rgba(128, 128, 128, 0.67);
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    z-index: 100;
+}
+
+div#library .modal {
+    top: 0;
+    padding-top: 15%;
+    padding-left: 10%;
+    padding-right: 10%; 
     background-color: rgba(128, 128, 128, 0.67);
     width: 100%;
     height: 100%;

@@ -12,8 +12,8 @@
 				<b>Authors</b>
 			</h6>
 			<ul>
-				<li>Isidoro Gil Leiva as creator</li>
-				<li>David López Martínez as developer</li>
+				<li><b>Creator</b>: Isidoro Gil Leiva</li>
+				<li><b>Developer</b>: David López Martínez</li>
 			</ul>
 		</div>
 	</div>
