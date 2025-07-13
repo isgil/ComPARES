@@ -11,7 +11,18 @@
 <c:forEach begin="1" end="${fn:length(testsResults)}" var="i">
 <div class="test-result">
 	<c:set var="testResult" value="${testsResults[i-1]}"/>
+	<c:set var="maxNumberOfTops" value="0"/>
+	<c:set var="maxTopResults"/>
 	<!-- For each Par -->
+	<c:forEach var="parResult" items="${testResult.parResults}">
+		<!-- Get number of Tops generated -->
+		<c:set var="topResultsLength" value="${fn:length(parResult.topResults)}" />
+		<!-- If number of tops for this Par is bigger, updates Max values -->
+		<c:if test="${maxNumberOfTops < topResultsLength}">
+			<c:set var="maxNumberOfTops" value="${topResultsLength}"/>
+			<c:set var="maxTopResults" value="${parResult.topResults}"/>
+		</c:if>
+	</c:forEach>	
 	 
 	<!-- Test Name -->
 	<div class="chip test-name white lighten-4">
@@ -19,11 +30,12 @@
 		<span id="test-name"> 
 		<c:choose>
 			<c:when test="${!empty testResult.test.name}">${testResult.test.name}</c:when>
-			<c:otherwise>[No title]</c:otherwise>
+			<c:otherwise>[Sin título]</c:otherwise>
 		</c:choose>
 		</span>
 	</div>
-	<tag:ResultsTable id="bas-${i}" source1="${testResult.test.source1.name}" source2="${testResult.test.source2.name}" testResult="${testResult}" />
+	<tag:ResultsTable id="bas-${i}" source1="${testResult.test.source1.name}" source2="${testResult.test.source2.name}" testResult="${testResult}" maxNumberOfTops="${maxNumberOfTops}" maxTopResults="${maxTopResults}" />
+	<tag:AdvancedResultsTable id="adv-${i}" source1="${testResult.test.source1.name}" source2="${testResult.test.source2.name}" testName="${testResult.test.name}" testResult="${testResult}" />
 	<c:set var="i" value="${i+1}"/>
 </div>
 </c:forEach>

@@ -45,15 +45,17 @@
 							type="button" name="action">Select All</button>
 						<button id="calculate-tops"
 							class="btn btn-small blue darken-1 waves-effect waves-light left"
-							type="button" name="action">Calculate TOPs</button>
+							type="button" name="action">Calculate Similarity</button>
 						<button id="remove"
 							class="btn btn-small red lighten-2 waves-effect waves-light right"
 							type="submit" name="action">Remove</button>
 					</div>
 					<div id="secondary-actions" class="item row actions secondary-actions">
+						<!-- 
 						<button id="toggle-results"
 							class="btn btn-small blue darken-1 waves-effect waves-light left"
 							type="button" name="action">Show advanced</button>
+						-->
 						<!-- <button id="export-excel"
 							class="btn btn-small purple darken-3 waves-effect waves-light right"
 							type="button" name="action">Export Excel</button> -->

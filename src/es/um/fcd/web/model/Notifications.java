@@ -3,6 +3,7 @@ package es.um.fcd.web.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import es.um.fcd.model.TestFile;
 import es.um.fcd.util.Strings;
 
 public class Notifications {
@@ -20,6 +21,10 @@ public class Notifications {
 	public static final String TESTS_REMOVED_SUCCESSFULLY = "Tests were removed successfully";
 	public static final String WARNING_NO_TOPS_SELECTED = "No tops selected, therefore all possible tops will be generated.";
 	
+	public static final String getErrorCreatingTest(String underlyingError) {
+		return "Error during the creation of the test. Underlying error is: " + underlyingError;
+	}
+	
 	public static final String getErrorReadingTestFile(String testFile) {
 		return "The following test file could not be read: " + testFile;
 	}
@@ -28,12 +33,16 @@ public class Notifications {
 		return "The following documents could not be uploaded to the system: " + Strings.getString(filesWithUploadErrors, ",", true);
 	}
 
-	public static String getExitoFicherosSubidos(int filesUploadedSuccessfully) {
+	public static String getSuccessFilesUpload(int filesUploadedSuccessfully) {
 		return filesUploadedSuccessfully + " files were uploaded successfully";
 	}
 	
 	public static String getErrorRemovingTests(List<Integer> testsNotRemoved) {
 		return "The following tests could not be removed: " + Strings.getString(testsNotRemoved, ",", true);
+	}
+	
+	public static String getNumberOfDuplicates(int numDuplicates, TestFile testFile) {
+		return numDuplicates + " duplicates removed in " + testFile.getFileName();
 	}
 	
 	/*

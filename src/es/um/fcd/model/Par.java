@@ -130,4 +130,33 @@ public class Par implements Serializable {
 	public void setTitles(List<Title> titles) {
 		this.titles = titles;
 	}
+	
+	public List<Title> getCommonTitles() {
+		List<Title> commonTitles = new LinkedList<Title>();
+		for (Title title : titles) {
+			if (title.getPositionSource1() != -1 && title.getPositionSource2() != -1) {
+				commonTitles.add(title);
+			}
+		}
+		
+		return commonTitles;
+	}
+	
+	public int getNumCommonTitles() {
+		return getCommonTitles().size();
+	}
+	
+	public int getNumDistinctTitles() {
+		int distinctTitles = 0;
+		for (Title title : titles) {
+			if ((title.getPositionSource1() == -1 && title.getPositionSource2() != -1) || (title.getPositionSource1() != -1 && title.getPositionSource2() == -1) ) {
+				distinctTitles++;
+			}
+		}
+		
+		return distinctTitles;
+	}
+	
+
+
 }

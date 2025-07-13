@@ -17,7 +17,7 @@ public class Title implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(length = 512)
+	@Column(length = 1000)
 	private String title;
 	private int positionSource1;
 	private int positionSource2;

@@ -8,6 +8,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
+
 import es.um.fcd.model.Test;
 import es.um.fcd.util.AppLogger;
 
@@ -28,8 +30,15 @@ public class JPADAOTest implements DAOTest {
 		try {
 			em.persist(test);
 			tx.commit();
-		} catch (Exception e) {
-			AppLogger.logException(e);
+		} 
+		catch (DatabaseException e1) {
+			AppLogger.logException(e1);
+			tx.rollback();
+			test = null;
+			throw new DAOException(e1.getMessage());
+		}
+		catch (Exception e2) {
+			AppLogger.logException(e2);
 			tx.rollback();
 			test = null;
 		}

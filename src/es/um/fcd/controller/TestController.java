@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,10 +21,12 @@ import es.um.fcd.model.Par;
 import es.um.fcd.model.Test;
 import es.um.fcd.model.TestFile;
 import es.um.fcd.model.Title;
-import es.um.fcd.web.model.AdvancedParResult;
+import es.um.fcd.web.model.ParAdvancedResult;
 import es.um.fcd.web.model.ParResult;
+import es.um.fcd.web.model.ParTopResult;
+import es.um.fcd.web.model.TestAdvancedResult;
 import es.um.fcd.web.model.TestResult;
-import es.um.fcd.web.model.TopResult;
+import es.um.fcd.web.model.TopAdvancedResult;
 
 public class TestController {
 	private static TestController instancia = null;
@@ -64,6 +67,7 @@ public class TestController {
 		return titles;
 	}
 
+	/*
 	public List<Title> getTitles(TestFile testFileSource1, String titleMarkSource1, TestFile testFileSource2, String titleMarkSource2, HttpSession session) throws DAOException, FileNotFoundException, IOException {
 
 		List<Title> titlesSource1 = getTitles(testFileSource1, titleMarkSource1);
@@ -71,8 +75,32 @@ public class TestController {
 		
 		return processTitles(titlesSource1, titlesSource2, session);
 	}
+	*/
 	
-	private List<Title> processTitles(List<Title> titlesSource1, List<Title> titlesSource2, HttpSession session) {
+	public List<Title> getTitles(TestFile testFile, String titleMark, HttpSession session) throws DAOException, FileNotFoundException, IOException {
+		return getTitles(testFile, titleMark);
+	}
+	
+	public int processDuplicates(List<Title> titles, HttpSession session) {
+		int titlesProcessed = 0;
+		int totalTitles = titles.size();
+		session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
+		Map<String, Title> titlesMap = new LinkedHashMap<String, Title>();
+		for (Title title : titles) {
+			String titleStr = title.getTitle().toLowerCase();
+			if (!titlesMap.containsKey(titleStr)) {
+				titlesMap.put(titleStr, title);
+			}
+			titlesProcessed++;
+		}
+		
+		titles = new LinkedList<>(titlesMap.values());
+		int numDuplicates = totalTitles - titles.size();
+		
+		return numDuplicates;
+	}
+	
+	public List<Title> processTitles(List<Title> titlesSource1, List<Title> titlesSource2, HttpSession session) {
 		List<Title> titles = new LinkedList<Title>();
 		int totalTitles = titlesSource1.size() + titlesSource2.size();
 		int titlesProcessed = 0;
@@ -121,10 +149,11 @@ public class TestController {
 		return titles;
 	}
 	
-	public TestResult getTestResult(Test test) throws DAOException {
+	/*
+	public TestAdvancedResult getTestResult(Test test) throws DAOException {
 		List<Par> pares = test.getPares();
-		List<ParResult> paresResults = new LinkedList<ParResult>();
-		Map<Integer, TopResult> mapTopResults = new LinkedHashMap<Integer, TopResult>();
+		List<ParTopResult> paresResults = new LinkedList<ParTopResult>();
+		Map<Integer, TopAdvancedResult> mapTopResults = new LinkedHashMap<Integer, TopAdvancedResult>();
 		int parIndex = 0;
 		for (Par par : pares) {
 			System.out.println("Calculating par " + par.getId());
@@ -144,15 +173,15 @@ public class TestController {
 					numTops++;
 					System.out.println("Calculating top " + top);
 					double accumulatedDistance = 0;
-					TopResult topResult = mapTopResults.get(top);
+					TopAdvancedResult topResult = mapTopResults.get(top);
 					if (topResult == null) {
-						topResult = new TopResult(top);
+						topResult = new TopAdvancedResult(top);
 						mapTopResults.put(top, topResult);
 					}
-					List<AdvancedParResult> advancedParResults = topResult.getAdvancedParResults();
-					AdvancedParResult advancedParResult = null;
+					List<ParAdvancedResult> advancedParResults = topResult.getAdvancedParResults();
+					ParAdvancedResult advancedParResult = null;
 					if (advancedParResults.size() <= parIndex) {
-						advancedParResult = new AdvancedParResult(par);
+						advancedParResult = new ParAdvancedResult(par);
 						topResult.getAdvancedParResults().add(advancedParResult);
 					} else {
 						advancedParResults.get(parIndex);
@@ -161,7 +190,7 @@ public class TestController {
 						int posSource1 = title.getPositionSource1();
 						int posSource2 = title.getPositionSource2();
 						double distance = 0;
-						if ((posSource1 <= top && posSource1 != -1) /*|| (posSource2 <= top && posSource2 != -1)*/) {
+						if ((posSource1 <= top && posSource1 != -1)){ // /*|| (posSource2 <= top && posSource2 != -1)
 							if (posSource2 > top || posSource2 == -1) distance = top;
 							else distance = Math.abs(posSource1 - posSource2);
 
@@ -178,8 +207,8 @@ public class TestController {
 					}
 					System.out.println("Total accumulated distance: " + accumulatedDistance);
 					double proximity = 100 - (100 * accumulatedDistance) / (top * top);
-					/*NumberFormat nf = NumberFormat.getInstance(Locale.FRANCE);
-					nf.format(proximity);*/
+					//NumberFormat nf = NumberFormat.getInstance(Locale.FRANCE);
+					//nf.format(proximity);
 					results.put(top, proximity);
 					advancedParResult.setProximity(proximity);
 					mean += proximity;
@@ -189,13 +218,46 @@ public class TestController {
 				}
 			}
 			mean = mean / numTops;
-			ParResult parResult = new ParResult(par, results, mean);
+			ParTopResult parResult = new ParTopResult(par, results, mean);
 			paresResults.add(parResult);
 			parIndex++;
 		}
-		List<TopResult> topsResults = new LinkedList<TopResult>(mapTopResults.values());
-		TestResult testResult = new TestResult(test, paresResults, topsResults);
+		List<TopAdvancedResult> topsResults = new LinkedList<TopAdvancedResult>(mapTopResults.values());
+		TestAdvancedResult testResult = new TestAdvancedResult(test, paresResults, topsResults);
 		
 		return testResult;
 	}
+	*/
+	
+	
+	public TestResult getTestResult(Test test) throws DAOException {
+		List<Par> pares = test.getPares();
+		List<ParResult> paresResults = new LinkedList<ParResult>();
+		for (Par par : pares) {
+			int n = (par.getNumTitlesSource1() >= par.getNumTitlesSource2()) ? par.getNumTitlesSource1() : par.getNumTitlesSource2();
+			int k = par.getNumCommonTitles();
+			int m = par.getNumDistinctTitles();
+			double dOrderMax = (double) k * (n-1);
+			double λn = 3 + 2 * Math.log(n);
+			double dAbsenceMax = (double) n * λn;
+			double dAbsence = (double) m * λn;
+			double absenceIndex = (double) dAbsence / dAbsenceMax;
+			int accumulatedDistance = 0;
+			List<Title> titles = par.getCommonTitles();
+			for (Title title : titles) {
+				int posSource1 = title.getPositionSource1();
+				int posSource2 = title.getPositionSource2();
+				int distance = Math.abs(posSource1 - posSource2);
+				accumulatedDistance += distance;
+			}
+			double orderIndex = (double) accumulatedDistance / dOrderMax;
+			double combinedIndex = 0.5 * orderIndex + 0.5 * absenceIndex;
+			ParResult parResult = new ParResult(par, orderIndex, absenceIndex, combinedIndex);
+			paresResults.add(parResult);
+		}
+		TestResult testResult = new TestResult(test, paresResults);
+		
+		return testResult;
+	}
+	
 }

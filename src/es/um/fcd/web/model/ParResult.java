@@ -1,18 +1,18 @@
 package es.um.fcd.web.model;
 
-import java.util.Map;
-
 import es.um.fcd.model.Par;
 
 public class ParResult {
 	private Par par;
-	private Map<Integer, Double> topResults;
-	private double mean;
+	private double orderIndex;
+	private double absenceIndex;
+	private double combinedIndex;
 	
-	public ParResult(Par par, Map<Integer, Double> topResults, double mean) {
+	public ParResult(Par par, double orderIndex, double absenceIndex, double combinedIndex) {
 		this.par = par;
-		this.topResults = topResults;
-		this.mean = mean;
+		this.orderIndex = orderIndex;
+		this.absenceIndex = absenceIndex;
+		this.combinedIndex = combinedIndex;
 	}
 	
 	public Par getPar() {
@@ -22,20 +22,28 @@ public class ParResult {
 	public void setPar(Par par) {
 		this.par = par;
 	}
-	
-	public Map<Integer, Double> getTopResults() {
-		return topResults;
-	}
-	
-	public void setTopResults(Map<Integer, Double> topResults) {
-		this.topResults = topResults;
+
+	public double getOrderIndex() {
+		return orderIndex;
 	}
 
-	public double getMean() {
-		return mean;
+	public void setOrderIndex(double orderIndex) {
+		this.orderIndex = orderIndex;
 	}
 
-	public void setMean(double mean) {
-		this.mean = mean;
+	public double getAbsenceIndex() {
+		return absenceIndex;
+	}
+
+	public void setAbsenceIndex(double absenceIndex) {
+		this.absenceIndex = absenceIndex;
+	}
+
+	public double getCombinedIndex() {
+		return combinedIndex;
+	}
+
+	public void setCombinedIndex(double combinedIndex) {
+		this.combinedIndex = combinedIndex;
 	}
 }

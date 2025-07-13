@@ -2,20 +2,20 @@ package es.um.fcd.web.model;
 
 import es.um.fcd.model.Par;
 
-public class AdvancedParResult {
+public class ParAdvancedResult {
 	private Par par;
 	private int matching;
 	private int samePosition;
 	private double proximity;
 	
-	public AdvancedParResult(Par par) {
+	public ParAdvancedResult(Par par) {
 		this.par = par;
 		this.matching = 0;
 		this.samePosition = 0;
 		this.proximity = 0;
 	}
 	
-	public AdvancedParResult(Par par, int matching, int samePosition, double proximity) {
+	public ParAdvancedResult(Par par, int matching, int samePosition, double proximity) {
 		this.par = par;
 		this.matching = matching;
 		this.samePosition = samePosition;

@@ -11,6 +11,7 @@ import es.um.fcd.controller.FacadeTests;
 import es.um.fcd.controller.TestController;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Test;
+import es.um.fcd.web.model.TestAdvancedResult;
 import es.um.fcd.web.model.TestResult;
 
 public class ActionResults extends Action {
@@ -30,9 +31,10 @@ public class ActionResults extends Action {
 		}
 		
 		TestController tc = TestController.getInstancia();
-		List<TestResult> testsResults = new LinkedList<TestResult>();
+		/*
+		List<TestAdvancedResult> testsResults = new LinkedList<TestAdvancedResult>();
 		for (Test test : tests) {
-			TestResult result = null;
+			TestAdvancedResult result = null;
 			try {
 				result = tc.getTestResult(test);
 			} catch (DAOException e) {
@@ -41,11 +43,24 @@ public class ActionResults extends Action {
 			}
 			testsResults.add(result);
 		}
+		*/
+		
+		List<TestResult> testsResults = new LinkedList<TestResult>();
+		for (Test test : tests) {
+			TestResult testResult = null;
+			try {
+				testResult = tc.getTestResult(test);
+			} catch(DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			testsResults.add(testResult);
+		}
 		/*
-		for (TestResult testResult : testsResults) {
+		for (TestAdvancedResult testResult : testsResults) {
 			System.out.println("Test: " + testResult.getTest().getName());
-			List<ParResult> parResults = testResult.getParResults();
-			for (ParResult parResult : parResults) {
+			List<ParTopResult> parResults = testResult.getParResults();
+			for (ParTopResult parResult : parResults) {
 				System.out.println("--Par: " + parResult.getPar().getId());
 				Map<Integer, Double> topResults = parResult.getTopResults();
 				for (Integer top : topResults.keySet()) {
@@ -59,5 +74,6 @@ public class ActionResults extends Action {
 		request.setAttribute("testsResults", testsResults);
 		
 		return "/WEB-INF/views/parts/results.jspf";
+		//return "/WEB-INF/views/parts/top-results.jspf";
 	}
 }

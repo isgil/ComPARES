@@ -19,7 +19,8 @@ public class TestFileStrategyRIS extends TestFileStrategy {
 
 	@Override
 	protected List<Title> extractTitles(TestFile testFile, String customTitleMark) throws DAOException, FileNotFoundException, IOException {
-		Map<String, Title> titles = new LinkedHashMap<String, Title>();
+		//Map<String, Title> titles = new LinkedHashMap<String, Title>();
+		List<Title> titles = new LinkedList<Title>();
 		FileReader file = null;
 		String titleMark = (customTitleMark != null && !customTitleMark.isEmpty()) ? customTitleMark : "TI";
 	
@@ -35,12 +36,14 @@ public class TestFileStrategyRIS extends TestFileStrategy {
 				titleStr = titleStr.replaceAll("</?[^>]+>", "");
 				titleStr = titleStr.replaceAll("[^\\p{L}\\p{ASCII}]", "");
 				Title title = new Title(titleStr);
-				titles.put(titleStr.toLowerCase(), title);
+				//titles.put(titleStr.toLowerCase(), title);
+				titles.add(title);
 			}
 		}
 		file.close();
-		List<Title> listOfTitles = new LinkedList<Title>(titles.values());
+		//List<Title> listOfTitles = new LinkedList<Title>(titles.values());
 
-		return listOfTitles;
+		//return listOfTitles;
+		return titles;
 	}
 }

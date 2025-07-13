@@ -209,7 +209,7 @@ table tr:last-child td {
 	border-bottom: 2px solid #cfcfcfaa;
 }
 
-tr.top-header, th.top-id, td.top-id, table.basic-results-table tr:last-child td {
+tr.top-header, th.top-id, td.top-id/*, table.basic-results-table tr:last-child td*/ {
 	background-color: #e3e3e3 !important;
     font-weight: bold;
 }

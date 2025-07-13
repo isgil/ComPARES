@@ -4,7 +4,7 @@
 <%@ attribute name="source1" required="true" type="java.lang.String"%>
 <%@ attribute name="source2" required="true" type="java.lang.String"%>
 <%@ attribute name="testName" required="true" type="java.lang.String"%>
-<%@ attribute name="testResult" required="true" type="es.um.fcd.web.model.TestResult"%>
+<%@ attribute name="testResult" required="true" type="es.um.fcd.web.model.TestAdvancedResult"%>
 
 <table id="${id}" class="advanced-results-table dataTable highlight centered">
 	<tbody>

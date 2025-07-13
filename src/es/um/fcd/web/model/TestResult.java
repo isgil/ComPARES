@@ -1,6 +1,5 @@
 package es.um.fcd.web.model;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import es.um.fcd.model.Test;
@@ -8,12 +7,10 @@ import es.um.fcd.model.Test;
 public class TestResult {
 	private Test test;
 	private List<ParResult> parResults;
-	private List<TopResult> topResults;
 	
-	public TestResult(Test test, List<ParResult> parResults, List<TopResult> topResults) {
+	public TestResult(Test test, List<ParResult> parResults) {
 		this.test = test;
 		this.parResults = parResults;
-		this.topResults = topResults;		
 	}
 	
 	public Test getTest() {
@@ -23,47 +20,48 @@ public class TestResult {
 	public void setTest(Test test) {
 		this.test = test;
 	}
-	
+
 	public List<ParResult> getParResults() {
 		return parResults;
 	}
-	
+
 	public void setParResults(List<ParResult> parResults) {
 		this.parResults = parResults;
 	}
-
-	public List<TopResult> getTopResults() {
-		return topResults;
-	}
-
-	public void setTopResults(List<TopResult> topResults) {
-		this.topResults = topResults;
-	}
 	
-	public double getMeanPares() {
-		double mean = 0;
-		for (ParResult result : parResults) {
-			mean += result.getMean();
+	public double getOrderIndexMean() {
+		int numTops = parResults.size();
+		double accumulatedOrderIndex = 0;
+		for (ParResult parResult : parResults) {
+			accumulatedOrderIndex += parResult.getOrderIndex();
 		}
 		
-		return mean / parResults.size();
+		double orderIndexMean = accumulatedOrderIndex / (double) numTops;
+		
+		return orderIndexMean;
 	}
 	
-	public double getMeanTops() {
-		double mean = 0;
-		for (TopResult result : topResults) {
-			mean += result.getMean();
+	public double getAbsenceIndexMean() {
+		int numTops = parResults.size();
+		double accumulatedAbsenceIndex = 0;
+		for (ParResult parResult : parResults) {
+			accumulatedAbsenceIndex += parResult.getAbsenceIndex();
 		}
 		
-		return mean / topResults.size();
+		double indexAbsenceMean = accumulatedAbsenceIndex / (double) numTops;
+		
+		return indexAbsenceMean;
 	}
 	
-	public List<Double> getAllParResultsMeans() {
-		List<Double> allParResultsMeans = new LinkedList<Double>();
-		for (TopResult topResult : topResults) {
-			allParResultsMeans.add(topResult.getMean());
+	public double getCombinedIndexMean() {
+		int numTops = parResults.size();
+		double accumulatedCombinedIndex = 0;
+		for (ParResult parResult : parResults) {
+			accumulatedCombinedIndex += parResult.getAbsenceIndex();
 		}
 		
-		return allParResultsMeans;
+		double indexCombinedMean = accumulatedCombinedIndex / (double) numTops;
+		
+		return indexCombinedMean;
 	}
 }
