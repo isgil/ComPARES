@@ -9,9 +9,9 @@
 	<thead>
 		<tr class="top-header">
 			<th class="top-id">Par</th>
+			<th class="top-id">Combined Index</th>
 			<th class="top-id">Order Index</th>
 			<th class="top-id">Absence Index</th>
-			<th class="top-id">Combined Index</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,63 +28,44 @@
 					</div>
 				</td>
 				<td>
-					<fmt:formatNumber value="${parResult.orderIndex}" type="number" maxFractionDigits="4" />
+					<fmt:formatNumber value="${parResult.combinedIndex}" type="number" maxFractionDigits="2" />
 					<br/>
-					<c:choose>
-						<c:when test="${parResult.orderIndex >= 0 && parResult.orderIndex < 0.05}">
-							<i>Almost identical order</i>
-						</c:when>
-						<c:when test="${parResult.orderIndex >= 0.05 && parResult.orderIndex < 0.10}">
-							<i>Small changes to the order</i>
-						</c:when>
-						<c:when test="${parResult.orderIndex >= 0.10 && parResult.orderIndex < 0.20}">
-							<i>Noticeably different order</i>
-						</c:when>
-						<c:when test="${parResult.orderIndex >= 0.20 && parResult.orderIndex < 0.30}">
-							<i>Moderate order changes</i>
-						</c:when>
-						<c:when test="${parResult.orderIndex >= 0.30 && parResult.orderIndex < 0.50}">
-							<i>Strong realignments</i>
-						</c:when>
-						<c:when test="${parResult.orderIndex >= 0.50}">
-							<i>Very different order (almost random)</i>
-						</c:when>
-					</c:choose>
+					<tag:IndexInterpretation indexType="combined" indexValue="${parResult.combinedIndex}" />
+				</td>
+				<td>
+					<fmt:formatNumber value="${parResult.orderIndex}" type="number" maxFractionDigits="2" />
+					<br/>
+					<tag:IndexInterpretation indexType="order" indexValue="${parResult.orderIndex}" />
 				</td>	
 				<td>
-					<fmt:formatNumber value="${parResult.absenceIndex}" type="number" maxFractionDigits="4" />
+					<fmt:formatNumber value="${parResult.absenceIndex}" type="number" maxFractionDigits="2" />
 					<br/>
-					<c:choose>
-						<c:when test="${parResult.absenceIndex >= 0 && parResult.absenceIndex < 0.05}">
-							<i>Almost no absence</i>
-						</c:when>
-						<c:when test="${parResult.absenceIndex >= 0.05 && parResult.absenceIndex < 0.10}">
-							<i>Very low one-off absences</i>
-						</c:when>
-						<c:when test="${parResult.absenceIndex >= 0.10 && parResult.absenceIndex < 0.20}">
-							<i>Low but present absences</i>
-						</c:when>
-						<c:when test="${parResult.absenceIndex >= 0.20 && parResult.absenceIndex < 0.30}">
-							<i>Moderate absences</i>
-						</c:when>
-						<c:when test="${parResult.absenceIndex >= 0.30 && parResult.absenceIndex < 0.50}">
-							<i>High absences</i>
-						</c:when>
-						<c:when test="${parResult.absenceIndex >= 0.50}">
-							<i>Very high absences</i>
-						</c:when>
-					</c:choose>
+					<tag:IndexInterpretation indexType="absence" indexValue="${parResult.absenceIndex}" />
 				</td>
-				<td><fmt:formatNumber value="${parResult.combinedIndex}" type="number" maxFractionDigits="4" /></td>
 			</tr>
 			<c:set var="nPar" value="${nPar+1}"/>
 		</c:forEach>
 		<c:if test="${testResult.getParResults().size() > 1}">
 			<tr>
+				<c:set var="orderIndexMean" value="${testResult.getOrderIndexMean()}" />
+				<c:set var="absenceIndexMean" value="${testResult.getAbsenceIndexMean()}" />
+				<c:set var="combinedIndexMean" value="${testResult.getCombinedIndexMean()}" />
 				<td><b>Mean</b></td>
-				<td><fmt:formatNumber value="${testResult.getOrderIndexMean()}" type="number" maxFractionDigits="4" /></td>
-				<td><fmt:formatNumber value="${testResult.getAbsenceIndexMean()}" type="number" maxFractionDigits="4" /></td>
-				<td><fmt:formatNumber value="${testResult.getCombinedIndexMean()}" type="number" maxFractionDigits="4" /></td>
+				<td>
+					<fmt:formatNumber value="${combinedIndexMean}" type="number" maxFractionDigits="2" />
+					<br/>
+					<tag:IndexInterpretation indexType="combined" indexValue="${combinedIndexMean}" />
+				</td>
+				<td>
+					<fmt:formatNumber value="${orderIndexMean}" type="number" maxFractionDigits="2" />
+					<br/>
+					<tag:IndexInterpretation indexType="order" indexValue="${orderIndexMean}" />
+				</td>
+				<td>
+					<fmt:formatNumber value="${absenceIndexMean}" type="number" maxFractionDigits="2" />
+					<br/>
+					<tag:IndexInterpretation indexType="absence" indexValue="${absenceIndexMean}" />
+				</td>
 			</tr>
 		</c:if>
 	</tbody>

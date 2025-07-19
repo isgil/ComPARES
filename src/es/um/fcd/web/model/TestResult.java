@@ -57,7 +57,7 @@ public class TestResult {
 		int numTops = parResults.size();
 		double accumulatedCombinedIndex = 0;
 		for (ParResult parResult : parResults) {
-			accumulatedCombinedIndex += parResult.getAbsenceIndex();
+			accumulatedCombinedIndex += parResult.getCombinedIndex();
 		}
 		
 		double indexCombinedMean = accumulatedCombinedIndex / (double) numTops;
