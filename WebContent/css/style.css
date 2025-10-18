@@ -177,6 +177,16 @@ table.basic-results-table tr td:first-child, table.basic-results-table tbody th 
 	text-align: left;
 }
 
+table.basic-results-table tr th:nth-child(3), table.basic-results-table tr th:nth-child(4), table.basic-results-table tr th:nth-child(5),
+table.basic-results-table tr td:nth-child(3), table.basic-results-table tr td:nth-child(4), table.basic-results-table tr td:nth-child(5) {
+	background-color: #0098ff12 !important;	
+}
+
+table.basic-results-table tr th:nth-child(2),
+table.basic-results-table tr td:nth-child(2) {
+	background-color: #ffff000d !important;
+}
+
 table.advanced-results-table tr:nth-child(2) td:first-child, table.advanced-results-table tbody th:nth-child(2) td:first-child {
 	width: 25%;
 }
@@ -241,8 +251,8 @@ table.distances-table tr.exact td {
 /********************************/
 
 div.item.row.actions {
-	display: none;
-	background-color: #f5f5f5;
+	/*display: none;*/
+	background-color: rgb(219, 219, 219);
 	padding: 10px 10px 0 10px !important;
 	/*padding: 10px !important;*/
 	/*margin-bottom: 20px;*/

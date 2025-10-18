@@ -29,6 +29,30 @@ public class TestResult {
 		this.parResults = parResults;
 	}
 	
+	public double getGSFnIndexMean() {
+		int numTops = parResults.size();
+		double accumulatedGSFnIndex = 0;
+		for (ParResult parResult : parResults) {
+			accumulatedGSFnIndex += parResult.getGSFnIndex();
+		}
+		
+		double indexGSFnMean = accumulatedGSFnIndex / (double) numTops;
+		
+		return indexGSFnMean;
+	}
+	
+	public double getCombinedIndexMean() {
+		int numTops = parResults.size();
+		double accumulatedCombinedIndex = 0;
+		for (ParResult parResult : parResults) {
+			accumulatedCombinedIndex += parResult.getCombinedIndex();
+		}
+		
+		double indexCombinedMean = accumulatedCombinedIndex / (double) numTops;
+		
+		return indexCombinedMean;
+	}
+	
 	public double getOrderIndexMean() {
 		int numTops = parResults.size();
 		double accumulatedOrderIndex = 0;
@@ -51,17 +75,5 @@ public class TestResult {
 		double indexAbsenceMean = accumulatedAbsenceIndex / (double) numTops;
 		
 		return indexAbsenceMean;
-	}
-	
-	public double getCombinedIndexMean() {
-		int numTops = parResults.size();
-		double accumulatedCombinedIndex = 0;
-		for (ParResult parResult : parResults) {
-			accumulatedCombinedIndex += parResult.getCombinedIndex();
-		}
-		
-		double indexCombinedMean = accumulatedCombinedIndex / (double) numTops;
-		
-		return indexCombinedMean;
 	}
 }

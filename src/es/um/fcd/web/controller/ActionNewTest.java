@@ -137,10 +137,15 @@ public class ActionNewTest extends Action {
 				request.getSession().setAttribute("loadPercentage", 0);
 				try {
 					titlesSource1 = tc.getTitles(testFileSource1, titleMark1, httpSession);
-					int numDuplicatesSource1 = tc.processDuplicates(titlesSource1, httpSession);
+					int numTitlesSource1 = titlesSource1.size();
+					titlesSource1 = tc.processDuplicates(titlesSource1, httpSession);
 					titlesSource2 = tc.getTitles(testFileSource2, titleMark2, httpSession);
-					int numDuplicatesSource2 = tc.processDuplicates(titlesSource2, httpSession);
+					int numTitlesSource2 = titlesSource2.size();
+					titlesSource2 = tc.processDuplicates(titlesSource2, httpSession);
+					/* Se procesan los títulos para extraer la posición de cada uno en la lista */
 					titles = tc.processTitles(titlesSource1, titlesSource2, httpSession);
+					int numDuplicatesSource1 = numTitlesSource1 - titlesSource1.size();
+					int numDuplicatesSource2 = numTitlesSource2 - titlesSource2.size();
 					if (numDuplicatesSource1 > 0) {
 						notifications.getWarning().add(Notifications.getNumberOfDuplicates(numDuplicatesSource1, testFileSource1));
 						System.out.println("Duplicados Source1: " + numDuplicatesSource1);

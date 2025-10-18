@@ -5,7 +5,10 @@
 	$(document).ready(function() {
 		$(".title-section").text($("nav #library span").text()).fadeIn(1000);
 		$("input.custom-checkbox").click(clickCheckbox);
-		$('button#select-all-nothing').click(selectAllNothing);
+		$('button#select-all-nothing').click(function() {
+			selectAllNothing();
+			clickCheckbox();
+		});
 		$('button#calculate-tops').click(clickCalculateTops);
 		$('button#toggle-results').click(clickToggleResults);
 		$('button#remove').click(removeTests);
@@ -43,7 +46,7 @@
 		// HTML
 		var htmlWrapperStart = '<html>';
 		htmlWrapperStart += '<head>';
-		htmlWrapperStart += '<style>table, th, td {border: 1px solid black; border-collapse: collapse; text-align: center; padding: 5px; white-space: nowrap} table {margin: 0px 20px 50px 20px;} th {background-color: #e3e3e3} tr.top-header, th.top-id, td.top-id { background-color: #e3e3e3 !important; font-weight: bold;} td.top-header {font-weight: bold;}</style>'
+		htmlWrapperStart += '<style>table, th, td {border: 1px solid black; border-collapse: collapse; text-align: center; padding: 5px; white-space: nowrap} table {margin: 0px 20px 50px 20px;} th {background-color: #e3e3e3} tr.top-header, th.top-id, td.top-id { background-color: #e3e3e3; font-weight: bold;} td.top-header {font-weight: bold;} table tr th:nth-child(3), table tr th:nth-child(4), table tr th:nth-child(5), table tr td:nth-child(3), table tr td:nth-child(4), table tr td:nth-child(5) { background-color: #0098ff12} table tr th:nth-child(2), table tr td:nth-child(2) { background-color: #ffff000d !important;}</style>'
 		htmlWrapperStart += '</head>';
 		htmlWrapperStart += '<body>';
 		var htmlWrapperEnd = '</body>';
@@ -313,13 +316,18 @@
 	function clickCheckbox() {
 		var testIds = getActiveCheckboxes();
 		if (testIds.length > 0) {
-			$('div#main-actions').show();
+			/*$('div#main-actions').show();*/
 			$('div.default-message').hide();
+			$('button#calculate-tops').removeClass('disabled');
+			$('button#remove').removeClass('disabled');
 		} else {
 			//$('#test-list').removeClass('l3').addClass('l6');
 			//$('#results-wrapper').removeClass('l9').addClass('l6');
-			$('div.actions').hide();
+			/*$('div.actions').hide();*/
 			$('div.default-message').show();
+			$('button#calculate-tops').addClass('disabled');
+			$('button#remove').addClass('disabled');
+			$('div.secondary-actions').hide();
 			$(".results").html('');
 			$(".results").hide();
 			if (modeAdvanced) {

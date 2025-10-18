@@ -157,6 +157,25 @@ public class Par implements Serializable {
 		return distinctTitles;
 	}
 	
+	public int getNumTitlesOnlyInSource1() {
+		int numTitlesOnlyInSource1 = 0;
+		for (Title title : titles) {
+			if (title.getPositionSource2() == -1) {
+				numTitlesOnlyInSource1++;
+			}
+		}
+		
+		return numTitlesOnlyInSource1;
+	}
 
-
+	public int getNumTitlesOnlyInSource2() {
+		int numTitlesOnlyInSource2 = 0;
+		for (Title title : titles) {
+			if (title.getPositionSource1() == -1) {
+				numTitlesOnlyInSource2++;
+			}
+		}
+		
+		return numTitlesOnlyInSource2;
+	}
 }

@@ -9,6 +9,7 @@
 	<thead>
 		<tr class="top-header">
 			<th class="top-id">Par</th>
+			<th class="top-id">GSF-n Index</th>
 			<th class="top-id">Combined Index</th>
 			<th class="top-id">Order Index</th>
 			<th class="top-id">Absence Index</th>
@@ -26,6 +27,11 @@
 						<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div><br/>
 						<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
 					</div>
+				</td>
+				<td>
+					<fmt:formatNumber value="${parResult.GSFnIndex}" type="number" maxFractionDigits="2" />
+					<br/>
+					<tag:IndexInterpretation indexType="GSFn" indexValue="${parResult.GSFnIndex}" />
 				</td>
 				<td>
 					<fmt:formatNumber value="${parResult.combinedIndex}" type="number" maxFractionDigits="2" />
@@ -47,10 +53,16 @@
 		</c:forEach>
 		<c:if test="${testResult.getParResults().size() > 1}">
 			<tr>
+				<c:set var="GSFnIndexMean" value="${testResult.getCombinedIndexMean()}" />
+				<c:set var="combinedIndexMean" value="${testResult.getCombinedIndexMean()}" />
 				<c:set var="orderIndexMean" value="${testResult.getOrderIndexMean()}" />
 				<c:set var="absenceIndexMean" value="${testResult.getAbsenceIndexMean()}" />
-				<c:set var="combinedIndexMean" value="${testResult.getCombinedIndexMean()}" />
 				<td><b>Mean</b></td>
+				<td>
+					<fmt:formatNumber value="${GSFnIndexMean}" type="number" maxFractionDigits="2" />
+					<br/>
+					<tag:IndexInterpretation indexType="GSFn" indexValue="${GSFnIndexMean}" />
+				</td>
 				<td>
 					<fmt:formatNumber value="${combinedIndexMean}" type="number" maxFractionDigits="2" />
 					<br/>

@@ -81,7 +81,7 @@ public class TestController {
 		return getTitles(testFile, titleMark);
 	}
 	
-	public int processDuplicates(List<Title> titles, HttpSession session) {
+	public List<Title> processDuplicates(List<Title> titles, HttpSession session) {
 		int titlesProcessed = 0;
 		int totalTitles = titles.size();
 		session.setAttribute("loadPercentage", (titlesProcessed * 100) / totalTitles);
@@ -95,9 +95,8 @@ public class TestController {
 		}
 		
 		titles = new LinkedList<>(titlesMap.values());
-		int numDuplicates = totalTitles - titles.size();
 		
-		return numDuplicates;
+		return titles;
 	}
 	
 	public List<Title> processTitles(List<Title> titlesSource1, List<Title> titlesSource2, HttpSession session) {
@@ -234,14 +233,19 @@ public class TestController {
 		List<Par> pares = test.getPares();
 		List<ParResult> paresResults = new LinkedList<ParResult>();
 		for (Par par : pares) {
+			/** index 50/50 **/
+			/* Número de elementos en la lista más grande */
 			int n = (par.getNumTitlesSource1() >= par.getNumTitlesSource2()) ? par.getNumTitlesSource1() : par.getNumTitlesSource2();
+			/* Número de títulos comunes */
 			int k = par.getNumCommonTitles();
+			/* Número de títulos que no están presentes en alguna de las listas */
 			int m = par.getNumDistinctTitles();
 			double dOrderMax = (double) k * (n-1);
 			double λn = 3 + 2 * Math.log(n);
 			double dAbsenceMax = (double) n * λn;
 			double dAbsence = (double) m * λn;
 			double absenceIndex = (double) dAbsence / dAbsenceMax;
+			/* Suma de las distancias */
 			int accumulatedDistance = 0;
 			List<Title> titles = par.getCommonTitles();
 			for (Title title : titles) {
@@ -252,7 +256,32 @@ public class TestController {
 			}
 			double orderIndex = (double) accumulatedDistance / dOrderMax;
 			double combinedIndex = 0.5 * orderIndex + 0.5 * absenceIndex;
-			ParResult parResult = new ParResult(par, orderIndex, absenceIndex, combinedIndex);
+			
+			/** Index GSF-n **/
+			/* Valor que se asignará como distancia a un elemento que no está en una de las listas */
+			int maxRank = n+1;
+			/* Suma de las distancias, GSF-AB */
+			accumulatedDistance = 0;
+			titles = par.getTitles();
+			/* Número de títulos totales (distintos) entre las dos listas */
+			k = titles.size();
+			int maxGSF = k * (maxRank -1); 
+			for (Title title : titles) {
+				int posSource1 = title.getPositionSource1();
+				int posSource2 = title.getPositionSource2();
+				if (posSource1 == -1) posSource1 = maxRank;
+				else if (posSource2 == -1) posSource2 = maxRank;
+				int distance = Math.abs(posSource1 - posSource2);
+				accumulatedDistance += distance;
+				System.out.println("distance=" + distance);
+			}
+			double GSFnIndex = 1-((double) accumulatedDistance / (double) maxGSF);
+			System.out.println("maxRank=" + maxRank);
+			System.out.println("accumulatedDistance=" + accumulatedDistance);
+			System.out.println("maxGSF=" + maxGSF);
+			System.out.println("GSFnIndex=" + GSFnIndex);
+			
+			ParResult parResult = new ParResult(par, orderIndex, absenceIndex, combinedIndex, GSFnIndex);
 			paresResults.add(parResult);
 		}
 		TestResult testResult = new TestResult(test, paresResults);

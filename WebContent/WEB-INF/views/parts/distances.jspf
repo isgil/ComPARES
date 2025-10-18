@@ -11,10 +11,13 @@
 	<div class="top-icons"><img class="close" /></div>
 	<div class="par-info">
 		<div class="grey lighten-4">
+			<c:set var="numTitlesSource1" value="${par.getNumTitlesSource1()}"/>
+			<c:set var="numTitlesSource2" value="${par.getNumTitlesSource2()}"/>
 			<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div>
 			<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
 			<br/><br/>
-	
+			<tag:CommonElementsTable par="${par}" source1="${source1}" source2="${source2}" />
+			<br />
 			<tag:DistancesTable par="${par}" source1="${source1}" source2="${source2}" />
 		</div>
 	</div>

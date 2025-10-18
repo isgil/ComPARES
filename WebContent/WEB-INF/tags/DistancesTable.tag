@@ -4,7 +4,7 @@
 <%@ attribute name="source1" required="true" type="java.lang.String"%>
 <%@ attribute name="source2" required="true" type="java.lang.String"%>
 
-<table class="distances-table highlight centered">
+<table id="distances-table" class="distances-table highlight centered">
 	<thead>
 		<tr class="top-header">
 			<th class="top-id">Title</th>

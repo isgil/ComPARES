@@ -7,12 +7,14 @@ public class ParResult {
 	private double orderIndex;
 	private double absenceIndex;
 	private double combinedIndex;
+	private double GSFnIndex;
 	
-	public ParResult(Par par, double orderIndex, double absenceIndex, double combinedIndex) {
+	public ParResult(Par par, double orderIndex, double absenceIndex, double combinedIndex, double GSFnIndex) {
 		this.par = par;
 		this.orderIndex = orderIndex;
 		this.absenceIndex = absenceIndex;
 		this.combinedIndex = combinedIndex;
+		this.GSFnIndex = GSFnIndex;
 	}
 	
 	public Par getPar() {
@@ -45,5 +47,13 @@ public class ParResult {
 
 	public void setCombinedIndex(double combinedIndex) {
 		this.combinedIndex = combinedIndex;
+	}
+	
+	public double getGSFnIndex() {
+		return GSFnIndex;
+	}
+
+	public void setGSFnIndex(double GSFnIndex) {
+		this.GSFnIndex = GSFnIndex;
 	}
 }

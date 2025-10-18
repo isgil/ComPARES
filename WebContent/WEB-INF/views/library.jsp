@@ -13,6 +13,12 @@
 							<div class="default-message center"><p><b>There are no tests in the system</b></p></div>
 						</c:when>
 						<c:otherwise>
+							
+							<div id="main-actions" class="item row actions">
+								<button id="select-all-nothing" class="btn btn-small blue darken-1 waves-effect waves-light left" type="button" name="action">Select All</button>
+								<button id="calculate-tops" class="btn btn-small blue darken-1 waves-effect waves-light left disabled" type="button" name="action">Calculate Similarity</button>
+								<button id="remove" class="btn btn-small red lighten-2 waves-effect waves-light right disabled" type="submit" name="action">Remove</button>
+							</div>
 							<c:forEach items="${tests}" var="test">
 								<div class="test row">
 									<div class="item col s12 m12 l12 grey lighten-4">
@@ -39,17 +45,6 @@
 					<c:if test="${tests.size() > 0}">
 						<div class="default-message center"><p><b>Select one or more tests to view the details</b></p></div>
 					</c:if>
-					<div id="main-actions" class="item row actions">
-						<button id="select-all-nothing"
-							class="btn btn-small blue darken-1 waves-effect waves-light left"
-							type="button" name="action">Select All</button>
-						<button id="calculate-tops"
-							class="btn btn-small blue darken-1 waves-effect waves-light left"
-							type="button" name="action">Calculate Similarity</button>
-						<button id="remove"
-							class="btn btn-small red lighten-2 waves-effect waves-light right"
-							type="submit" name="action">Remove</button>
-					</div>
 					<div id="secondary-actions" class="item row actions secondary-actions">
 						<!-- 
 						<button id="toggle-results"
