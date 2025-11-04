@@ -6,11 +6,11 @@ import es.um.fcd.model.Test;
 
 public class TestResult {
 	private Test test;
-	private List<ParResult> parResults;
+	private List<ParTopResult> parTopResults;
 	
-	public TestResult(Test test, List<ParResult> parResults) {
+	public TestResult(Test test, List<ParTopResult> parResults) {
 		this.test = test;
-		this.parResults = parResults;
+		this.parTopResults = parResults;
 	}
 	
 	public Test getTest() {
@@ -21,58 +21,58 @@ public class TestResult {
 		this.test = test;
 	}
 
-	public List<ParResult> getParResults() {
-		return parResults;
+	public List<ParTopResult> getParResults() {
+		return parTopResults;
 	}
 
-	public void setParResults(List<ParResult> parResults) {
-		this.parResults = parResults;
+	public void setParResults(List<ParTopResult> parResults) {
+		this.parTopResults = parResults;
 	}
 	
 	public double getGSFnIndexMean() {
-		int numTops = parResults.size();
+		int numPares = parTopResults.size();
 		double accumulatedGSFnIndex = 0;
-		for (ParResult parResult : parResults) {
-			accumulatedGSFnIndex += parResult.getGSFnIndex();
+		for (ParTopResult parTopResult : parTopResults) {
+			accumulatedGSFnIndex += parTopResult.getGSFnIndexMean();
 		}
 		
-		double indexGSFnMean = accumulatedGSFnIndex / (double) numTops;
+		double indexGSFnMean = accumulatedGSFnIndex / (double) numPares;
 		
 		return indexGSFnMean;
 	}
 	
 	public double getCombinedIndexMean() {
-		int numTops = parResults.size();
+		int numPares = parTopResults.size();
 		double accumulatedCombinedIndex = 0;
-		for (ParResult parResult : parResults) {
-			accumulatedCombinedIndex += parResult.getCombinedIndex();
+		for (ParTopResult parTopResult : parTopResults) {
+			accumulatedCombinedIndex += parTopResult.getCombinedIndexMean();
 		}
 		
-		double indexCombinedMean = accumulatedCombinedIndex / (double) numTops;
+		double indexCombinedMean = accumulatedCombinedIndex / (double) numPares;
 		
 		return indexCombinedMean;
 	}
 	
 	public double getOrderIndexMean() {
-		int numTops = parResults.size();
+		int numPares = parTopResults.size();
 		double accumulatedOrderIndex = 0;
-		for (ParResult parResult : parResults) {
-			accumulatedOrderIndex += parResult.getOrderIndex();
+		for (ParTopResult parTopResult : parTopResults) {
+			accumulatedOrderIndex += parTopResult.getOrderIndexMean();
 		}
 		
-		double orderIndexMean = accumulatedOrderIndex / (double) numTops;
+		double orderIndexMean = accumulatedOrderIndex / (double) numPares;
 		
 		return orderIndexMean;
 	}
 	
 	public double getAbsenceIndexMean() {
-		int numTops = parResults.size();
+		int numPares = parTopResults.size();
 		double accumulatedAbsenceIndex = 0;
-		for (ParResult parResult : parResults) {
-			accumulatedAbsenceIndex += parResult.getAbsenceIndex();
+		for (ParTopResult parTopResult : parTopResults) {
+			accumulatedAbsenceIndex += parTopResult.getAbsenceIndexMean();
 		}
 		
-		double indexAbsenceMean = accumulatedAbsenceIndex / (double) numTops;
+		double indexAbsenceMean = accumulatedAbsenceIndex / (double) numPares;
 		
 		return indexAbsenceMean;
 	}

@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -27,6 +28,7 @@ import es.um.fcd.web.model.ParTopResult;
 import es.um.fcd.web.model.TestAdvancedResult;
 import es.um.fcd.web.model.TestResult;
 import es.um.fcd.web.model.TopAdvancedResult;
+import es.um.fcd.web.model.TopResult;
 
 public class TestController {
 	private static TestController instancia = null;
@@ -225,64 +227,80 @@ public class TestController {
 		TestAdvancedResult testResult = new TestAdvancedResult(test, paresResults, topsResults);
 		
 		return testResult;
-	}
+	}	
 	*/
-	
 	
 	public TestResult getTestResult(Test test) throws DAOException {
 		List<Par> pares = test.getPares();
-		List<ParResult> paresResults = new LinkedList<ParResult>();
+		List<ParTopResult> paresResults = new LinkedList<ParTopResult>();
 		for (Par par : pares) {
-			/** index 50/50 **/
-			/* Número de elementos en la lista más grande */
-			int n = (par.getNumTitlesSource1() >= par.getNumTitlesSource2()) ? par.getNumTitlesSource1() : par.getNumTitlesSource2();
-			/* Número de títulos comunes */
-			int k = par.getNumCommonTitles();
-			/* Número de títulos que no están presentes en alguna de las listas */
-			int m = par.getNumDistinctTitles();
-			double dOrderMax = (double) k * (n-1);
-			double λn = 3 + 2 * Math.log(n);
-			double dAbsenceMax = (double) n * λn;
-			double dAbsence = (double) m * λn;
-			double absenceIndex = (double) dAbsence / dAbsenceMax;
-			/* Suma de las distancias */
-			int accumulatedDistance = 0;
-			List<Title> titles = par.getCommonTitles();
-			for (Title title : titles) {
-				int posSource1 = title.getPositionSource1();
-				int posSource2 = title.getPositionSource2();
-				int distance = Math.abs(posSource1 - posSource2);
-				accumulatedDistance += distance;
+			//int numTitlesSource1 = par.getTitlesSource1().size();
+			//int numTitlesSource2 = par.getTitlesSource2().size();
+			//int minNumTitles = (numTitlesSource1 <= numTitlesSource2) ? numTitlesSource1 : numTitlesSource2;
+			List<Integer> tops = FacadeSettings.getInstancia().getTops();
+			if (tops == null) {
+				tops = defaultTops;
 			}
-			double orderIndex = (double) accumulatedDistance / dOrderMax;
-			double combinedIndex = 0.5 * orderIndex + 0.5 * absenceIndex;
-			
-			/** Index GSF-n **/
-			/* Valor que se asignará como distancia a un elemento que no está en una de las listas */
-			int maxRank = n+1;
-			/* Suma de las distancias, GSF-AB */
-			accumulatedDistance = 0;
-			titles = par.getTitles();
-			/* Número de títulos totales (distintos) entre las dos listas */
-			k = titles.size();
-			int maxGSF = k * (maxRank -1); 
-			for (Title title : titles) {
-				int posSource1 = title.getPositionSource1();
-				int posSource2 = title.getPositionSource2();
-				if (posSource1 == -1) posSource1 = maxRank;
-				else if (posSource2 == -1) posSource2 = maxRank;
-				int distance = Math.abs(posSource1 - posSource2);
-				accumulatedDistance += distance;
-				System.out.println("distance=" + distance);
+			// Número de titulos en la lista más larga
+			int nMax = (par.getNumTitlesSource1() >= par.getNumTitlesSource2()) ? par.getNumTitlesSource1() : par.getNumTitlesSource2();
+			tops.add(nMax);
+			// Ordenamos los top
+			System.out.println("n= " + nMax);
+			Map<Integer, TopResult> topResults = new LinkedHashMap<Integer, TopResult>();
+			Collections.sort(tops);
+			System.out.println(tops);
+			for (int top : tops) {
+				if (top <= nMax) {
+					System.out.println("Top " + top);
+					/** index 50/50 **/
+					/* Número de elementos en la lista más grande */
+					int n = (nMax >= top) ? top : nMax;
+					
+					/* Número de títulos comunes */
+					List<Title> commonTitles = par.getCommonTitles(top);
+					int k = commonTitles.size();
+					/* Número de títulos que no están presentes en alguna de las listas */
+					int m = par.getNumDistinctTitles(top);
+					double dOrderMax = (double) k * (n-1);
+					double λn = 3 + 2 * Math.log(n);
+					double dAbsenceMax = (double) n * λn;
+					double dAbsence = (double) m * λn;
+					double absenceIndex = (double) dAbsence / dAbsenceMax;
+					/* Suma de las distancias */
+					int accumulatedDistance = 0;
+					for (Title title : commonTitles) {
+						int posSource1 = title.getPositionSource1();
+						int posSource2 = title.getPositionSource2();
+						int distance = Math.abs(posSource1 - posSource2);
+						accumulatedDistance += distance;
+					}
+					double orderIndex = (double) accumulatedDistance / dOrderMax;
+					double combinedIndex = 0.5 * orderIndex + 0.5 * absenceIndex;
+					
+					/** Index GSF-n **/
+					/* Valor que se asignará como distancia a un elemento que no está en una de las listas */
+					int maxRank = n+1;
+					/* Suma de las distancias, GSF-AB */
+					accumulatedDistance = 0;
+					List<Title> titles = par.getTitles();
+					/* Número de títulos totales (distintos) entre las dos listas */
+					k = titles.size();
+					int maxGSF = k * (maxRank -1); 
+					for (Title title : titles) {
+						int posSource1 = title.getPositionSource1();
+						int posSource2 = title.getPositionSource2();
+						if (posSource1 == -1) posSource1 = maxRank;
+						else if (posSource2 == -1) posSource2 = maxRank;
+						int distance = Math.abs(posSource1 - posSource2);
+						accumulatedDistance += distance;
+					}
+					double GSFnIndex = 1-((double) accumulatedDistance / (double) maxGSF);
+					TopResult topResult = new TopResult(orderIndex, absenceIndex, combinedIndex, GSFnIndex);
+					topResults.put(top, topResult);
+				}
 			}
-			double GSFnIndex = 1-((double) accumulatedDistance / (double) maxGSF);
-			System.out.println("maxRank=" + maxRank);
-			System.out.println("accumulatedDistance=" + accumulatedDistance);
-			System.out.println("maxGSF=" + maxGSF);
-			System.out.println("GSFnIndex=" + GSFnIndex);
-			
-			ParResult parResult = new ParResult(par, orderIndex, absenceIndex, combinedIndex, GSFnIndex);
-			paresResults.add(parResult);
+			ParTopResult parTopResult = new ParTopResult(par, topResults, 0.0);
+			paresResults.add(parTopResult);	
 		}
 		TestResult testResult = new TestResult(test, paresResults);
 		
