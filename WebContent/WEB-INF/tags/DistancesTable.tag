@@ -17,7 +17,7 @@
 		<c:forEach var="title" items="${par.getTitles()}">
 			<c:set var="pos1" value="${title.positionSource1}" />
 			<c:set var="pos2" value="${title.positionSource2}" />
-			<c:set var="distance" value="${title.getDistance()}" />
+			<c:set var="distance" value="${title.calculateDistance()}" />
 			<tr <c:if test="${pos1 == -1 || pos2 == -1}"> class="missing"</c:if><c:if test="${distance == 0}"> class="exact"</c:if>>
 				<td>${title.title}</td>
 				<td><c:choose><c:when test="${pos1 != -1}">${pos1}</c:when><c:otherwise><span style="display: none">1000000</span></c:otherwise></c:choose></td>

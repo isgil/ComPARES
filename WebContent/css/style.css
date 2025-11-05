@@ -171,6 +171,10 @@ table {
 
 /*table.basic-results-table tr td:not(:first-child):not(:empty):after {content: '%'}*/
 
+.dataTables_wrapper {
+	margin: 10px 0;
+}
+
 table.basic-results-table tr td:first-child, table.basic-results-table tbody th td:first-child {
 	white-space: nowrap;
 	max-width: 20%;
@@ -179,7 +183,7 @@ table.basic-results-table tr td:first-child, table.basic-results-table tbody th 
 
 table.basic-results-table tr:nth-child(2) td, table.basic-results-table tr:nth-child(3) td, table.basic-results-table tr:nth-child(4) td
 {
-	background-color: #0098ff12 !important;	
+	background-color: #00ff9212 !important;	
 }
 
 table.basic-results-table tr:nth-child(1) td,
@@ -220,7 +224,7 @@ table tr:last-child td {
 }
 
 tr.top-header, th.top-id, td.top-id/*, table.basic-results-table tr:last-child td*/ {
-	background-color: #e3e3e3 !important;
+	background-color: #ffe0b2 !important;
     font-weight: bold;
 }
 
@@ -250,16 +254,29 @@ table.distances-table tr.exact td {
 
 /********************************/
 
+
+
 div.item.row.actions {
 	/*display: none;*/
-	background-color: rgb(219, 219, 219);
+	background-color: rgb(86 134 240 / 44%);
 	padding: 10px 10px 0 10px !important;
 	/*padding: 10px !important;*/
 	/*margin-bottom: 20px;*/
 }
 
-div.secondary-actions {
+div#main-actions {
+	background-image: url(../img/cool-background-volt.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 500%;
+}
+
+div#secondary-actions {
 	display: none;
+	background-image: url(../img/cool-background-volt.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 500%;
 }
 
 .preloader-wrapper {
@@ -342,12 +359,15 @@ div.actions button {
 	margin-bottom: 10px;
 }
 
-div.test-result {
-	margin: 10px 20px;
-	margin-top: 0;
+div#results  {
+	padding: 0 !important;
 }
 
-div.test-result + div.test-result {
+div#results .item {
+	padding: 20px 30px !important;
+}
+
+div.results .item + .item {
 	margin-top: 40px;
 }
 

@@ -55,10 +55,10 @@
 				
 				<div class="row s12 m12 l12 center">
 					<div class="col s6">
-						<a id="add-input1" class="btn-floating btn-small add-file blue darken-1 waves-effect waves-light left"><i class="material-icons">add</i></a>
+						<a id="add-input1" class="btn-floating btn-small add-file blue darken-3 waves-effect waves-light left"><i class="material-icons">add</i></a>
 					</div>
 					<div class="col s6">
-						<a id="add-input2" class="btn-floating btn-small add-file blue darken-1 waves-effect waves-light left"><i class="material-icons">add</i></a>
+						<a id="add-input2" class="btn-floating btn-small add-file blue darken-3 waves-effect waves-light left"><i class="material-icons">add</i></a>
 					</div>
           		</div>
           		
@@ -83,7 +83,7 @@
 				</div>
 				<div class="row s12 m12 l12 center">
 					<div class="center col s12">
-						<button id="create-test" class="btn btn-small blue darken-1 waves-effect waves-light" type="submit" name="action">Create</button>
+						<button id="create-test" class="btn btn-small blue darken-3 waves-effect waves-light" type="submit" name="action">Create</button>
 					</div>
 				</div>
 			</form>

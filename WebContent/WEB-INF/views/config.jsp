@@ -51,7 +51,7 @@
 				</div>
 				<div class="row s12 m12 l12 center">
 					<div class="center col s12">
-						<button id="save-tops" class="btn btn-small blue darken-1 waves-effect waves-light" type="submit" name="action">Save</button>
+						<button id="save-tops" class="btn btn-small blue darken-3 waves-effect waves-light" type="submit" name="action">Save</button>
 					</div>
 				</div>
 		</form>

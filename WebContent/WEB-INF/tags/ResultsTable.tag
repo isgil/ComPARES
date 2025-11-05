@@ -9,7 +9,7 @@
 <c:set var="par" value="${parTopResult.par}"/>
 <c:set var="numTitlesSource1" value="${parTopResult.par.getNumTitlesSource1()}"/>
 <c:set var="numTitlesSource2" value="${parTopResult.par.getNumTitlesSource2()}"/>
-<br/>
+<br/><br/>
 <div id="${par.id}-${source1}-${source2}">
 	<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div>
 	<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
@@ -20,30 +20,20 @@
 		<tr class="top-header">
 			<th class="top-id"></th>
 			<c:set var="keys" value="${parTopResult.topResults.keySet()}" />
+			<c:set var="values" value="${parTopResult.topResults.values()}" />
 			<c:set var="numTopResults" value="${fn:length(keys)}" />
+			
+			<th class="top-id">Complete</th>
 
-			<!-- Pintar el último elemento primero -->
+			<!-- Pintar el resto de elementos en orden, excepto el primero -->
 			<c:forEach var="top" items="${keys}" varStatus="status">
-    			<c:if test="${status.index == numTopResults - 1}">
-        			<th class="top-id">List</th>
-    			</c:if>
-			</c:forEach>
-
-			<!-- Pintar el resto de elementos en orden, excepto el último -->
-			<c:forEach var="top" items="${keys}" varStatus="status">
-    			<c:if test="${status.index != numTopResults - 1}">
+    			<c:if test="${status.index != 0}">
         			<th class="top-id">Top ${top}</th>
     			</c:if>
 			</c:forEach>
 		</tr>
 	</thead>
 	<tbody>
-<!-- 
-			<th class="top-id">GSF-n Index</th>
-			<th class="top-id">Combined Index</th>
-			<th class="top-id">Order Index</th>
-			<th class="top-id">Absence Index</th>
- -->			
 		<tr>
 			<td class="top-id">GSF-n Index</td>
 			<c:forEach var="topResult" items="${parTopResult.topResults.values()}">

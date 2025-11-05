@@ -15,9 +15,9 @@
 						<c:otherwise>
 							
 							<div id="main-actions" class="item row actions">
-								<button id="select-all-nothing" class="btn btn-small blue darken-1 waves-effect waves-light left" type="button" name="action">Select All</button>
-								<button id="calculate-tops" class="btn btn-small blue darken-1 waves-effect waves-light left disabled" type="button" name="action">Calculate Similarity</button>
-								<button id="remove" class="btn btn-small red lighten-2 waves-effect waves-light right disabled" type="submit" name="action">Remove</button>
+								<button id="select-all-nothing" class="btn btn-small blue darken-3 waves-effect waves-light left" type="button" name="action">Select All</button>
+								<button id="calculate-tops" class="btn btn-small blue darken-3 waves-effect waves-light left disabled" type="button" name="action">Calculate Similarity</button>
+								<button id="remove" class="btn btn-small red darken-4 waves-effect waves-light right disabled" type="submit" name="action">Remove</button>
 							</div>
 							<c:forEach items="${tests}" var="test">
 								<div class="test row">
@@ -48,14 +48,14 @@
 					<div id="secondary-actions" class="item row actions secondary-actions">
 						<!-- 
 						<button id="toggle-results"
-							class="btn btn-small blue darken-1 waves-effect waves-light left"
+							class="btn btn-small blue darken-3 waves-effect waves-light left"
 							type="button" name="action">Show advanced</button>
 						-->
 						<!-- <button id="export-excel"
 							class="btn btn-small purple darken-3 waves-effect waves-light right"
 							type="button" name="action">Export Excel</button> -->
 						<button id="export-html"
-							class="btn btn-small purple darken-3 waves-effect waves-light right"
+							class="btn btn-small purple darken-1 waves-effect waves-light right"
 							type="button" name="action">Export HTML</button>
 					</div>
 					<div class="preloader-wrapper big">
@@ -71,7 +71,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="results" class="item results row grey lighten-4">
+					<div id="results" class="item results row">
 					</div>
 				</div>
 				<div id="distances" class="modal">

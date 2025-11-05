@@ -243,18 +243,22 @@ public class TestController {
 			}
 			// Número de titulos en la lista más larga
 			int nMax = (par.getNumTitlesSource1() >= par.getNumTitlesSource2()) ? par.getNumTitlesSource1() : par.getNumTitlesSource2();
+			tops.remove((Integer) nMax);
 			tops.add(nMax);
 			// Ordenamos los top
 			System.out.println("n= " + nMax);
-			Map<Integer, TopResult> topResults = new LinkedHashMap<Integer, TopResult>();
 			Collections.sort(tops);
+			Map<Integer, TopResult> topResults = new LinkedHashMap<Integer, TopResult>();
+			// Incluimos como primer elemento de los top el correspondiente al tamaño de la lista.
+			// El resto de tops (10-n) irán a continuación 
+			topResults.put(nMax, null);
 			System.out.println(tops);
 			for (int top : tops) {
 				if (top <= nMax) {
 					System.out.println("Top " + top);
 					/** index 50/50 **/
 					/* Número de elementos en la lista más grande */
-					int n = (nMax >= top) ? top : nMax;
+					int n = top;
 					
 					/* Número de títulos comunes */
 					List<Title> commonTitles = par.getCommonTitles(top);
@@ -265,16 +269,22 @@ public class TestController {
 					double λn = 3 + 2 * Math.log(n);
 					double dAbsenceMax = (double) n * λn;
 					double dAbsence = (double) m * λn;
-					double absenceIndex = (double) dAbsence / dAbsenceMax;
 					/* Suma de las distancias */
 					int accumulatedDistance = 0;
-					for (Title title : commonTitles) {
-						int posSource1 = title.getPositionSource1();
-						int posSource2 = title.getPositionSource2();
-						int distance = Math.abs(posSource1 - posSource2);
-						accumulatedDistance += distance;
+					double orderIndex = 1;
+					if (commonTitles.size() > 0) {
+						for (Title title : commonTitles) {
+							/*
+							int posSource1 = title.getPositionSource1();
+							int posSource2 = title.getPositionSource2();
+							int distance = Math.abs(posSource1 - posSource2);*/
+							int distance = title.calculateDistance();
+							accumulatedDistance += distance;
+						}
+						
 					}
-					double orderIndex = (double) accumulatedDistance / dOrderMax;
+					orderIndex = (double) accumulatedDistance / dOrderMax;
+					double absenceIndex = (double) dAbsence / dAbsenceMax;
 					double combinedIndex = 0.5 * orderIndex + 0.5 * absenceIndex;
 					
 					/** Index GSF-n **/
@@ -282,23 +292,32 @@ public class TestController {
 					int maxRank = n+1;
 					/* Suma de las distancias, GSF-AB */
 					accumulatedDistance = 0;
-					List<Title> titles = par.getTitles();
+					List<Title> titles = par.getTitles(top);
 					/* Número de títulos totales (distintos) entre las dos listas */
 					k = titles.size();
-					int maxGSF = k * (maxRank -1); 
+					int maxGSF = k * (maxRank - 1);
+					System.out.println("maxRank = " + maxRank);
+					System.out.println("k = " + k);
+					System.out.println("maxGSF = " + maxGSF);
 					for (Title title : titles) {
+						//int distance = title.calculateDistance(maxRank);
+						//if (top < 50) System.out.println(title.getPositionSource1() + " / " + title.getPositionSource2() + " // " + distance);
 						int posSource1 = title.getPositionSource1();
 						int posSource2 = title.getPositionSource2();
-						if (posSource1 == -1) posSource1 = maxRank;
-						else if (posSource2 == -1) posSource2 = maxRank;
+						if (posSource1 == -1 || posSource1 > top) posSource1 = maxRank;
+						else if (posSource2 == -1 || posSource2 > top) posSource2 = maxRank;
 						int distance = Math.abs(posSource1 - posSource2);
 						accumulatedDistance += distance;
 					}
+					System.out.println("accumulatedDistance = " + accumulatedDistance);
 					double GSFnIndex = 1-((double) accumulatedDistance / (double) maxGSF);
+					//if (GSFnIndex < 0) GSFnIndex = 1;
+					System.out.println("GSFnIndex = " + GSFnIndex);
 					TopResult topResult = new TopResult(orderIndex, absenceIndex, combinedIndex, GSFnIndex);
 					topResults.put(top, topResult);
 				}
 			}
+			System.out.println(topResults.values());
 			ParTopResult parTopResult = new ParTopResult(par, topResults, 0.0);
 			paresResults.add(parTopResult);	
 		}

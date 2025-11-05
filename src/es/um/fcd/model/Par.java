@@ -1,8 +1,6 @@
 package es.um.fcd.model;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity(name="PAR")
 public class Par implements Serializable {
@@ -124,11 +121,29 @@ public class Par implements Serializable {
 	}
 */
 	public List<Title> getTitles() {
-		return titles;
+		return getTitles(-1);
+	}
+	
+	public List<Title> getTitles(int top) {
+		if (top == -1 || top == titles.size()) return titles;
+		
+		List<Title> titlesInTop = new LinkedList<Title>();
+		for (Title title : titles) {
+			/* Si el título se encuentra en posiciones [1, top] para al menos uno de los sources */
+			if ((title.getPositionSource1() <= top && title.getPositionSource1() != -1) || (title.getPositionSource2() <= top && title.getPositionSource2() != -1)) {
+				titlesInTop.add(title);
+				//if (top < 50) System.out.println(title.getPositionSource1() + " / " + title.getPositionSource2());
+			}
+		}
+		return titlesInTop;
 	}
 
 	public void setTitles(List<Title> titles) {
 		this.titles = titles;
+	}
+	
+	public List<Title> getCommonTitles() {
+		return getCommonTitles(-1);
 	}
 	
 	public List<Title> getCommonTitles(int top) {
@@ -149,8 +164,16 @@ public class Par implements Serializable {
 		return commonTitles;
 	}
 	
+	public int getNumCommonTitles() {
+		return getCommonTitles().size();
+	}
+	
 	public int getNumCommonTitles(int top) {
 		return getCommonTitles(top).size();
+	}
+	
+	public int getNumDistinctTitles() {
+		return getNumDistinctTitles(-1);
 	}
 	
 	public int getNumDistinctTitles(int top) {
