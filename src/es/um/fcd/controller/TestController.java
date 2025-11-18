@@ -2,18 +2,14 @@ package es.um.fcd.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,12 +18,8 @@ import es.um.fcd.model.Par;
 import es.um.fcd.model.Test;
 import es.um.fcd.model.TestFile;
 import es.um.fcd.model.Title;
-import es.um.fcd.web.model.ParAdvancedResult;
-import es.um.fcd.web.model.ParResult;
 import es.um.fcd.web.model.ParTopResult;
-import es.um.fcd.web.model.TestAdvancedResult;
 import es.um.fcd.web.model.TestResult;
-import es.um.fcd.web.model.TopAdvancedResult;
 import es.um.fcd.web.model.TopResult;
 
 public class TestController {
@@ -246,16 +238,16 @@ public class TestController {
 			tops.remove((Integer) nMax);
 			tops.add(nMax);
 			// Ordenamos los top
-			System.out.println("n= " + nMax);
+			//System.out.println("n= " + nMax);
 			Collections.sort(tops);
 			Map<Integer, TopResult> topResults = new LinkedHashMap<Integer, TopResult>();
 			// Incluimos como primer elemento de los top el correspondiente al tamaño de la lista.
 			// El resto de tops (10-n) irán a continuación 
 			topResults.put(nMax, null);
-			System.out.println(tops);
+			//System.out.println(tops);
 			for (int top : tops) {
 				if (top <= nMax) {
-					System.out.println("Top " + top);
+					//System.out.println("Top " + top);
 					/** index 50/50 **/
 					/* Número de elementos en la lista más grande */
 					int n = top;
@@ -281,9 +273,8 @@ public class TestController {
 							int distance = title.calculateDistance();
 							accumulatedDistance += distance;
 						}
-						
+						orderIndex = (double) accumulatedDistance / dOrderMax;
 					}
-					orderIndex = (double) accumulatedDistance / dOrderMax;
 					double absenceIndex = (double) dAbsence / dAbsenceMax;
 					double combinedIndex = 0.5 * orderIndex + 0.5 * absenceIndex;
 					
@@ -296,9 +287,9 @@ public class TestController {
 					/* Número de títulos totales (distintos) entre las dos listas */
 					k = titles.size();
 					int maxGSF = k * (maxRank - 1);
-					System.out.println("maxRank = " + maxRank);
-					System.out.println("k = " + k);
-					System.out.println("maxGSF = " + maxGSF);
+					//System.out.println("maxRank = " + maxRank);
+					//System.out.println("k = " + k);
+					//System.out.println("maxGSF = " + maxGSF);
 					for (Title title : titles) {
 						//int distance = title.calculateDistance(maxRank);
 						//if (top < 50) System.out.println(title.getPositionSource1() + " / " + title.getPositionSource2() + " // " + distance);
@@ -309,15 +300,15 @@ public class TestController {
 						int distance = Math.abs(posSource1 - posSource2);
 						accumulatedDistance += distance;
 					}
-					System.out.println("accumulatedDistance = " + accumulatedDistance);
+					//System.out.println("accumulatedDistance = " + accumulatedDistance);
 					double GSFnIndex = 1-((double) accumulatedDistance / (double) maxGSF);
 					//if (GSFnIndex < 0) GSFnIndex = 1;
-					System.out.println("GSFnIndex = " + GSFnIndex);
+					//System.out.println("GSFnIndex = " + GSFnIndex);
 					TopResult topResult = new TopResult(orderIndex, absenceIndex, combinedIndex, GSFnIndex);
 					topResults.put(top, topResult);
 				}
 			}
-			System.out.println(topResults.values());
+			//System.out.println(topResults.values());
 			ParTopResult parTopResult = new ParTopResult(par, topResults, 0.0);
 			paresResults.add(parTopResult);	
 		}

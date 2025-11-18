@@ -9,7 +9,7 @@
 
 <!-- For each Test -->
 <c:forEach begin="1" end="${fn:length(testsResults)}" var="i">
-<div class="item grey lighten-4">
+<div class="test-result item grey lighten-4">
 	<c:set var="testResult" value="${testsResults[i-1]}"/>
 	<!-- For each Par -->
 	 
@@ -23,7 +23,9 @@
 		</c:choose>
 		</span>
 	</div>
-	<tag:ResultsTable id="bas-${i}" source1="${testResult.test.source1.name}" source2="${testResult.test.source2.name}" testResult="${testResult}" />
+	<div class="test-result-content">
+		<tag:ResultsTable id="bas-${i}" source1="${testResult.test.source1.name}" source2="${testResult.test.source2.name}" testResult="${testResult}" />
+	</div>
 	<c:set var="i" value="${i+1}"/>
 </div>
 </c:forEach>
@@ -42,7 +44,7 @@ $(document).ready(function() {
 	/*$('button#export-excel').click(exportResultsExcel);*/
 	$('button#export-html').click(exportResultsHTML);
 	$('div.test-name').click(clickTestName);
-	$('div.results .chip').click(clickViewDistances);
+	$('div.pares div.chip').click(clickViewDistances);
 	
     $('table.basic-results-table').each(function() {
     	$(this).DataTable({

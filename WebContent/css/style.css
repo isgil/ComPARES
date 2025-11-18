@@ -183,12 +183,12 @@ table.basic-results-table tr td:first-child, table.basic-results-table tbody th 
 
 table.basic-results-table tr:nth-child(2) td, table.basic-results-table tr:nth-child(3) td, table.basic-results-table tr:nth-child(4) td
 {
-	background-color: #00ff9212 !important;	
+	background-color: #eafff6 !important;	
 }
 
 table.basic-results-table tr:nth-child(1) td,
 table.basic-results-table tr:nth-child(1) td {
-	background-color: #ffff000d !important;
+	background-color: #ffffcb !important;
 }
 
 table.advanced-results-table tr:nth-child(2) td:first-child, table.advanced-results-table tbody th:nth-child(2) td:first-child {
