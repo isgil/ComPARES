@@ -24,7 +24,7 @@
 			<c:set var="values" value="${parTopResult.topResults.values()}" />
 			<c:set var="numTopResults" value="${fn:length(keys)}" />
 			
-			<th class="top-id">Complete</th>
+			<th class="top-id">Complete Lists</th>
 
 			<!-- Pintar el resto de elementos en orden, excepto el primero -->
 			<c:forEach var="top" items="${keys}" varStatus="status">

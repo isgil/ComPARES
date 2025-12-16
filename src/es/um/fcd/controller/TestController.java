@@ -247,7 +247,8 @@ public class TestController {
 			//System.out.println(tops);
 			for (int top : tops) {
 				if (top <= nMax) {
-					//System.out.println("Top " + top);
+					System.out.println("Top " + top);
+					System.out.println("=Index 50/50=");
 					/** index 50/50 **/
 					/* Número de elementos en la lista más grande */
 					int n = top;
@@ -261,6 +262,13 @@ public class TestController {
 					double λn = 3 + 2 * Math.log(n);
 					double dAbsenceMax = (double) n * λn;
 					double dAbsence = (double) m * λn;
+					System.out.println("n=" + n);
+					System.out.println("k=" + k);
+					System.out.println("m=" + m);
+					System.out.println("dOrderMax=" + dOrderMax);
+					System.out.println("λn=" + λn);
+					System.out.println("dAbsenceMax=" + dAbsenceMax);
+					System.out.println("dAbsence=" + dAbsence);
 					/* Suma de las distancias */
 					int accumulatedDistance = 0;
 					double orderIndex = 1;
@@ -277,7 +285,8 @@ public class TestController {
 					}
 					double absenceIndex = (double) dAbsence / dAbsenceMax;
 					double combinedIndex = 0.5 * orderIndex + 0.5 * absenceIndex;
-					
+					System.out.println("============");
+					System.out.println("=GSFn Index=");
 					/** Index GSF-n **/
 					/* Valor que se asignará como distancia a un elemento que no está en una de las listas */
 					int maxRank = n+1;
@@ -287,9 +296,9 @@ public class TestController {
 					/* Número de títulos totales (distintos) entre las dos listas */
 					k = titles.size();
 					int maxGSF = k * (maxRank - 1);
-					//System.out.println("maxRank = " + maxRank);
-					//System.out.println("k = " + k);
-					//System.out.println("maxGSF = " + maxGSF);
+					System.out.println("maxRank = " + maxRank);
+					System.out.println("k = " + k);
+					System.out.println("maxGSF = " + maxGSF);
 					for (Title title : titles) {
 						//int distance = title.calculateDistance(maxRank);
 						//if (top < 50) System.out.println(title.getPositionSource1() + " / " + title.getPositionSource2() + " // " + distance);
@@ -300,10 +309,10 @@ public class TestController {
 						int distance = Math.abs(posSource1 - posSource2);
 						accumulatedDistance += distance;
 					}
-					//System.out.println("accumulatedDistance = " + accumulatedDistance);
+					System.out.println("accumulatedDistance = " + accumulatedDistance);
 					double GSFnIndex = 1-((double) accumulatedDistance / (double) maxGSF);
 					//if (GSFnIndex < 0) GSFnIndex = 1;
-					//System.out.println("GSFnIndex = " + GSFnIndex);
+					System.out.println("GSFnIndex = " + GSFnIndex);
 					TopResult topResult = new TopResult(orderIndex, absenceIndex, combinedIndex, GSFnIndex);
 					topResults.put(top, topResult);
 				}
