@@ -247,6 +247,7 @@ public class TestController {
 			//System.out.println(tops);
 			for (int top : tops) {
 				if (top <= nMax) {
+					System.out.println();
 					System.out.println("Top " + top);
 					System.out.println("=Index 50/50=");
 					/** index 50/50 **/
@@ -260,7 +261,7 @@ public class TestController {
 					int m = par.getNumDistinctTitles(top);
 					double dOrderMax = (double) k * (n-1);
 					double λn = 3 + 2 * Math.log(n);
-					double dAbsenceMax = (double) n * λn;
+					double dAbsenceMax = (double) (n*2) * λn;
 					double dAbsence = (double) m * λn;
 					System.out.println("n=" + n);
 					System.out.println("k=" + k);
@@ -294,8 +295,9 @@ public class TestController {
 					accumulatedDistance = 0;
 					List<Title> titles = par.getTitles(top);
 					/* Número de títulos totales (distintos) entre las dos listas */
-					k = titles.size();
-					int maxGSF = k * (maxRank - 1);
+					k = n;
+				    //titles.size();
+					int maxGSF = k * (k + 1);
 					System.out.println("maxRank = " + maxRank);
 					System.out.println("k = " + k);
 					System.out.println("maxGSF = " + maxGSF);
@@ -310,7 +312,7 @@ public class TestController {
 						accumulatedDistance += distance;
 					}
 					System.out.println("accumulatedDistance = " + accumulatedDistance);
-					double GSFnIndex = 1-((double) accumulatedDistance / (double) maxGSF);
+					double GSFnIndex = ((double) accumulatedDistance / (double) maxGSF);
 					//if (GSFnIndex < 0) GSFnIndex = 1;
 					System.out.println("GSFnIndex = " + GSFnIndex);
 					TopResult topResult = new TopResult(orderIndex, absenceIndex, combinedIndex, GSFnIndex);
