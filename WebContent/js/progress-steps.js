@@ -45,8 +45,10 @@ class ProgressSteps extends HTMLElement {
     const style = `
       <style>
         :host {
-          display: block;
-          position: relative;
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			position: relative;
         }
 
         .label {
@@ -63,6 +65,8 @@ class ProgressSteps extends HTMLElement {
           display: flex;
           gap: 3px;
           height: 20px;
+		  max-width: 100px;
+		  min-width: 100px;
         }
 
         .step {
