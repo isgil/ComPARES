@@ -217,6 +217,7 @@ table td, table th {
 table th, table td {
 	border: 1px solid #cfcfcfaa;
 	vertical-align: middle;
+	min-width: 80px;
 }
 
 table tr:last-child td {

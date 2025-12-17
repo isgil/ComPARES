@@ -3,7 +3,6 @@ package es.um.fcd.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -235,15 +234,10 @@ public class TestController {
 			}
 			// Número de titulos en la lista más larga
 			int nMax = (par.getNumTitlesSource1() >= par.getNumTitlesSource2()) ? par.getNumTitlesSource1() : par.getNumTitlesSource2();
-			tops.remove((Integer) nMax);
-			tops.add(nMax);
+			
 			// Ordenamos los top
 			//System.out.println("n= " + nMax);
-			Collections.sort(tops);
 			Map<Integer, TopResult> topResults = new LinkedHashMap<Integer, TopResult>();
-			// Incluimos como primer elemento de los top el correspondiente al tamaño de la lista.
-			// El resto de tops (10-n) irán a continuación 
-			topResults.put(nMax, null);
 			//System.out.println(tops);
 			for (int top : tops) {
 				if (top <= nMax) {
