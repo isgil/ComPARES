@@ -176,11 +176,13 @@ public class Par implements Serializable {
 		return getNumDistinctTitles(-1);
 	}
 	
+	/* Títulos que están en una lista y no en la otra y viceversa */
 	public int getNumDistinctTitles(int top) {
 		int distinctTitles = 0;
 		for (Title title : titles) {
 			if ((title.getPositionSource1() == -1 && title.getPositionSource2() != -1) || (title.getPositionSource1() != -1 && title.getPositionSource2() == -1) ) {
 				if (top != -1) {
+					/* En este punto, uno de los títulos tendrá posición -1, y el otro debe estar dentro del top tratado */
 					if (title.getPositionSource1() <= top && title.getPositionSource2() <= top) {
 						distinctTitles++;
 					}

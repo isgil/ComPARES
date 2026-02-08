@@ -17,6 +17,9 @@ import es.um.fcd.model.Par;
 import es.um.fcd.model.Test;
 import es.um.fcd.model.TestFile;
 import es.um.fcd.model.Title;
+import es.um.fcd.web.model.AbsenceIndex;
+import es.um.fcd.web.model.CombinedIndex;
+import es.um.fcd.web.model.OrderIndex;
 import es.um.fcd.web.model.ParTopResult;
 import es.um.fcd.web.model.TestResult;
 import es.um.fcd.web.model.TopResult;
@@ -245,7 +248,7 @@ public class TestController {
 					System.out.println("Top " + top);
 					System.out.println("=Index 50/50=");
 					/** index 50/50 **/
-					/* Número de elementos en la lista más grande */
+					/* Número de elementos máximo a tratar en ambas listas */
 					int n = top;
 					
 					/* Número de títulos comunes */
@@ -253,40 +256,55 @@ public class TestController {
 					int k = commonTitles.size();
 					/* Número de títulos que no están presentes en alguna de las listas */
 					int m = par.getNumDistinctTitles(top);
-					double dOrderMax = (double) k * (n-1);
-					double λn = 3 + 2 * Math.log(n);
-					double dAbsenceMax = (double) (n*2) * λn;
-					double dAbsence = (double) m * λn;
+					AbsenceIndex absenceIndex = new AbsenceIndex(m, n);
+					
 					System.out.println("n=" + n);
 					System.out.println("k=" + k);
 					System.out.println("m=" + m);
-					System.out.println("dOrderMax=" + dOrderMax);
-					System.out.println("λn=" + λn);
-					System.out.println("dAbsenceMax=" + dAbsenceMax);
-					System.out.println("dAbsence=" + dAbsence);
+					System.out.println("λn=" + absenceIndex.getλn());
+					System.out.println("dAbsenceMax=" + absenceIndex.getAbsenceMax());
+					System.out.println("dAbsence=" + absenceIndex.getAbsence());
+					System.out.println("Absence Index=" + absenceIndex.getValue());
 					/* Suma de las distancias */
-					int accumulatedDistance = 0;
-					double orderIndex = 1;
+					List<Integer> distances = new LinkedList<Integer>();
+					//int accumulatedDistance = 0;
+					//double orderIndexValue = 1;
 					if (commonTitles.size() > 0) {
 						for (Title title : commonTitles) {
+							distances.add(title.calculateDistance());
 							/*
 							int posSource1 = title.getPositionSource1();
 							int posSource2 = title.getPositionSource2();
 							int distance = Math.abs(posSource1 - posSource2);*/
-							int distance = title.calculateDistance();
-							accumulatedDistance += distance;
+							//int distance = title.calculateDistance();
+							//accumulatedDistance += distance;
 						}
-						orderIndex = (double) accumulatedDistance / dOrderMax;
+						//System.out.println("Accumulated distance: " + accumulatedDistance);
+						//orderIndex = (double) accumulatedDistance / dOrderMax;
 					}
-					double absenceIndex = (double) dAbsence / dAbsenceMax;
-					double combinedIndex = 0.5 * orderIndex + 0.5 * absenceIndex;
+					OrderIndex orderIndex = new OrderIndex(k, n, distances);
+					System.out.println("dOrder=" + orderIndex.getOrder());
+					System.out.println("dOrderMax=" + orderIndex.getOrderMax());
+					double orderIndexValue = orderIndex.getValue();
+					double absenceIndexValue = absenceIndex.getValue();
+					CombinedIndex combinedIndex = new CombinedIndex(n, orderIndexValue, absenceIndexValue);
+					//double combinedIndexValue = 0.5 * orderIndexValue + 0.5 * absenceIndexValue;
+					double combinedIndexValue = combinedIndex.getValue();
+					if (top == 10) {
+						System.out.println(absenceIndex.getExplanation());
+						System.out.println();
+						System.out.println(orderIndex.getExplanation());
+						System.out.println();
+						System.out.println(combinedIndex.getExplanation());
+					}
+					
 					System.out.println("============");
 					System.out.println("=GSFn Index=");
 					/** Index GSF-n **/
 					/* Valor que se asignará como distancia a un elemento que no está en una de las listas */
 					int maxRank = n+1;
 					/* Suma de las distancias, GSF-AB */
-					accumulatedDistance = 0;
+					int accumulatedDistance = 0;
 					List<Title> titles = par.getTitles(top);
 					/* Número de títulos totales (distintos) entre las dos listas */
 					k = n;
@@ -309,7 +327,7 @@ public class TestController {
 					double GSFnIndex = ((double) accumulatedDistance / (double) maxGSF);
 					//if (GSFnIndex < 0) GSFnIndex = 1;
 					System.out.println("GSFnIndex = " + GSFnIndex);
-					TopResult topResult = new TopResult(orderIndex, absenceIndex, combinedIndex, GSFnIndex);
+					TopResult topResult = new TopResult(orderIndexValue, absenceIndexValue, combinedIndexValue, GSFnIndex);
 					topResults.put(top, topResult);
 				}
 			}
