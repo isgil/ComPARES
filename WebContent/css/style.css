@@ -130,6 +130,11 @@ div#test-list .test-name {
 
 div.chip.test-id {
 	margin-left: -12px;
+	text-align: center;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0px;
+    min-width: 50px;
+    max-width: 100px;
 }
 
 div.results-wrapper {
@@ -144,18 +149,21 @@ div.par-info {
     margin: auto;
     margin-top: 20px;
     /* border-radius: 10px; */
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-right: 50px;
 }
 
 div.par-info-wrapper {
 	top: 0;
     bottom: 0;
+    left: 0;
+    right: 0;
     margin: auto;
     position: fixed;
-    width: 80%;
+    /*width: 80%;*/
     height: 80%;
     padding: 30px 0px 0px 50px !important;
+    max-width: 1000px;
 }
 
 /* TABLE ******************************/
@@ -189,6 +197,10 @@ table.basic-results-table tr:nth-child(2) td, table.basic-results-table tr:nth-c
 table.basic-results-table tr:nth-child(1) td,
 table.basic-results-table tr:nth-child(1) td {
 	background-color: #ffffcb !important;
+}
+
+table.basic-results-table tbody td:not(:first-child) {
+	cursor: pointer; 
 }
 
 table.advanced-results-table tr:nth-child(2) td:first-child, table.advanced-results-table tbody th:nth-child(2) td:first-child {
@@ -517,7 +529,7 @@ div.input-list {
 	color: #a3a3a3;
 }
 
-div#distances div.top-icons {
+div.modal div.top-icons {
     margin-left: -30px;
 }
 
@@ -783,6 +795,10 @@ div#library .modal {
     height: 100%;
     max-height: 100%;
     z-index: 100;
+}
+
+div#top-explanation div.par-info-wrapper {
+	height: 50%
 }
 
 /******** Checkbox ********/

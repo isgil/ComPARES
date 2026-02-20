@@ -70,14 +70,28 @@ public class Title implements Serializable {
 		this.positionSource2 = positionSource2;
 	}
 	
-	public int calculateDistance() {
-		return calculateDistance(-1);
+	public int calculateDistance(int top) {
+		return calculateDistance(top, -1);
 	}
 	
-	public int calculateDistance(int maxDistance) {
+	public int calculateDistance(int top, int maxDistance) {
 		if (this.positionSource1 == -1 || this.positionSource2 == -1) return maxDistance;
-		if (maxDistance != -1 && (this.positionSource1 > maxDistance || this.positionSource2 > maxDistance)) return maxDistance;
+		else if (top != -1 && (this.positionSource1 > top || this.positionSource2 > top)) return maxDistance;
 		else return Math.abs(this.positionSource1 - this.positionSource2);
+	}
+	
+	public int calculateAbsoluteDistance(int top) {
+		return calculateAbsoluteDistance(top, 0);
+	}
+	
+	public int calculateAbsoluteDistance(int top, int maxDistance) {
+		int posSource1 = this.positionSource1;
+		int posSource2 = this.positionSource2;
+		if (posSource1 == -1 || posSource1 > top) posSource1 = maxDistance;
+		else if (posSource2 == -1 || posSource2 > top) posSource2 = maxDistance;
+		int distance = Math.abs(posSource1 - posSource2);
+		
+		return distance;
 	}
 
 	@Override

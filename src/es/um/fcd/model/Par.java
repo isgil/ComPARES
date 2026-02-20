@@ -125,7 +125,7 @@ public class Par implements Serializable {
 	}
 	
 	public List<Title> getTitles(int top) {
-		if (top == -1 || top == titles.size()) return titles;
+		if (top == -1 || titles.size() <= top) return titles;
 		
 		List<Title> titlesInTop = new LinkedList<Title>();
 		for (Title title : titles) {

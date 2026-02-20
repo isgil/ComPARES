@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.LinkedList" %>
+<%@ page import="java.util.LinkedHashMap" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+
+<div class="item par-info-wrapper grey lighten-4">
+	<div class="top-icons"><img class="close" /></div>
+	<div class="par-info">
+		<div class="grey lighten-4">
+			${explanation}
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$('img.close').click(closeModal);
+	
+	function closeModal(){
+		$('#top-explanation').html('');
+		$('#top-explanation').hide();
+	}
+</script>

@@ -14,7 +14,7 @@ public class OrderIndex extends Index {
 	// Peor orden posible
 	private double dOrderMax;
 	// Suma de las distancias
-	private double dOrder;
+	private int dOrder;
 
 	public OrderIndex(int k, int n, List<Integer> distances) {
 		super();
@@ -29,7 +29,7 @@ public class OrderIndex extends Index {
 		if (dOrderMax == 0) {
 			this.value = 1;
 		} else {
-			this.value = dOrder / dOrderMax;
+			this.value = (double) dOrder / dOrderMax;
 		};
 	}
 	
@@ -45,19 +45,19 @@ public class OrderIndex extends Index {
 		return dOrderMax;
 	}
 	
-	public double getOrder() {		
+	public int getOrder() {		
 		return dOrder;
 	}
 	
 	public String getExplanation() {
-		BigDecimal dOrderRound = new BigDecimal(dOrder).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
 		BigDecimal dOrderMaxRound = new BigDecimal(dOrderMax).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
 		BigDecimal valueRound = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
-		String explanation = "<h3>Calculation of Order Index</h3>";
-		explanation += "\n1. Top treated (n): " + n;
-		explanation += "\n2. Identify all common elements between the lists for the top treated (k) = " + k;
-		explanation += "\n3. Calculate the absolute position differences for the common elements:<br/>";
-		explanation += "\n - Distances between common elements in order: ";
+		String explanation = "<h5>Calculation of <b>Order Index</b></h5>";
+		explanation += "<div class=\"divider\"></div>";
+		explanation += "<br/>Top treated: <b>n = " + n + "</b>";
+		explanation += "<br/><br/>1. Identify all common elements between the lists for the top treated (k) = " + k;
+		explanation += "<br/><br/>2. Calculate the absolute position differences for the common elements:<br/>";
+		explanation += "<br/> - Distances between common elements, in order: ";
 		int numDistances = distances.size();
 		int i=0;
 		for (int distance : distances) {
@@ -65,11 +65,11 @@ public class OrderIndex extends Index {
 			i++;
 			if (i < numDistances) explanation += " + ";
 		}
-		explanation += "\n - Sum of differences = " + dOrderRound;
-		explanation += "\n4. Calculate the worst order possible:";
-		explanation += "\nOrder(max) = k x (n-1) = " + k + " x (" + n + " - 1) = " + dOrderMaxRound;
-		explanation += "\n5. Calculate the Order Index by standardizing order: ";
-		explanation += "\nOrder / Order(max) = " + dOrderRound + " / " + dOrderMaxRound + " = " + valueRound;
+		explanation += "<br/> - <b>Order = Sum of differences</b> = <u><span class=\"yellow lighten-4\">" + dOrder + "</span></u>";
+		explanation += "<br/><br/>3. Calculate the worst order possible:";
+		explanation += "<br/><b>Order(max) = k x (n-1)</b> = " + k + " x (" + n + " - 1) = <u><span class=\"yellow lighten-4\">" + dOrderMaxRound + "</span></u>";
+		explanation += "<br/><br/>4. Calculate the Order Index by standardizing order: ";
+		explanation += "<br/><b>Order Index = Order / Order(max)</b> = " + dOrder + " / " + dOrderMaxRound + " = " + "<u><span class=\"yellow lighten-4\">" + valueRound + "</span></b>";
 		
 		
 		return explanation;

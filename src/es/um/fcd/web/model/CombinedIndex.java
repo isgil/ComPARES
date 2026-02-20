@@ -28,10 +28,11 @@ public class CombinedIndex extends Index {
 		BigDecimal orderIndexRound = new BigDecimal(orderIndex).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
 		BigDecimal absenceIndexRound = new BigDecimal(absenceIndex).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
 		BigDecimal valueRound = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
-		String explanation = "<h3>Calculation of Combined Index</h3>";
-		explanation += "\n1. Top treated (n): " + n;
-		explanation += "\n2. Calculate Combined Index by using Order and Absence indexes:";
-		explanation += "\nOrder Index x 0.5 + Absence Index x 0.5 = " + orderIndexRound + " x 0.5 + " + absenceIndexRound + " x 0.5 = " + valueRound;
+		String explanation = "<h5>Calculation of <b>Combined Index</b></h5>";
+		explanation += "<div class=\"divider\"></div>";
+		explanation += "<br/>Top treated: <b>n = " + n + "</b>";
+		explanation += "<br/><br/>Calculate Combined Index by using Order and Absence indexes:";
+		explanation += "<br/><b>Combined Index = Order Index x 0.5 + Absence Index x 0.5</b> = " + orderIndexRound + " x 0.5 + " + absenceIndexRound + " x 0.5 = " + "<u><span class=\"yellow lighten-4\">" + valueRound + "</span></b>";
 				
 		return explanation;
 	}

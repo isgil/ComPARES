@@ -157,6 +157,28 @@
 		$("#distances").html(data);
 		$("#distances").show();
 	}
+	
+	function clickViewExplanation(indexId) {
+		console.log('index id = ' + indexId);
+		
+		var parameters = $.param({
+			'id' : indexId
+		}, true);
+		executeAjax('POST', 'explanation.ctrl', parameters, 'HTML', true, successViewExplanation, error, always);
+		$('.preloader-wrapper').toggleClass('active');
+		
+		//$('.preloader-wrapper').show();
+		//$('#test-list').removeClass('l3').addClass('l6');
+		//$('#results-wrapper').removeClass('l9').addClass('l6');
+		//$(".distances").html('');
+		//$('div#secondary-actions').hide();
+	}
+	
+	function successViewExplanation(data){
+		console.log('explanation retrieved!');
+		$("#top-explanation").html(data);
+		$("#top-explanation").show();
+	}
 
 	function clickRemove() {
 		var testIds = getActiveCheckboxes();

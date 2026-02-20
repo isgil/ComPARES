@@ -12,6 +12,7 @@ import es.um.fcd.controller.TestController;
 import es.um.fcd.dao.DAOException;
 import es.um.fcd.model.Test;
 import es.um.fcd.web.model.TestAdvancedResult;
+import es.um.fcd.web.model.TestDetailedResult;
 import es.um.fcd.web.model.TestResult;
 
 public class ActionResults extends Action {
@@ -47,14 +48,16 @@ public class ActionResults extends Action {
 		
 		List<TestResult> testsResults = new LinkedList<TestResult>();
 		for (Test test : tests) {
-			TestResult testResult = null;
+			TestDetailedResult testDetailedResult = null;
 			try {
-				testResult = tc.getTestResult(test);
+				testDetailedResult = tc.getTestResult(test);
 			} catch(DAOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			testsResults.add(testResult);
+			testsResults.add(testDetailedResult.getTestResults());
+			request.getSession().removeAttribute("topResultsDetailed");
+			request.getSession().setAttribute("topResultsDetailed", testDetailedResult.getTopResultsDetailed());
 		}
 		/*
 		for (TestAdvancedResult testResult : testsResults) {

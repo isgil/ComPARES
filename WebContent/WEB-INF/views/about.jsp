@@ -6,7 +6,7 @@
 <body>
 	<div class="container about">
 		<div class="center item grey lighten-4">
-			<h6><b>ComPARES v2.0 (Jul 2025)</b></h6>
+			<h6><b>ComPARES v2.1.4.0 (February 2026)</b></h6>
 			<br/><br/>
 			<h6>
 				<b>Authors</b>

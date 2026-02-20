@@ -19,10 +19,13 @@ import es.um.fcd.model.TestFile;
 import es.um.fcd.model.Title;
 import es.um.fcd.web.model.AbsenceIndex;
 import es.um.fcd.web.model.CombinedIndex;
+import es.um.fcd.web.model.GSFnIndex;
 import es.um.fcd.web.model.OrderIndex;
 import es.um.fcd.web.model.ParTopResult;
+import es.um.fcd.web.model.TestDetailedResult;
 import es.um.fcd.web.model.TestResult;
 import es.um.fcd.web.model.TopResult;
+import es.um.fcd.web.model.TopResultDetailed;
 
 public class TestController {
 	private static TestController instancia = null;
@@ -224,9 +227,10 @@ public class TestController {
 	}	
 	*/
 	
-	public TestResult getTestResult(Test test) throws DAOException {
+	public TestDetailedResult getTestResult(Test test) throws DAOException {
 		List<Par> pares = test.getPares();
 		List<ParTopResult> paresResults = new LinkedList<ParTopResult>();
+		Map<String, TopResultDetailed> topResultsDetailed = new LinkedHashMap<String, TopResultDetailed>();
 		for (Par par : pares) {
 			//int numTitlesSource1 = par.getTitlesSource1().size();
 			//int numTitlesSource2 = par.getTitlesSource2().size();
@@ -266,12 +270,12 @@ public class TestController {
 					System.out.println("dAbsence=" + absenceIndex.getAbsence());
 					System.out.println("Absence Index=" + absenceIndex.getValue());
 					/* Suma de las distancias */
-					List<Integer> distances = new LinkedList<Integer>();
+					List<Integer> orderIndexDistances = new LinkedList<Integer>();
 					//int accumulatedDistance = 0;
 					//double orderIndexValue = 1;
 					if (commonTitles.size() > 0) {
 						for (Title title : commonTitles) {
-							distances.add(title.calculateDistance());
+							orderIndexDistances.add(title.calculateDistance(top));
 							/*
 							int posSource1 = title.getPositionSource1();
 							int posSource2 = title.getPositionSource2();
@@ -282,7 +286,7 @@ public class TestController {
 						//System.out.println("Accumulated distance: " + accumulatedDistance);
 						//orderIndex = (double) accumulatedDistance / dOrderMax;
 					}
-					OrderIndex orderIndex = new OrderIndex(k, n, distances);
+					OrderIndex orderIndex = new OrderIndex(k, n, orderIndexDistances);
 					System.out.println("dOrder=" + orderIndex.getOrder());
 					System.out.println("dOrderMax=" + orderIndex.getOrderMax());
 					double orderIndexValue = orderIndex.getValue();
@@ -304,30 +308,40 @@ public class TestController {
 					/* Valor que se asignará como distancia a un elemento que no está en una de las listas */
 					int maxRank = n+1;
 					/* Suma de las distancias, GSF-AB */
-					int accumulatedDistance = 0;
+					//int accumulatedDistance = 0;
 					List<Title> titles = par.getTitles(top);
 					/* Número de títulos totales (distintos) entre las dos listas */
 					k = n;
 				    //titles.size();
-					int maxGSF = k * (k + 1);
-					System.out.println("maxRank = " + maxRank);
-					System.out.println("k = " + k);
-					System.out.println("maxGSF = " + maxGSF);
+					//System.out.println("maxRank = " + maxRank);
+					//System.out.println("k = " + k);
+					//System.out.println("maxGSF = " + maxGSF);
+					List<Integer> gsfnIndexDistances = new LinkedList<Integer>();
 					for (Title title : titles) {
+						gsfnIndexDistances.add(title.calculateAbsoluteDistance(top, maxRank));
 						//int distance = title.calculateDistance(maxRank);
 						//if (top < 50) System.out.println(title.getPositionSource1() + " / " + title.getPositionSource2() + " // " + distance);
-						int posSource1 = title.getPositionSource1();
-						int posSource2 = title.getPositionSource2();
-						if (posSource1 == -1 || posSource1 > top) posSource1 = maxRank;
-						else if (posSource2 == -1 || posSource2 > top) posSource2 = maxRank;
-						int distance = Math.abs(posSource1 - posSource2);
-						accumulatedDistance += distance;
+						//int posSource1 = title.getPositionSource1();
+						//int posSource2 = title.getPositionSource2();
+						//if (posSource1 == -1 || posSource1 > top) posSource1 = maxRank;
+						//else if (posSource2 == -1 || posSource2 > top) posSource2 = maxRank;
+						//int distance = Math.abs(posSource1 - posSource2);
+						//System.out.println(" - " + title.getTitle() + " = " + posSource1 + "/" + posSource2 + " = " + distance);
+						
+						//accumulatedDistance += distance;
 					}
-					System.out.println("accumulatedDistance = " + accumulatedDistance);
-					double GSFnIndex = ((double) accumulatedDistance / (double) maxGSF);
+					//System.out.println("accumulatedDistance = " + accumulatedDistance);
+					GSFnIndex gsfnIndex = new GSFnIndex(n, k, gsfnIndexDistances);
+					double gsfnIndexValue = gsfnIndex.getValue();
+					if (top == 10) {
+						System.out.println();
+						System.out.println(gsfnIndex.getExplanation());
+					}
 					//if (GSFnIndex < 0) GSFnIndex = 1;
-					System.out.println("GSFnIndex = " + GSFnIndex);
-					TopResult topResult = new TopResult(orderIndexValue, absenceIndexValue, combinedIndexValue, GSFnIndex);
+					//System.out.println("GSFnIndex = " + gsfnIndexValue);
+					TopResult topResult = new TopResult(orderIndexValue, absenceIndexValue, combinedIndexValue, gsfnIndexValue);
+					String id = test.getId() + "-" + par.getId() + "-" + top; 
+					topResultsDetailed.put(id, new TopResultDetailed(orderIndex, absenceIndex, combinedIndex, gsfnIndex));
 					topResults.put(top, topResult);
 				}
 			}
@@ -336,8 +350,9 @@ public class TestController {
 			paresResults.add(parTopResult);	
 		}
 		TestResult testResult = new TestResult(test, paresResults);
+		TestDetailedResult testDetailedResult = new TestDetailedResult(testResult, topResultsDetailed);
 		
-		return testResult;
+		return testDetailedResult;
 	}
 	
 }

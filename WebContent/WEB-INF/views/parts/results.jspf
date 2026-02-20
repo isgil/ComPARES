@@ -24,7 +24,7 @@
 		</span>
 	</div>
 	<div class="test-result-content">
-		<tag:ResultsTable id="bas-${i}" source1="${testResult.test.source1.name}" source2="${testResult.test.source2.name}" testResult="${testResult}" />
+		<tag:ResultsTable testResult="${testResult}" />
 	</div>
 	<c:set var="i" value="${i+1}"/>
 </div>

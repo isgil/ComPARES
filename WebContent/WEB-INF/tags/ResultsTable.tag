@@ -1,9 +1,9 @@
 <%@ include file="../views/html/include.jsp"%>
 <%@ tag body-content="empty"%>
-<%@ attribute name="id" required="true" type="java.lang.String"%>
-<%@ attribute name="source1" required="true" type="java.lang.String"%>
-<%@ attribute name="source2" required="true" type="java.lang.String"%>
 <%@ attribute name="testResult" required="true" type="es.um.fcd.web.model.TestResult"%>
+<c:set var="id" value="${testResult.test.id}" />
+<c:set var="source1" value="${testResult.test.source1.name}" />
+<c:set var="source2" value="${testResult.test.source2.name}" /> 
 
 <c:forEach var="parTopResult" items="${testResult.parResults}">
 <div class="par-result-content">
@@ -15,17 +15,18 @@
 	<div class="chip blue lighten-4">${par.testFileSource1.fileName} (${numTitlesSource1} docs)</div>
 	<div class="chip blue lighten-4">${par.testFileSource2.fileName} (${numTitlesSource2} docs)</div>
 </div>
+
+<c:set var="keys" value="${parTopResult.topResults.keySet().toArray()}" />
 				
-<table id="T${id}-P${parTopResult.par.id}" class="basic-results-table highlight centered">
+<table id="${id}-${parTopResult.par.id}" class="basic-results-table highlight centered">
 	<thead>
 		<tr class="top-header">
 			<th class="top-id"></th>
-			<c:set var="keys" value="${parTopResult.topResults.keySet()}" />
 			<c:set var="values" value="${parTopResult.topResults.values()}" />
 			<c:set var="numTopResults" value="${fn:length(keys)}" />
 
 			<!-- Pintar el resto de elementos en orden, excepto el primero -->
-			<c:forEach var="top" items="${keys}" varStatus="status">
+			<c:forEach var="top" items="${keys}">
         		<th class="top-id">Top ${top}</th>
 			</c:forEach>
 		</tr>
@@ -33,8 +34,8 @@
 	<tbody>
 		<tr>
 			<td class="top-id">GSF-n Index</td>
-			<c:forEach var="topResult" items="${parTopResult.topResults.values()}">
-				<td>
+			<c:forEach var="topResult" items="${parTopResult.topResults.values()}" varStatus="status">
+				<td id="${id}-${parTopResult.par.id}-${keys[status.index]}-gsfn">
 					<fmt:formatNumber value="${topResult.GSFnIndex}" type="number" maxFractionDigits="2" />
 					<br/>
 					<tag:IndexInterpretation indexType="GSFn" indexValue="${topResult.GSFnIndex}" />
@@ -43,8 +44,8 @@
 		</tr>
 		<tr>
 			<td class="top-id">Combined Index</td>
-			<c:forEach var="topResult" items="${parTopResult.topResults.values()}">
-				<td>
+			<c:forEach var="topResult" items="${parTopResult.topResults.values()}" varStatus="status">
+				<td id="${id}-${parTopResult.par.id}-${keys[status.index]}-combined">
 					<fmt:formatNumber value="${topResult.combinedIndex}" type="number" maxFractionDigits="2" />
 					<br/>
 					<tag:IndexInterpretation indexType="combined" indexValue="${topResult.combinedIndex}" />
@@ -53,8 +54,8 @@
 		</tr>
 		<tr>
 			<td class="top-id">Order Index</td>
-			<c:forEach var="topResult" items="${parTopResult.topResults.values()}">
-				<td>
+			<c:forEach var="topResult" items="${parTopResult.topResults.values()}" varStatus="status">
+				<td id="${id}-${parTopResult.par.id}-${keys[status.index]}-order">
 					<fmt:formatNumber value="${topResult.orderIndex}" type="number" maxFractionDigits="2" />
 					<br/>
 					<tag:IndexInterpretation indexType="order" indexValue="${topResult.orderIndex}" />
@@ -63,8 +64,8 @@
 		</tr>
 		<tr>
 			<td class="top-id">Absence Index</td>
-			<c:forEach var="topResult" items="${parTopResult.topResults.values()}">
-				<td>
+			<c:forEach var="topResult" items="${parTopResult.topResults.values()}" varStatus="status">
+				<td id="${id}-${parTopResult.par.id}-${keys[status.index]}-absence">
 					<fmt:formatNumber value="${topResult.absenceIndex}" type="number" maxFractionDigits="2" />
 					<br/>
 					<tag:IndexInterpretation indexType="absence" indexValue="${topResult.absenceIndex}" />
@@ -75,3 +76,10 @@
 </table>
 </div>
 </c:forEach>
+
+<script type="text/javascript">
+	$("tbody").on("click", "td:not(:first-child)", function () { 
+		const id = $(this).attr("id"); // Recupera el id del TD pulsado 
+		clickViewExplanation(id);
+	});
+</script>

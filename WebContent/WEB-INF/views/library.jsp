@@ -74,9 +74,8 @@
 					<div id="results" class="item results row">
 					</div>
 				</div>
-				<div id="distances" class="modal">
-					
-				</div>
+				<div id="distances" class="modal"></div>
+				<div id="top-explanation" class="modal"></div>
 			</div>
 		</form>
 	</div>
