@@ -59,6 +59,9 @@ $(document).ready(function() {
             ]
     	});
     });
+    
+    $("div#results-wrapper").on("click", "table tbody td:not(:first-child)", function () { const id = $(this).attr("id"); clickViewExplanation(id); });
+	
 });
 
 </script>

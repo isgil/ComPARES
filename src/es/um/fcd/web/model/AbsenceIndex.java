@@ -56,7 +56,7 @@ public class AbsenceIndex extends Index {
 		explanation += "<br/><br/>4. Calculate the maximum possible absence:";
 		explanation += "<br/><b>Absence(max) = n x λ(n)</b> = " + n + " x λ(" + n + ") = <u><span class=\"yellow lighten-4\">" + dAbsenceMaxRound + "</span></u>";
 		explanation += "<br/><br/>5. Calculate Absence Index by standardizing absence:";
-		explanation += "<br/><b>Absence Index = Absence / Absence(max)</b> = " + dAbsenceRound + " / " + dAbsenceMaxRound + " = " + "<u>" + valueRound + "</span></u>"; 
+		explanation += "<br/><b>Absence Index = Absence / Absence(max)</b> = " + dAbsenceRound + " / " + dAbsenceMaxRound + " = " + "<u><span class=\"yellow lighten-4\">" + valueRound + "</span></u>"; 
 		
 		return explanation;
 	}

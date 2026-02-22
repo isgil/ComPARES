@@ -1,7 +1,9 @@
 package es.um.fcd.web.controller;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import es.um.fcd.model.Test;
 import es.um.fcd.web.model.TestAdvancedResult;
 import es.um.fcd.web.model.TestDetailedResult;
 import es.um.fcd.web.model.TestResult;
+import es.um.fcd.web.model.TopResultDetailed;
 
 public class ActionResults extends Action {
 
@@ -47,6 +50,7 @@ public class ActionResults extends Action {
 		*/
 		
 		List<TestResult> testsResults = new LinkedList<TestResult>();
+		Map<String, TopResultDetailed> topResultsDetailed = new LinkedHashMap<String, TopResultDetailed>();
 		for (Test test : tests) {
 			TestDetailedResult testDetailedResult = null;
 			try {
@@ -56,8 +60,7 @@ public class ActionResults extends Action {
 				e.printStackTrace();
 			}
 			testsResults.add(testDetailedResult.getTestResults());
-			request.getSession().removeAttribute("topResultsDetailed");
-			request.getSession().setAttribute("topResultsDetailed", testDetailedResult.getTopResultsDetailed());
+			topResultsDetailed.putAll(testDetailedResult.getTopResultsDetailed());
 		}
 		/*
 		for (TestAdvancedResult testResult : testsResults) {
@@ -74,6 +77,8 @@ public class ActionResults extends Action {
 		*/
 		
 		//request.setAttribute("results", generateDummyResults(tests));
+		request.getSession().removeAttribute("topResultsDetailed");
+		request.getSession().setAttribute("topResultsDetailed", topResultsDetailed);
 		request.setAttribute("testsResults", testsResults);
 		
 		return "/WEB-INF/views/parts/results.jspf";

@@ -342,6 +342,7 @@ public class TestController {
 					TopResult topResult = new TopResult(orderIndexValue, absenceIndexValue, combinedIndexValue, gsfnIndexValue);
 					String id = test.getId() + "-" + par.getId() + "-" + top; 
 					topResultsDetailed.put(id, new TopResultDetailed(orderIndex, absenceIndex, combinedIndex, gsfnIndex));
+					System.out.println("- Añado top detail ID " + id);
 					topResults.put(top, topResult);
 				}
 			}
@@ -351,6 +352,7 @@ public class TestController {
 		}
 		TestResult testResult = new TestResult(test, paresResults);
 		TestDetailedResult testDetailedResult = new TestDetailedResult(testResult, topResultsDetailed);
+		System.out.println("Number of top detailed: " + topResultsDetailed.size());
 		
 		return testDetailedResult;
 	}

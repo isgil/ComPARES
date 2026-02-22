@@ -76,10 +76,3 @@
 </table>
 </div>
 </c:forEach>
-
-<script type="text/javascript">
-	$("tbody").on("click", "td:not(:first-child)", function () { 
-		const id = $(this).attr("id"); // Recupera el id del TD pulsado 
-		clickViewExplanation(id);
-	});
-</script>

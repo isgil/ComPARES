@@ -56,7 +56,7 @@ public class OrderIndex extends Index {
 		explanation += "<div class=\"divider\"></div>";
 		explanation += "<br/>Top treated: <b>n = " + n + "</b>";
 		explanation += "<br/><br/>1. Identify all common elements between the lists for the top treated (k) = " + k;
-		explanation += "<br/><br/>2. Calculate the absolute position differences for the common elements:<br/>";
+		explanation += "<br/><br/>2. Calculate the absolute position differences for the common elements:";
 		explanation += "<br/> - Distances between common elements, in order: ";
 		int numDistances = distances.size();
 		int i=0;
