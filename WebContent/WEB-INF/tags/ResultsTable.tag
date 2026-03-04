@@ -21,7 +21,7 @@
 <table id="${id}-${parTopResult.par.id}" class="basic-results-table highlight centered">
 	<thead>
 		<tr class="top-header">
-			<th class="top-id"></th>
+			<th class="top-id"><i>Index</i></th>
 			<c:set var="values" value="${parTopResult.topResults.values()}" />
 			<c:set var="numTopResults" value="${fn:length(keys)}" />
 

@@ -50,7 +50,7 @@ public class OrderIndex extends Index {
 	}
 	
 	public String getExplanation() {
-		BigDecimal dOrderMaxRound = new BigDecimal(dOrderMax).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
+		BigDecimal dOrderMaxRound = new BigDecimal(dOrderMax).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
 		BigDecimal valueRound = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
 		String explanation = "<h5>Calculation of <b>Order Index</b></h5>";
 		explanation += "<div class=\"divider\"></div>";
@@ -67,9 +67,9 @@ public class OrderIndex extends Index {
 		}
 		explanation += "<br/> - <b>Order = Sum of differences</b> = <u><span class=\"yellow lighten-4\">" + dOrder + "</span></u>";
 		explanation += "<br/><br/>3. Calculate the worst order possible:";
-		explanation += "<br/><b>Order(max) = k x (n-1)</b> = " + k + " x (" + n + " - 1) = <u><span class=\"yellow lighten-4\">" + dOrderMaxRound + "</span></u>";
+		explanation += "<br/><b>Order(max) = k x (n-1)</b> = " + k + " x (" + n + " - 1) = <u><span class=\"yellow lighten-4\">" + dOrderMaxRound.toPlainString() + "</span></u>";
 		explanation += "<br/><br/>4. Calculate the Order Index by standardizing order: ";
-		explanation += "<br/><b>Order Index = Order / Order(max)</b> = " + dOrder + " / " + dOrderMaxRound + " = " + "<u><span class=\"yellow lighten-4\">" + valueRound + "</span></b>";
+		explanation += "<br/><b>Order Index = Order / Order(max)</b> = " + dOrder + " / " + dOrderMaxRound.toPlainString() + " = " + "<u><span class=\"yellow lighten-4\">" + valueRound.toPlainString() + "</span></b>";
 		
 		
 		return explanation;

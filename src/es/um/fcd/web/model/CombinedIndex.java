@@ -32,7 +32,7 @@ public class CombinedIndex extends Index {
 		explanation += "<div class=\"divider\"></div>";
 		explanation += "<br/>Top treated: <b>n = " + n + "</b>";
 		explanation += "<br/><br/>Calculate Combined Index by using Order and Absence indexes:";
-		explanation += "<br/><b>Combined Index = Order Index x 0.5 + Absence Index x 0.5</b> = <u><span class=\"yellow lighten-4\">" + orderIndexRound + "</span></u> x 0.5 + <u><span class=\"yellow lighten-4\">" + absenceIndexRound + "</u> x 0.5 = " + "<u><span class=\"yellow lighten-4\">" + valueRound + "</span></b>";
+		explanation += "<br/><b>Combined Index = Order Index x 0.5 + Absence Index x 0.5</b> = <u><span class=\"yellow lighten-4\">" + orderIndexRound.toPlainString() + "</span></u> x 0.5 + <u><span class=\"yellow lighten-4\">" + absenceIndexRound.toPlainString() + "</u> x 0.5 = " + "<u><span class=\"yellow lighten-4\">" + valueRound.toPlainString() + "</span></b>";
 				
 		return explanation;
 	}

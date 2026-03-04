@@ -80,3 +80,9 @@
 		</form>
 	</div>
 </body>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('button#export-html').click(exportResultsHTML);
+});
+</script>
+}

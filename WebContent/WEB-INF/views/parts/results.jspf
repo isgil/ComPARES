@@ -42,7 +42,7 @@ $(document).ready(function() {
 	prepareExports();
 	
 	/*$('button#export-excel').click(exportResultsExcel);*/
-	$('button#export-html').click(exportResultsHTML);
+	
 	$('div.test-name').click(clickTestName);
 	$('div.pares div.chip').click(clickViewDistances);
 	

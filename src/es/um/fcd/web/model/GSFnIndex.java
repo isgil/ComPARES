@@ -70,7 +70,7 @@ public class GSFnIndex extends Index {
 		explanation += "<br/><br/>3. Calculate the worst GSF possible, where <b>k = n</b>:";
 		explanation += "<br/><b>GSF(max) = k x (k + 1)</b> = " + k + " x (" + k + " + 1) = <u><span class=\"yellow lighten-4\">" + maxGSF + "</span></u>";
 		explanation += "<br/><br/>4. Calculation of normalized GSF (GSF-n):";
-		explanation += "<br/><b>GSF-n = GSF / GSF(max)</b> = " + GSF + " / " + maxGSF + " = " + "<u><span class=\"yellow lighten-4\">" + valueRound + "</span></u>";
+		explanation += "<br/><b>GSF-n = GSF / GSF(max)</b> = " + GSF + " / " + maxGSF + " = " + "<u><span class=\"yellow lighten-4\">" + valueRound.toPlainString() + "</span></u>";
 				
 		return explanation;
 	}
