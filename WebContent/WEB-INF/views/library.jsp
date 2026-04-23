@@ -85,4 +85,3 @@ $(document).ready(function() {
 	$('button#export-html').click(exportResultsHTML);
 });
 </script>
-}

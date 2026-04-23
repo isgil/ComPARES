@@ -273,20 +273,22 @@ public class TestController {
 					List<Integer> orderIndexDistances = new LinkedList<Integer>();
 					//int accumulatedDistance = 0;
 					//double orderIndexValue = 1;
+					/*
 					if (commonTitles.size() > 0) {
 						for (Title title : commonTitles) {
 							orderIndexDistances.add(title.calculateDistance(top));
-							/*
+							
 							int posSource1 = title.getPositionSource1();
 							int posSource2 = title.getPositionSource2();
-							int distance = Math.abs(posSource1 - posSource2);*/
+							int distance = Math.abs(posSource1 - posSource2);
 							//int distance = title.calculateDistance();
 							//accumulatedDistance += distance;
 						}
 						//System.out.println("Accumulated distance: " + accumulatedDistance);
 						//orderIndex = (double) accumulatedDistance / dOrderMax;
 					}
-					OrderIndex orderIndex = new OrderIndex(k, n, orderIndexDistances);
+					*/
+					OrderIndex orderIndex = new OrderIndex(k, n, commonTitles);
 					System.out.println("dOrder=" + orderIndex.getOrder());
 					System.out.println("dOrderMax=" + orderIndex.getOrderMax());
 					double orderIndexValue = orderIndex.getValue();
