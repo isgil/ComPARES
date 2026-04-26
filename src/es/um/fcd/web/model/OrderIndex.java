@@ -9,16 +9,35 @@ import es.um.fcd.model.Title;
 public class OrderIndex extends Index {
 	// Top tratado
 	private int n;
+	
 	// Número de elementos comunes entre listas para el top tratado
 	private int k;
-	// Peor orden posible
+	
+	// Elementos comunes entre listas para el top tratado
+	private List<Title> commonTitles;
+	
+	// Peor orden posible tomando A como referencia
+	private double dOrderMaxA;
+	
+	// Peor orden posible tomando B como referencia
+	private double dOrderMaxB;
+	
+	// Peor orden posible final
 	private double dOrderMax;
-	// Suma de las distancias
+	
+	// Suma de las contribuciones tomando la lista A como referencia
+	private double dOrderA;
+	
+	// Suma de las contribuciones tomando la lista B como referencia
+	private double dOrderB;
+	
+	// Contribuciones finales
 	private double dOrder;
 
-	public OrderIndex(int k, int n, List<Title> commonTitles) {
+	public OrderIndex(int n, List<Title> commonTitles) {
 		super();
-		this.k = k;
+		this.commonTitles = commonTitles;
+		this.k = commonTitles.size();
 		this.n = n;
 		
 		this.dOrder = generateOrder(commonTitles);
@@ -33,63 +52,78 @@ public class OrderIndex extends Index {
 	
 	private double generateOrder(List<Title> commonTitles) {
 
-		double dOrdenA = 0.0;
-		double dOrdenB = 0.0;
+		double dOrderA = 0.0;
+		double dOrderB = 0.0;
 
 		for (Title title : commonTitles) {
 			int posA = title.getPositionSource1();
 			int posB = title.getPositionSource2();
 
 			// Término: (1 / log(1 + posA)) * |posA - posB|
-			double peso = 1.0 / Math.log(1 + posA);
-			double diferenciaAbsoluta = Math.abs(posA - posB);
+			double penalty = 1.0 / Math.log(1 + posA);
+			double distance = Math.abs(posA - posB);
 
-			dOrdenA += peso * diferenciaAbsoluta;
+			double contribution = penalty * distance;
+			System.out.println("Contribution " + title.getTitle() + " = " + contribution);
+			dOrderA += contribution;
 		}
-
+		
+		this.dOrderA = dOrderA;
+		System.out.println("****************");
+		
 		for (Title title : commonTitles) {
 			int posA = title.getPositionSource1();
 			int posB = title.getPositionSource2();
 
 			// Término: (1 / log(1 + posA)) * |posA - posB|
-			double peso = 1.0 / Math.log(1 + posB);
-			double diferenciaAbsoluta = Math.abs(posB - posA);
+			double penalty = 1.0 / Math.log(1 + posB);
+			double distance = Math.abs(posB - posA);
 
-			dOrdenB += peso * diferenciaAbsoluta;
+			double contribution = penalty * distance; 
+			System.out.println("Contribution " + title.getTitle() + " = " + contribution);
+			dOrderB += contribution;
 		}
+		
+		this.dOrderB = dOrderB;
 
-		return (dOrdenA + dOrdenB) / 2;
+		return (dOrderA + dOrderB) / 2;
 	}
 
 	private double generateOrderMax(int n, List<Title> commonTitles) {
-		double orderMaxA = 0.0;
-		double orderMaxB = 0.0;
+		double dOrderMaxA = 0.0;
+		double dOrderMaxB = 0.0;
 
 		for (Title title : commonTitles) {
 			// La posición en A es i
-			// La peor posición en B sería n - i + 1
+			// La peor posición en B sería n - i
 			double posA = title.getPositionSource1();
-			double posB = n - posA + 1;
+			double posB = n - posA;
 
-			double peso = 1.0 / Math.log(1 + posA);
-			double diferencia = Math.abs(posA - posB);
+			double penalty = 1.0 / Math.log(1 + posA);
+			//double distance = Math.abs(posA - posB);
 
-			orderMaxA += peso * diferencia;
+			double contribution = penalty * posB;
+			//System.out.println("Contribution " + title.getTitle() + " = " + contribution);
+			dOrderMaxA += contribution;
 		}
+		this.dOrderMaxA = dOrderMaxA;
 		
 		for (Title title : commonTitles) {
 			// La posición en A es i
-			// La peor posición en B sería n - i + 1
+			// La peor posición en B sería n - i
 			double posB = title.getPositionSource2();
-			double posA = n - posB + 1;
+			double posA = n - posB;
 
-			double peso = 1.0 / Math.log(1 + posB);
-			double diferencia = Math.abs(posB - posA);
+			double penalty = 1.0 / Math.log(1 + posB);
+			//double distance = Math.abs(posB - posA);
 
-			orderMaxB += peso * diferencia;
+			double contribution = penalty * posA;
+			//System.out.println("Contribution " + title.getTitle() + " = " + contribution);
+			dOrderMaxB += contribution;
 		}
+		this.dOrderMaxB = dOrderMaxB;
 
-		return (orderMaxA + orderMaxB) / 2;
+		return (dOrderMaxA + dOrderMaxB) / 2;
 	}
 	
 	public int getK() {
@@ -109,18 +143,50 @@ public class OrderIndex extends Index {
 	}
 	
 	public String getExplanation() {
+		BigDecimal dOrderARound = new BigDecimal(dOrderA).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
+		BigDecimal dOrderBRound = new BigDecimal(dOrderB).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
+		BigDecimal dOrderRound = new BigDecimal(dOrder).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
+		BigDecimal dOrderMaxARound = new BigDecimal(dOrderMaxA).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
+		BigDecimal dOrderMaxBRound = new BigDecimal(dOrderMaxB).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
 		BigDecimal dOrderMaxRound = new BigDecimal(dOrderMax).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
 		BigDecimal valueRound = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP) .stripTrailingZeros();
-		String explanation = "<h5>Calculation of <b>Order Index</b></h5>";
+		String explanation = "<h1>Calculation of <b>Order Index</b></h1>";
 		explanation += "<div class=\"divider\"></div>";
-		explanation += "<br/>Top treated: <b>n = " + n + "</b>";
-		explanation += "<br/><br/>1. Identify all common elements between the lists for the top treated (k) = " + k;
-		explanation += "<br/><br/>2. Calculate the contribution of each title and sum results: <span class=\"yellow lighten-4\">" + dOrder + "</span>";
-		explanation += "<br/><br/>3. Calculate the worst order possible:";
-		explanation += "<br/><b>Order(max) = k x (n-1)</b> = " + k + " x (" + n + " - 1) = <u><span class=\"yellow lighten-4\">" + dOrderMaxRound.toPlainString() + "</span></u>";
-		explanation += "<br/><br/>4. Calculate the Order Index by standardizing order: ";
-		explanation += "<br/><b>Order Index = Order / Order(max)</b> = " + dOrder + " / " + dOrderMaxRound.toPlainString() + " = " + "<u><span class=\"yellow lighten-4\">" + valueRound.toPlainString() + "</span></b>";
 		
+		// 0
+		explanation += "<br/><h2>Top calculated:</h2>";
+		explanation += "\\[n = " + n + "\\]";
+		
+		// 1
+		explanation += "<br/><h2>1. Determine the intersection of elements between both lists for the top calculated.</h2>";
+		explanation += "\\[k = " + k + " \\]";
+		int i=0;
+		for (Title title : commonTitles) {
+			i++;
+			explanation += " - " + title.getTitle() + "<br/>";
+			if (i>10) { 
+				explanation += "... <br/>";
+				break;
+			}
+		}
+		
+		// 2
+		explanation += "<br/><br/><h2>2. Calculate the contribution of each title and aggregate results.</h2>";
+		explanation += "The contribution is calculated by using the distance between elements in both lists and a weight that Penalizes ranking misalignment by applying a logarithmic weight that prioritizes variance in top-tier positions.";
+		explanation += "\\[ D_{orden}(A, B) = \\sum_{e \\in A \\cap B} \\frac{|pos_A(e) - pos_B(e)|}{\\ln(1 + pos_A(e))} = " + dOrderARound.toPlainString() + " \\]"; 
+		explanation += "<br/>\\[ D_{orden}(B, A) = \\sum_{e \\in A \\cap B} \\frac{|pos_B(e) - pos_A(e)|}{\\ln(1 + pos_B(e))} = " + dOrderBRound.toPlainString() + " \\]"; 
+		explanation += "<br/>\\[ D_{orden}^{sym} = \\frac{D_{orden}(A, B) + D_{orden}(B, A)}{2} = " + dOrderRound.toPlainString() + " \\]";
+		
+		// 3
+		explanation += "<br/><br/><h2>3. Calculate the worst order case possible.</h2>";
+		explanation += "The theoretical maximum for ordinal difference is defined as the worst-case ranking misalignment within the comparison universe, considering the total list size.";
+		explanation += "\\[ D_{orden}^{max}(A, B) = \\sum_{e \\in A \\cap B} \\frac{n - pos_A(e)}{\\ln(1 + pos_A(e))} \\]";
+		explanation += "<br/>\\[ D_{orden}^{max}(B, A) = \\sum_{e \\in A \\cap B} \\frac{n - pos_B(e)}{\\ln(1 + pos_B(e))} \\]";
+		explanation += "<br/>\\[ D_{orden}^{max, sym} = \\frac{D_{orden}^{max}(A, B) + D_{orden}^{max}(B, A)}{2} = \\frac{" + dOrderMaxARound.toPlainString() + " + " + dOrderMaxBRound.toPlainString() + "}{2} = " + dOrderMaxRound.toPlainString() + "\\]";
+		
+		// 4
+		explanation += "<br/><br/><h2>4. Calculate the Order Index by normalizing the Order.</h2>";
+		explanation += "\\[ I_{orden} = \\frac{D_{orden}^{sym}}{D_{orden}^{max,sym}} = " + dOrderRound.toPlainString() + " + " + dOrderMaxRound.toPlainString() + " = " + valueRound.toPlainString() + "\\]";
 		
 		return explanation;
 	}

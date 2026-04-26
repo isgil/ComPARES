@@ -29,7 +29,7 @@ import es.um.fcd.web.model.TopResultDetailed;
 
 public class TestController {
 	private static TestController instancia = null;
-	private static List<Integer> defaultTops = Arrays.asList(5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000);
+	private static List<Integer> defaultTops = Arrays.asList(10, 20, 50, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000);
 
 	private TestController() {
 		// seccionesLeidas = new LinkedList<String>();
@@ -232,6 +232,7 @@ public class TestController {
 		List<ParTopResult> paresResults = new LinkedList<ParTopResult>();
 		Map<String, TopResultDetailed> topResultsDetailed = new LinkedHashMap<String, TopResultDetailed>();
 		for (Par par : pares) {
+			System.out.println("Procesando Par = " + par.getId());
 			//int numTitlesSource1 = par.getTitlesSource1().size();
 			//int numTitlesSource2 = par.getTitlesSource2().size();
 			//int minNumTitles = (numTitlesSource1 <= numTitlesSource2) ? numTitlesSource1 : numTitlesSource2;
@@ -239,10 +240,12 @@ public class TestController {
 			if (tops == null) {
 				tops = defaultTops;
 			}
+			
+			System.out.println(tops.toString());
 			// Número de titulos en la lista más larga
 			int nMax = (par.getNumTitlesSource1() >= par.getNumTitlesSource2()) ? par.getNumTitlesSource1() : par.getNumTitlesSource2();
+			System.out.println("nMax=" + nMax);
 			
-			// Ordenamos los top
 			//System.out.println("n= " + nMax);
 			Map<Integer, TopResult> topResults = new LinkedHashMap<Integer, TopResult>();
 			//System.out.println(tops);
@@ -260,17 +263,16 @@ public class TestController {
 					int k = commonTitles.size();
 					/* Número de títulos que no están presentes en alguna de las listas */
 					int m = par.getNumDistinctTitles(top);
-					AbsenceIndex absenceIndex = new AbsenceIndex(m, n);
+					AbsenceIndex absenceIndex = new AbsenceIndex(n, par.getTitlesOnlyInSource1(top), par.getTitlesOnlyInSource2(top), par.getTitlesSource1(top), par.getTitlesSource2(top));
 					
 					System.out.println("n=" + n);
-					System.out.println("k=" + k);
+					//System.out.println("k=" + k);
 					System.out.println("m=" + m);
-					System.out.println("λn=" + absenceIndex.getλn());
 					System.out.println("dAbsenceMax=" + absenceIndex.getAbsenceMax());
 					System.out.println("dAbsence=" + absenceIndex.getAbsence());
 					System.out.println("Absence Index=" + absenceIndex.getValue());
 					/* Suma de las distancias */
-					List<Integer> orderIndexDistances = new LinkedList<Integer>();
+					//List<Integer> orderIndexDistances = new LinkedList<Integer>();
 					//int accumulatedDistance = 0;
 					//double orderIndexValue = 1;
 					/*
@@ -288,7 +290,7 @@ public class TestController {
 						//orderIndex = (double) accumulatedDistance / dOrderMax;
 					}
 					*/
-					OrderIndex orderIndex = new OrderIndex(k, n, commonTitles);
+					OrderIndex orderIndex = new OrderIndex(n, commonTitles);
 					System.out.println("dOrder=" + orderIndex.getOrder());
 					System.out.println("dOrderMax=" + orderIndex.getOrderMax());
 					double orderIndexValue = orderIndex.getValue();

@@ -74,9 +74,13 @@ public class Par implements Serializable {
 	}
 	
 	public List<Title> getTitlesSource1() {
+		return getTitlesSource1(titles.size());
+	}
+	
+	public List<Title> getTitlesSource1(int top) {
 		List<Title> titlesSource1 = new LinkedList<Title>();
 		for (Title title : titles) {
-			if (title.getPositionSource1() != -1) {
+			if (title.getPositionSource1() != -1 && title.getPositionSource1() <= top) {
 				titlesSource1.add(title);
 			}
 		}
@@ -89,9 +93,13 @@ public class Par implements Serializable {
 	}
 	
 	public List<Title> getTitlesSource2() {
+		return getTitlesSource2(titles.size());
+	}
+	
+	public List<Title> getTitlesSource2(int top) {
 		List<Title> titlesSource2 = new LinkedList<Title>();
 		for (Title title : titles) {
-			if (title.getPositionSource2() != -1) {
+			if (title.getPositionSource2() != -1 && title.getPositionSource2() <= top) {
 				titlesSource2.add(title);
 			}
 		}
@@ -196,25 +204,49 @@ public class Par implements Serializable {
 		return distinctTitles;
 	}
 	
-	public int getNumTitlesOnlyInSource1() {
-		int numTitlesOnlyInSource1 = 0;
+	public List<Title> getTitlesOnlyInSource1() {
+		return getTitlesOnlyInSource1(titles.size()); 
+	}
+	
+	public List<Title> getTitlesOnlyInSource1(int top) {
+		List<Title> titlesOnlyInSource1 = new LinkedList<Title>();
 		for (Title title : titles) {
-			if (title.getPositionSource2() == -1) {
-				numTitlesOnlyInSource1++;
+			if (title.getPositionSource2() == -1 && title.getPositionSource1() <= top) {
+				titlesOnlyInSource1.add(title);
 			}
 		}
 		
-		return numTitlesOnlyInSource1;
+		return titlesOnlyInSource1;
+	}
+	
+	public int getNumTitlesOnlyInSource1() {
+		return getNumTitlesOnlyInSource1(titles.size());
+	}
+	
+	public int getNumTitlesOnlyInSource1(int top) {
+		return getTitlesOnlyInSource1(top).size();
+	}
+	
+	public List<Title> getTitlesOnlyInSource2() {
+		return getTitlesOnlyInSource2(titles.size());
+	}
+	
+	public List<Title> getTitlesOnlyInSource2(int top) {
+		List<Title> titlesOnlyInSource2 = new LinkedList<Title>();
+		for (Title title : titles) {
+			if (title.getPositionSource1() == -1 && title.getPositionSource2() <= top) {
+				titlesOnlyInSource2.add(title);
+			}
+		}
+		
+		return titlesOnlyInSource2;
+	}
+	
+	public int getNumTitlesOnlyInSource2() {
+		return getTitlesOnlyInSource2(titles.size()).size();
 	}
 
-	public int getNumTitlesOnlyInSource2() {
-		int numTitlesOnlyInSource2 = 0;
-		for (Title title : titles) {
-			if (title.getPositionSource1() == -1) {
-				numTitlesOnlyInSource2++;
-			}
-		}
-		
-		return numTitlesOnlyInSource2;
+	public int getNumTitlesOnlyInSource2(int top) {
+		return getTitlesOnlyInSource2(top).size();
 	}
 }

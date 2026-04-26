@@ -178,6 +178,8 @@
 		console.log('explanation retrieved!');
 		$("#top-explanation").html(data);
 		$("#top-explanation").show();
+		// Pedimos a MathJax que reprocese el elemento top-explanation para generar las fórmulas en estilo LaTeX
+		MathJax.typesetPromise([document.getElementById("top-explanation")]);
 	}
 
 	function clickRemove() {

@@ -803,6 +803,20 @@ div#top-explanation div.par-info-wrapper {
 	height: 50%
 }
 
+div#top-explanation h1 {
+	font-size: 1.3em;
+}
+
+div#top-explanation h2 {
+	font-size: 1.2em;
+	font-style: italic;
+}
+
+mjx-container[jax="CHTML"][display="true"] {
+    text-align: left !important;
+    margin-left: 0 !important;
+}
+
 /******** Checkbox ********/
 input.custom-checkbox {
 	position: absolute;
