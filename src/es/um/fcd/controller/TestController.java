@@ -232,7 +232,7 @@ public class TestController {
 		List<ParTopResult> paresResults = new LinkedList<ParTopResult>();
 		Map<String, TopResultDetailed> topResultsDetailed = new LinkedHashMap<String, TopResultDetailed>();
 		for (Par par : pares) {
-			System.out.println("Procesando Par = " + par.getId());
+			//System.out.println("Procesando Par = " + par.getId());
 			//int numTitlesSource1 = par.getTitlesSource1().size();
 			//int numTitlesSource2 = par.getTitlesSource2().size();
 			//int minNumTitles = (numTitlesSource1 <= numTitlesSource2) ? numTitlesSource1 : numTitlesSource2;
@@ -241,19 +241,19 @@ public class TestController {
 				tops = defaultTops;
 			}
 			
-			System.out.println(tops.toString());
+			//System.out.println(tops.toString());
 			// Número de titulos en la lista más larga
 			int nMax = (par.getNumTitlesSource1() >= par.getNumTitlesSource2()) ? par.getNumTitlesSource1() : par.getNumTitlesSource2();
-			System.out.println("nMax=" + nMax);
+			//System.out.println("nMax=" + nMax);
 			
 			//System.out.println("n= " + nMax);
 			Map<Integer, TopResult> topResults = new LinkedHashMap<Integer, TopResult>();
 			//System.out.println(tops);
 			for (int top : tops) {
 				if (top <= nMax) {
-					System.out.println();
-					System.out.println("Top " + top);
-					System.out.println("=Index 50/50=");
+					//System.out.println();
+					//System.out.println("Top " + top);
+					//System.out.println("=Index 50/50=");
 					/** index 50/50 **/
 					/* Número de elementos máximo a tratar en ambas listas */
 					int n = top;
@@ -262,15 +262,15 @@ public class TestController {
 					List<Title> commonTitles = par.getCommonTitles(top);
 					int k = commonTitles.size();
 					/* Número de títulos que no están presentes en alguna de las listas */
-					int m = par.getNumDistinctTitles(top);
+					//int m = par.getNumDistinctTitles(top);
 					AbsenceIndex absenceIndex = new AbsenceIndex(n, par.getTitlesOnlyInSource1(top), par.getTitlesOnlyInSource2(top), par.getTitlesSource1(top), par.getTitlesSource2(top));
 					
-					System.out.println("n=" + n);
+					//System.out.println("n=" + n);
 					//System.out.println("k=" + k);
-					System.out.println("m=" + m);
-					System.out.println("dAbsenceMax=" + absenceIndex.getAbsenceMax());
-					System.out.println("dAbsence=" + absenceIndex.getAbsence());
-					System.out.println("Absence Index=" + absenceIndex.getValue());
+					//System.out.println("m=" + m);
+					//System.out.println("dAbsenceMax=" + absenceIndex.getAbsenceMax());
+					//System.out.println("dAbsence=" + absenceIndex.getAbsence());
+					//System.out.println("Absence Index=" + absenceIndex.getValue());
 					/* Suma de las distancias */
 					//List<Integer> orderIndexDistances = new LinkedList<Integer>();
 					//int accumulatedDistance = 0;
@@ -291,13 +291,14 @@ public class TestController {
 					}
 					*/
 					OrderIndex orderIndex = new OrderIndex(n, commonTitles);
-					System.out.println("dOrder=" + orderIndex.getOrder());
-					System.out.println("dOrderMax=" + orderIndex.getOrderMax());
+					//System.out.println("dOrder=" + orderIndex.getOrder());
+					//System.out.println("dOrderMax=" + orderIndex.getOrderMax());
 					double orderIndexValue = orderIndex.getValue();
 					double absenceIndexValue = absenceIndex.getValue();
 					CombinedIndex combinedIndex = new CombinedIndex(n, orderIndexValue, absenceIndexValue);
 					//double combinedIndexValue = 0.5 * orderIndexValue + 0.5 * absenceIndexValue;
 					double combinedIndexValue = combinedIndex.getValue();
+					/*
 					if (top == 10) {
 						System.out.println(absenceIndex.getExplanation());
 						System.out.println();
@@ -305,9 +306,10 @@ public class TestController {
 						System.out.println();
 						System.out.println(combinedIndex.getExplanation());
 					}
+					*/
 					
-					System.out.println("============");
-					System.out.println("=GSFn Index=");
+					//System.out.println("============");
+					//System.out.println("=GSFn Index=");
 					/** Index GSF-n **/
 					/* Valor que se asignará como distancia a un elemento que no está en una de las listas */
 					int maxRank = n+1;
@@ -337,16 +339,18 @@ public class TestController {
 					//System.out.println("accumulatedDistance = " + accumulatedDistance);
 					GSFnIndex gsfnIndex = new GSFnIndex(n, k, gsfnIndexDistances);
 					double gsfnIndexValue = gsfnIndex.getValue();
+					/*
 					if (top == 10) {
 						System.out.println();
 						System.out.println(gsfnIndex.getExplanation());
 					}
+					*/
 					//if (GSFnIndex < 0) GSFnIndex = 1;
 					//System.out.println("GSFnIndex = " + gsfnIndexValue);
 					TopResult topResult = new TopResult(orderIndexValue, absenceIndexValue, combinedIndexValue, gsfnIndexValue);
 					String id = test.getId() + "-" + par.getId() + "-" + top; 
 					topResultsDetailed.put(id, new TopResultDetailed(orderIndex, absenceIndex, combinedIndex, gsfnIndex));
-					System.out.println("- Añado top detail ID " + id);
+					//System.out.println("- Añado top detail ID " + id);
 					topResults.put(top, topResult);
 				}
 			}
@@ -356,7 +360,7 @@ public class TestController {
 		}
 		TestResult testResult = new TestResult(test, paresResults);
 		TestDetailedResult testDetailedResult = new TestDetailedResult(testResult, topResultsDetailed);
-		System.out.println("Number of top detailed: " + topResultsDetailed.size());
+		//System.out.println("Number of top detailed: " + topResultsDetailed.size());
 		
 		return testDetailedResult;
 	}

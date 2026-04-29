@@ -47,7 +47,7 @@ public class AbsenceIndex extends Index {
 		double dAbsenceB = 0.0;
 	    for (Title title : titlesOnlyInSource1) {
 	    	double contribution = 1.0 / Math.log(1 + title.getPositionSource1()); 
-	    	System.out.println("Contribution " + title.getTitle() + " = " + contribution);
+	    	//System.out.println("Contribution " + title.getTitle() + " = " + contribution);
 	        dAbsenceA += contribution;
 	    }
 	    this.dAbsenceA = dAbsenceA;
@@ -138,7 +138,7 @@ public class AbsenceIndex extends Index {
 		
 		// 4
 		explanation += "<br/><br/><h2>4. Calculate Absence Index by standardizing absence:</h2>";
-		explanation += "\\[ I_{ausencia} = \\frac{D_{ausencia}^{sym}}{D_{ausencia}^{max, sym}} = \\frac{" + dAbsenceRound.toPlainString() + "}{" + dAbsenceMaxRound.toPlainString() + "} = " + valueRound.toPlainString() + "\\]"; 
+		explanation += "\\[ I_{ausencia} = \\frac{D_{ausencia}^{sym}}{D_{ausencia}^{max}} = \\frac{" + dAbsenceRound.toPlainString() + "}{" + dAbsenceMaxRound.toPlainString() + "} = " + valueRound.toPlainString() + "\\]"; 
 		
 		return explanation;
 	}

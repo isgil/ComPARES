@@ -17,7 +17,7 @@ public class CombinedIndex extends Index {
 		this.absenceIndex = absenceIndex;
 		this.dynamicPenalty = Math.max(0.1, 1 - (0.5 / Math.pow(Math.log(1+n), 0.5)));
 		this.baseIndex = orderIndex * 0.5 + absenceIndex * 0.5;
-		this.value = baseIndex * dynamicPenalty;
+		this.value = (baseIndex == 1) ? baseIndex : (baseIndex * dynamicPenalty);
 		
 	}
 	

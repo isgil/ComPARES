@@ -64,12 +64,11 @@ public class OrderIndex extends Index {
 			double distance = Math.abs(posA - posB);
 
 			double contribution = penalty * distance;
-			System.out.println("Contribution " + title.getTitle() + " = " + contribution);
+			//System.out.println("Contribution " + title.getTitle() + " = " + contribution);
 			dOrderA += contribution;
 		}
 		
 		this.dOrderA = dOrderA;
-		System.out.println("****************");
 		
 		for (Title title : commonTitles) {
 			int posA = title.getPositionSource1();
@@ -80,7 +79,7 @@ public class OrderIndex extends Index {
 			double distance = Math.abs(posB - posA);
 
 			double contribution = penalty * distance; 
-			System.out.println("Contribution " + title.getTitle() + " = " + contribution);
+			//System.out.println("Contribution " + title.getTitle() + " = " + contribution);
 			dOrderB += contribution;
 		}
 		
